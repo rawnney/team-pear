@@ -22,7 +22,7 @@ sudo gem install sass
 
 Skriv sass! starta watcher!
 
-sass --watch public/assets/sass:public/assets/css
+sass --watch src/assets/sass:src/assets/css
 
   -------------------
 

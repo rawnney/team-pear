@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+//  import '../assets/css/main.css'
 
 class Welcome extends Component {
   render () {
