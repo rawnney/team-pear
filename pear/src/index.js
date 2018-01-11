@@ -6,4 +6,5 @@ import registerServiceWorker from './registerServiceWorker'
 import 'bootstrap/dist/css/bootstrap.css'
 
 ReactDOM.render(<App />, document.getElementById('root'))
+// alert('hey this is react alert')
 registerServiceWorker()
