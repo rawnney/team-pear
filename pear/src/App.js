@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
 import { Link, Route, Switch } from 'react-router-dom'
+import LeaderBoard from './components/LeaderBoard'
+import Login from './components/Login'
+import InfoRules from './components/InfoRules'
+import './index.css'
+import { Button } from 'reactstrap'
+import bg from './assets/img/bg.png'
 
 const Home = () => (
   <div>
@@ -7,41 +13,31 @@ const Home = () => (
   </div>
 )
 
-const LeaderBoard = () => (
-  <div>
-    <h1>Leaderboard</h1>
-  </div>
-)
-
-const InfoRules = () => (
-  <div>
-    <h1>Info/Rules</h1>
-  </div>
-)
-
 /* Link components are used for linking to other views */
 /* Route components are rendered if the path prop matches the current URL */
 
-class App extends Component {
+export default class App extends Component {
   render () {
     return (
       <div>
-        <nav className="navbar navbar-light">
-          <ul className="nav navbar-nav">
-            <li><Link to="/">Homes</Link></li>
-            <li><Link to="/LeaderBoard">Leader Board</Link></li>
-            <li><Link to="/InfoRules">Info/Rules</Link></li>
-          </ul>
-        </nav>
-        <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route path="/LeaderBoard" component={LeaderBoard}/>
-          <Route path="/InfoRules" component={InfoRules}/>
-        </Switch>
-
+        <img src={bg} className="bgmap" />
+        <div className="">
+          <nav className="navbar navbar-light">
+            <ul className="nav navbar-nav">
+              <Button><li><Link to="/">Home</Link></li></Button>
+              <Button><li><Link to="/Login">Login</Link></li></Button>
+              <Button><li><Link to="/LeaderBoard">Leader Board</Link></li></Button>
+              <Button><li><Link to="/InfoRules">Info/Rules</Link></li></Button>
+            </ul>
+          </nav>
+          <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route path="/Login" component={Login}/>
+            <Route path="/LeaderBoard" component={LeaderBoard}/>
+            <Route path="/InfoRules" component={InfoRules}/>
+          </Switch>
+        </div>
       </div>
     )
   }
 }
-
-export default App
