@@ -3,3 +3,49 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.App {
+  display: flex;
+  justify-content: center;
+  width: 414px;
+  height: 736px;
+  flex-direction: column;
+
+}
+
+
+.Gmap{
+  width: 414px;
+  height: 368px;;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+
+}
+
+.containerElement{
+  height: 368px;
+  width: 414px;
+}
+
+.Char{
+  width: 414px;
+  height: 368px;
+  display: flex;
+  flex-direction: row;
+
+
+}
+
+.Char .charpage{
+  height: 368px;
+  width: 208px;
+  background-color: #DFECEF;
+
+}
+
+.Char .invpage{
+  background-color: #A39FAF;
+  height: 368px;
+  width: 208px;
+}
