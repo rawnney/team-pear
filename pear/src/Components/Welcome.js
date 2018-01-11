@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 //  import '../assets/css/main.css'
 
-export default class Welcome extends Component {
+class Welcome extends Component {
   render () {
     return (
       <div className="Welcome">
@@ -14,3 +14,5 @@ export default class Welcome extends Component {
     )
   }
 }
+
+export default Welcome
