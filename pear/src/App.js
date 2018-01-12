@@ -3,6 +3,7 @@ import { Link, Route, Switch } from 'react-router-dom'
 import LeaderBoard from './components/LeaderBoard'
 import Login from './components/Login'
 import InfoRules from './components/InfoRules'
+import Map from './components/Map'
 import './index.css'
 import { Button } from 'reactstrap'
 import bg from './assets/img/bg.png'
@@ -20,8 +21,9 @@ export default class App extends Component {
   render () {
     return (
       <div>
-        <img src={bg} className="bgmap" />
-        <div className="">
+        <Map />
+        {/* <img src={bg} alt='' className="bgmap" /> */}
+        <div className=''>
           <nav className="navbar navbar-light">
             <ul className="nav navbar-nav">
               <Button><li><Link to="/">Home</Link></li></Button>
