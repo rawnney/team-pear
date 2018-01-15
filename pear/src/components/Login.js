@@ -4,6 +4,7 @@ import { Button } from 'reactstrap'
 
 const LOGIN = 'LOGIN'
 const REGISTER = 'REGISTER'
+
 export default class Login extends Component {
   state = {type: LOGIN}
   render () {

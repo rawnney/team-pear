@@ -24,9 +24,10 @@ export default class Map extends Component {
 
         <MapWithAMarker
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
-          loadingElement={<div style={styles.containerEle} className="containerElement"/>}
-          containerElement={<div style={styles.containerEle} className="containerElement"/>}
-          mapElement={<div style={styles.containerEle} className="containerElement"/>}
+          loadingElement={<div style={styles.containerEle} className="bgmap"/>}
+          containerElement={<div style={styles.containerEle} className="bgmap"/>}
+          mapElement={<div style={styles.containerEle} className="bgmap"/>}
+          hej
         />
       </div>
     )
@@ -34,8 +35,10 @@ export default class Map extends Component {
 }
 
 let styles = {
-  containerEle: {
-    width: '100%',
-    height: '100%'
-  }
+  // containerEle: {
+  //   width: '200',
+  //   backgroundColor: 'black',
+  //   height: '200',
+  //   zIndex: 10
+  // }
 }

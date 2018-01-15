@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import { Link, Route, Switch } from 'react-router-dom'
 import LeaderBoard from './components/LeaderBoard'
@@ -15,7 +16,7 @@ const Home = () => (
 )
 
 /* Link components are used for linking to other views */
-/* Route components are rendered if the path prop matches the current URL */
+/* Route components are rendered if the path prop matches the c2urrent URL */
 
 export default class App extends Component {
   render () {
@@ -23,7 +24,7 @@ export default class App extends Component {
       <div>
         <Map />
         {/* <img src={bg} alt='' className="bgmap" /> */}
-        <div className=''>
+        <div className='allNav'>
           <nav className="navbar navbar-light">
             <ul className="nav navbar-nav">
               <Button><li><Link to="/">Home</Link></li></Button>
