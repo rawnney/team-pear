@@ -1,5 +1,13 @@
 import React, { Component } from 'react'
 
+const ACCINFO = {
+  AccName: 'Account Name Example',
+  FirstName: 'Ragnar',
+  LastName: 'Lodbrok',
+  Email: 'email@email.com'
+
+}
+
 export default class MyAccount extends Component {
   constructor (props) {
     super(props)
@@ -17,7 +25,7 @@ export default class MyAccount extends Component {
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <h3>My Account</h3>
         <ul style={{listStyle: 'none'}}>
-          <li AccName='Account Name Example'/>
+          <li AccName='Account Name Example' />
           <li FirstName='Ragnar'/>
           <li LastName='Lodbrok'/>
           <li Email='Email@email.com'/>

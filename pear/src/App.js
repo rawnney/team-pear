@@ -29,6 +29,7 @@ export default class App extends Component {
         <div className=''>
           <nav className="navbar navbar-light">
             <ul className="nav navbar-nav">
+              <Link to="/"><Button><li>Home</li></Button></Link>
               <Link to="/MyAccount"><Button><li>My Account</li></Button></Link>
               <Link to="/Login"><Button><li>Login</li></Button></Link>
               <Link to="/LeaderBoard"><Button><li>Leader Board</li></Button></Link>
@@ -36,6 +37,7 @@ export default class App extends Component {
             </ul>
           </nav>
           <Switch>
+            <Route exact path="/" component={Home}/>
             <Route exact path="/MyAccount" component={MyAccount}/>
             <Route path="/Login" component={Login}/>
             <Route path="/LeaderBoard" component={LeaderBoard}/>
