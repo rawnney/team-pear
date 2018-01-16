@@ -44,7 +44,6 @@ export default class FightView extends Component {
   }
 
   onAttack = () => {
-    checkHealth()
     let eHP = this.state.enemyHP
     eHP = eHP - 10
     this.setState({
@@ -53,8 +52,8 @@ export default class FightView extends Component {
   }
 }
 
-checkHealth = () => {
-  if (enemyHP === 0) {
-    return 'DEAD'
-  }
-}
+// checkHealth = () => {
+//   if (enemyHP === 0) {
+//     return 'DEAD'
+//   }
+// }
