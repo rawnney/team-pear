@@ -6,8 +6,10 @@ import Login from './components/Login'
 import InfoRules from './components/InfoRules'
 import Map from './components/Map'
 import './index.css'
+import './assets/css/main.css'
 import { Button } from 'reactstrap'
-import bg from './assets/img/bg.png'
+import CharacterView from './components/CharacterView'
+import FightView from './components/FightView'
 
 const Home = () => (
   <div>
@@ -21,16 +23,15 @@ const Home = () => (
 export default class App extends Component {
   render () {
     return (
-      <div>
+      <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
         <Map />
-        {/* <img src={bg} alt='' className="bgmap" /> */}
-        <div className='allNav'>
+        <div className=''>
           <nav className="navbar navbar-light">
             <ul className="nav navbar-nav">
-              <Button><li><Link to="/">Home</Link></li></Button>
-              <Button><li><Link to="/Login">Login</Link></li></Button>
-              <Button><li><Link to="/LeaderBoard">Leader Board</Link></li></Button>
-              <Button><li><Link to="/InfoRules">Info/Rules</Link></li></Button>
+              <Link to="/"><Button><li>Home</li></Button></Link>
+              <Link to="/Login"><Button><li>Login</li></Button></Link>
+              <Link to="/LeaderBoard"><Button><li>Leader Board</li></Button></Link>
+              <Link to="/InfoRules"><Button><li>Info/Rules</li></Button></Link>
             </ul>
           </nav>
           <Switch>
@@ -40,6 +41,8 @@ export default class App extends Component {
             <Route path="/InfoRules" component={InfoRules}/>
           </Switch>
         </div>
+        <FightView style={{justifyContent: 'center', alignSelf: 'center'}}/>
+        <CharacterView style={{position: 'absolute', bottom: '0'}}/>
       </div>
     )
   }

@@ -1,3 +1,5 @@
+// @flow
+
 import {
   withScriptjs,
   withGoogleMap,
@@ -27,7 +29,6 @@ export default class Map extends Component {
           loadingElement={<div style={styles.containerEle} className="bgmap"/>}
           containerElement={<div style={styles.containerEle} className="bgmap"/>}
           mapElement={<div style={styles.containerEle} className="bgmap"/>}
-          hej
         />
       </div>
     )
