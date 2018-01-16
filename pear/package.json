@@ -8,6 +8,7 @@
     "@types/react": "^15.6.11",
     "bootstrap": "^4.0.0-beta.3",
     "jquery": "^1.9.1",
+    "missing": "0.0.1",
     "popper.js": "^1.12.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
