@@ -30,24 +30,23 @@ export default class Nav extends Component {
             <div className="button-div">
               <button type="button" className="btn btn-warning ribbon">Övrigt</button>
             </div>
-            <br/>
             <hr className="prettyline" />
           </div>
 
         </section>
-        {/*modal starts*/}
+        {/* modal starts */}
         <section>
-          <div>
-            <div className="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-              <div className="modal-dialog modal-sm">
-                <div className="modal-content">
+
+          <div className="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-sm">
+              <div className="modal-content">
                 <br/>
                 <div className="bs-example bs-example-tabs">
-                    <ul id="myTab" className="nav nav-tabs">
-                      <li className="active"><a href="#signin" data-toggle="tab">Sign In</a></li>
-                      <li className=""><a href="#signup" data-toggle="tab">Register</a></li>
-                      <li className=""><a href="#why" data-toggle="tab">Why?</a></li>
-                    </ul>
+                  <ul id="myTab" className="nav nav-tabs">
+                    <li className="active"><a href="#signin" data-toggle="tab">Sign In</a></li>
+                    <li className=""><a href="#signup" data-toggle="tab">Register</a></li>
+                    <li className=""><a href="#why" data-toggle="tab">Why?</a></li>
+                  </ul>
                 </div>
                 <div className="modal-body">
                   <div id="myTabContent" className="tab-content">
@@ -56,8 +55,8 @@ export default class Nav extends Component {
                     <div className="tab-pane fade active in" id="signin">
                       <form className="form-horizontal">
                         <fieldset>
-                        {/*Sign In Form*/}
-                        {/*Text input*/}
+                          {/* Sign In Form */}
+                          {/* Text input */}
                           <div className="control-group">
                             <label className="control-label">User Name:</label>
                             <div className="controls">
@@ -65,7 +64,7 @@ export default class Nav extends Component {
                             </div>
                           </div>
 
-                          {/*Password input*/}
+                          {/* Password input */}
                           <div className="control-group">
                             <label className="control-label">Password:</label>
                             <div className="controls">
@@ -73,7 +72,7 @@ export default class Nav extends Component {
                             </div>
                           </div>
 
-                          {/*- Multiple Checkboxes (inline)*/}
+                          {/* - Multiple Checkboxes (inline) */}
                           <div className="control-group">
                             <label className="control-label" ></label>
                             <div className="controls">
@@ -83,7 +82,7 @@ export default class Nav extends Component {
                             </div>
                           </div>
 
-                          {/*Button*/}
+                          {/* Button */}
                           <div className="control-group">
                             <label className="control-label"></label>
                             <div className="controls">
@@ -92,12 +91,12 @@ export default class Nav extends Component {
                           </div>
                         </fieldset>
                       </form>
-                  </div>
-                  <div className="tab-pane fade" id="signup">
-                    <form className="form-horizontal">
+                    </div>
+                    <div className="tab-pane fade" id="signup">
+                      <form className="form-horizontal">
                         <fieldset>
 
-                        {/*Sign Up Form Text input*/}
+                          {/* Sign Up Form Text input */}
                           <div className="control-group">
                             <label className="control-label">Email:</label>
                             <div className="controls">
@@ -105,7 +104,7 @@ export default class Nav extends Component {
                             </div>
                           </div>
 
-                          {/*Text input*/}
+                          {/* Text input */}
                           <div className="control-group">
                             <label className="control-label" >Alias:</label>
                             <div className="controls">
@@ -113,7 +112,7 @@ export default class Nav extends Component {
                             </div>
                           </div>
 
-                          {/*Password input*/}
+                          {/* Password input */}
                           <div className="control-group">
                             <label className="control-label">Password:</label>
                             <div className="controls">
@@ -122,7 +121,7 @@ export default class Nav extends Component {
                             </div>
                           </div>
 
-                          {/*Text input*/}
+                          {/* Text input */}
                           <div className="control-group">
                             <label className="control-label" >Re-Enter Password:</label>
                             <div className="controls">
@@ -130,7 +129,7 @@ export default class Nav extends Component {
                             </div>
                           </div>
 
-                          {/*Multiple Radios (inline)*/}
+                          {/* Multiple Radios (inline) */}
                           <br/>
                           <div className="control-group">
                             <label className="control-label">Humanity Check:</label>
@@ -144,7 +143,7 @@ export default class Nav extends Component {
                             </div>
                           </div>
 
-                          {/*Button*/}
+                          {/* Button */}
                           <div className="control-group">
                             <label className="control-label" ></label>
                             <div className="controls">
@@ -152,19 +151,20 @@ export default class Nav extends Component {
                             </div>
                           </div>
                         </fieldset>
-                    </form>
+                      </form>
+                    </div>
                   </div>
                 </div>
-            </div>
-            <div className="modal-footer">
-                <center>
+                <div className="modal-footer">
+                  <center>
                     <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                </center>
+                  </center>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
     )
   }
 }
