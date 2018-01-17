@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import '../assets/css/main.css'
+import { Link } from 'react-router-dom'
+import Routes from '../Routes'
 
 export default class Home extends Component {
   render () {
@@ -86,7 +88,9 @@ export default class Home extends Component {
                           <div className="control-group">
                             <label className="control-label"></label>
                             <div className="controls">
-                              <button id="signin" name="signin" className="btn btn-success">Sign In</button>
+                              <Link to='/GameView'>
+                                <button id="signin" name="signin" className="btn btn-success">Sign In</button>
+                              </Link>
                             </div>
                           </div>
                         </fieldset>

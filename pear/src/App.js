@@ -1,16 +1,22 @@
 import React, { Component } from 'react'
-import Welcome from './Components/Welcome'
-import { Button } from 'reactstrap'
-import Nav from './Components/Nav'
-import './assets/css/main.css'
+import { Switch, Route } from 'react-router-dom'
+import Home from './components/Home'
+import GameView from './components/GameView'
+
+const Main = () => (
+  <main>
+    <Switch>
+      <Route exact path='/' component={Home}/>
+      <Route path='/GameView' component={GameView}/>
+    </Switch>
+  </main>
+)
 
 export default class App extends Component {
   render () {
     return (
       <div className="App">
-        <Nav />
-        <Welcome />
-
+        <Main />
       </div>
     )
   }
