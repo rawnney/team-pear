@@ -4,14 +4,22 @@ import { Button } from 'reactstrap'
 import Nav from './Components/Nav'
 import './assets/css/main.css'
 
-export default class App extends Component {
+class App extends Component {
   render () {
     return (
-      <div className="App">
-        <Nav />
-        <Welcome />
+      <div>
+        <h1>Simple SPA</h1>
+        <ul className="header">
+          <li><a href="/">Home</a></li>
+          <li><a href="/stuff">Stuff</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+        <div className="content">
 
+        </div>
       </div>
     )
   }
 }
+
+export default App
