@@ -1,6 +1,8 @@
 html {
   width: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .Nav ul {
@@ -8,24 +10,32 @@ html {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333; }
+  background-color: #333;
+}
 .Nav li {
-  float: left; }
+  float: left;
+}
 .Nav a {
   display: block;
   color: white;
   text-align: center;
   padding: 14px 16px;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 .Welcome {
-  margin-top: 20px; }
-  .Welcome ul {
-    width: 600px;
-    margin: 0 auto;
-    list-style: none; }
-  .Welcome li {
-    color: red; }
+  margin-top: 20px;
+}
+
+.Welcome ul {
+  width: 600px;
+  margin: 0 auto;
+  list-style: none;
+}
+
+.Welcome li {
+  color: red;
+}
 
 /*# sourceMappingURL=main.css.map */
 /*css classes for nav*/

@@ -5535,6 +5535,12 @@ react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
+react-geolocated@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-geolocated/-/react-geolocated-2.2.1.tgz#816b88d3d88afc5afde08e4d071b36cd16b4c34a"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-google-maps@^9.4.5:
   version "9.4.5"
   resolved "https://registry.yarnpkg.com/react-google-maps/-/react-google-maps-9.4.5.tgz#920c199bdc925e0ce93880edffb09428d263aafa"
