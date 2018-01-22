@@ -23,7 +23,7 @@ export default class GameView extends Component {
   }
 
     getLocation = () => {
-      if (!this.innerRef || !this.innerRef.getLocation) return
+      if (!this.innerRef || !this.innerRef.getLocation) return
       this.innerRef.getLocation()
     }
 

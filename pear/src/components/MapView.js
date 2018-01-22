@@ -16,7 +16,7 @@ class MapView extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-  // return nextProps.coords.lat !== this.coords.lat || nextProps.coords.lng !== this.coords.lng
+    // return nextProps.coords.lat !== this.coords.lat || nextProps.coords.lng !== this.coords.lng
     return true
   }
 
