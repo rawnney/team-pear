@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import Main from './Main'
+import Stuff from './Stuff'
 import registerServiceWorker from './registerServiceWorker'
-import 'bootstrap/dist/css/bootstrap.css'
 
 ReactDOM.render(
   <div>
-    <Main />
+    {/* <Main /> */}
+    <App/>
+    {/* <Stuff /> */}
   </div>,
   document.getElementById('root'))
 registerServiceWorker()
