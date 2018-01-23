@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MapView from './MapView'
+import CharacterView from './CharacterView'
 
 export default class GameView extends Component {
   innerRef
@@ -17,6 +18,7 @@ export default class GameView extends Component {
   render () {
     return (
       <div className='GameView'>
+        <CharacterView />
         <MapView ref={this.setRef} />
       </div>
     )
