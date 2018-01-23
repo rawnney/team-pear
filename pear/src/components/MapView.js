@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { geolocated } from 'react-geolocated'
-import MARKERS from './MyMarker'
+import MARKERS from './Markers'
 import Monster from '../assets/img/icons/monster-icon.png'
 
 class MapView extends Component {
@@ -27,7 +27,7 @@ class MapView extends Component {
   }
 
   render () {
-    let {coords, isGeolocationAvailable, isGeolocationEnabled, markers} = this.props
+    let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) { /* handle error */ }
     if (!coords) return <div style={styles.infoMsg}>Getting the location data&hellip; </div>

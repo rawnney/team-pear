@@ -1,11 +1,33 @@
 import React, { Component } from 'react'
-import '../assets/css/main.css'
 import { Link } from 'react-router-dom'
 import Routes from '../Routes'
 
 export default class Home extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      username: '1',
+      password: '1'
+    }
+  }
+
+  // validateForm () {
+  //   return this.state.email.length > 0 && this.state.password.length > 0
+  // }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+  }
+
   render () {
     return (
+
       <div>
         <header className="col-md-12">
           <div className="logo-image" >
@@ -55,14 +77,15 @@ export default class Home extends Component {
                     <div className="tab-pane fade in" id="why">
                     </div>
                     <div className="tab-pane fade active in" id="signin">
-                      <form className="form-horizontal">
+                      <form className="form-horizontal" onSubmit={this.handleSubmit}>
                         <fieldset>
                           {/* Sign In Form */}
                           {/* Text input */}
                           <div className="control-group">
                             <label className="control-label">User Name:</label>
                             <div className="controls">
-                              <input required="" id="userid" name="userid" type="text" className="form-control" placeholder="" className="input-medium" required="" />
+                              <input required="" id="userid" name="userid" type="text" className="form-control" placeholder="" className="input-medium" required=""
+                                value={this.state.email} onChange={this.handleChange}/>
                             </div>
                           </div>
 
@@ -70,7 +93,8 @@ export default class Home extends Component {
                           <div className="control-group">
                             <label className="control-label">Password:</label>
                             <div className="controls">
-                              <input required="" id="passwordinput" name="passwordinput" className="form-control" type="password" placeholder="********" className="input-medium" />
+                              <input required="" id="passwordinput" name="passwordinput" className="form-control" type="password" placeholder="********" className="input-medium"
+                                value={this.state.password} onChange={this.handleChange}/>
                             </div>
                           </div>
 
@@ -89,7 +113,7 @@ export default class Home extends Component {
                             <label className="control-label"></label>
                             <div className="controls">
                               <Link to='/GameView'>
-                                <button id="signin" name="signin" className="btn btn-success">Sign In</button>
+                                <button id="signin" name="signin" className="btn btn-success" type="submit">Sign In</button>
                               </Link>
                             </div>
                           </div>
@@ -172,3 +196,38 @@ export default class Home extends Component {
     )
   }
 }
+
+//   render () {
+//     return (
+//       <div className="Login">
+//         <form onSubmit={this.handleSubmit}>
+//           <FormGroup controlId="email" bsSize="large">
+//             <ControlLabel>Email</ControlLabel>
+//             <FormControl
+//               autoFocus
+//               type="email"
+//               value={this.state.email}
+//               onChange={this.handleChange}
+//             />
+//           </FormGroup>
+//           <FormGroup controlId="password" bsSize="large">
+//             <ControlLabel>Password</ControlLabel>
+//             <FormControl
+//               value={this.state.password}
+//               onChange={this.handleChange}
+//               type="password"
+//             />
+//           </FormGroup>
+//           <Button
+//             block
+//             bsSize="large"
+//             disabled={!this.validateForm()}
+//             type="submit"
+//           >
+//               Login
+//           </Button>
+//         </form>
+//       </div>
+//     )
+//   }
+// }
