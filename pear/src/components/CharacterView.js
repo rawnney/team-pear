@@ -1,136 +1,82 @@
 import React, { Component } from 'react'
+import sword from '../assets/img/sword.png'
+// import Items from './items'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class CharacterView extends Component {
+  constructor(props) {
+super(props);
+this.state = {
+  username: 'sTor-Lazze',
+  name: 'Lasse',
+  lastname: 'Kroner',
+  email: 'Lasse@kroner.iDid',
+
+
+   };
+ }
+
   render () {
     return (
 
-      <section>
-        <button type="button" className="btn btn-success ribbon menu-button" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Menu</button>
+
+      <section style={{display: 'flex', justifyContent: 'center'}}>
+        <button style={{width: '10%'}} type="button" className="btn btn-success ribbon menu-button" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Menu</button>
         <div className="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-sm">
             <div className="modal-content">
               <br/>
               <div className="bs-example bs-example-tabs">
                 <ul id="myTab" className="nav nav-tabs">
-                  <li className="active"><a href="#signin" data-toggle="tab">Sign In</a></li>
-                  <li className=""><a href="#signup" data-toggle="tab">Register</a></li>
-                  <li className=""><a href="#why" data-toggle="tab">Why?</a></li>
+                  <li className="btn btn-primary ribbon menu-button"><a style={{textDecoration: 'none', color: 'inherit'}} href="#MyAccount" data-toggle="tab">My Account</a></li>
+                  <li className="btn btn-primary ribbon menu-button"><a style={{textDecoration: 'none', color: 'inherit'}}
+                   href="#inventory" data-toggle="tab">Inventory</a></li>
+                  <li className="active btn btn-primary ribbon menu-button"><a style={{textDecoration: 'none', color: 'inherit'}} href="#skills" data-toggle="tab">Skills</a></li>
+
+
                 </ul>
               </div>
               <div className="modal-body">
                 <div id="myTabContent" className="tab-content">
-                  <div className="tab-pane fade in" id="why">
+                  <div className="tab-pane fade in" id="MyAccount">
+                  <ModalHeader toggle={this.toggle}>My Account</ModalHeader>
+                  <br/>
+                  <ul style={{listStyle: 'none'}}>
+                      <li><p>USERNAME: {this.state.username}</p> </li>
+                      <li><p>FIRST NAME: {this.state.name}</p></li>
+                      <li><p>LAST NAME: {this.state.lastname}</p></li>
+                      <li><p>EMAIL: {this.state.email}</p></li>
+                  </ul>
+
+                  <Button color="success">Edit</Button>
                   </div>
-                  <div className="tab-pane fade active in" id="signin">
-                    <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                      <fieldset>
-                        {/* Sign In Form */}
-                        {/* Text input */}
-                        <div className="control-group">
-                          <label className="control-label">User Name:</label>
-                          <div className="controls">
-                            <input required="" id="userid" name="userid" type="text" className="form-control" placeholder="" className="input-medium" required=""
-                            />
-                          </div>
-                        </div>
+                  <div className="tab-pane fade active in" id="skills">
+                    <ModalHeader toggle={this.toggle}>Skillz</ModalHeader>
 
-                        {/* Password input */}
-                        <div className="control-group">
-                          <label className="control-label">Password:</label>
-                          <div className="controls">
-                            <input required="" id="passwordinput" name="passwordinput" className="form-control" type="password" placeholder="********" className="input-medium"
-                            />
-                          </div>
-                        </div>
-
-                        {/* - Multiple Checkboxes (inline) */}
-                        <div className="control-group">
-                          <label className="control-label" ></label>
-                          <div className="controls">
-                            <label className="checkbox inline">
-                              <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me" />Remember me
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* Button */}
-                        <div className="control-group">
-                          <label className="control-label"></label>
-                          <div className="controls">
-
-                            <button id="signin" name="signin" className="btn btn-success" type="submit">Sign In</button>
-
-                          </div>
-                        </div>
-                      </fieldset>
-                    </form>
                   </div>
-                  <div className="tab-pane fade" id="signup">
-                    <form className="form-horizontal">
-                      <fieldset>
+                  <div className="tab-pane fade" id="inventory">
+                  <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
+                  <ul style={{listStyle: 'none'}}>
+                      <br/>
 
-                        {/* Sign Up Form Text input */}
-                        <div className="control-group">
-                          <label className="control-label">Email:</label>
-                          <div className="controls">
-                            <input id="Email" name="Email" className="form-control" type="text" placeholder="youremail@example.com" className="input-large" required=""/>
-                          </div>
-                        </div>
+                      <li><img style={{width: '40px', height: '40px'}} src={require('../assets/img/sword.png')} />
+                      <img style={{width: '40px', height: '40px'}} src={require('../assets/img/wand.png')} />
+                      <img style={{width: '40px', height: '40px'}} src={require('../assets/img/shield.png')} />
+                      </li>
+                      <br/>
+                      <li><img style={{width: '40px', height: '40px'}} src={require('../assets/img/dagger.png')} />
+                      <img style={{width: '40px', height: '40px'}} src={require('../assets/img/armor.png')} />
+                      </li>
 
-                        {/* Text input */}
-                        <div className="control-group">
-                          <label className="control-label" >Alias:</label>
-                          <div className="controls">
-                            <input id="userid" name="userid" className="form-control" type="text" placeholder="JoeSixpack" className="input-large" required=""/>
-                          </div>
-                        </div>
 
-                        {/* Password input */}
-                        <div className="control-group">
-                          <label className="control-label">Password:</label>
-                          <div className="controls">
-                            <input id="password" name="password" className="form-control" type="password" placeholder="********" className="input-large" required=""/>
-                            <em>1-8 Characters</em>
-                          </div>
-                        </div>
+                  </ul>
 
-                        {/* Text input */}
-                        <div className="control-group">
-                          <label className="control-label" >Re-Enter Password:</label>
-                          <div className="controls">
-                            <input id="reenterpassword" className="form-control" name="reenterpassword" type="password" placeholder="********" className="input-large" required=""/>
-                          </div>
-                        </div>
-
-                        {/* Multiple Radios (inline) */}
-                        <br/>
-                        <div className="control-group">
-                          <label className="control-label">Humanity Check:</label>
-                          <div className="controls">
-                            <label className="radio inline">
-                              <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked" />I am a Robot
-                            </label>
-                            <label className="radio inline" >
-                              <input type="radio" name="humancheck" id="humancheck-1" value="human"/>I am Human
-                            </label>
-                          </div>
-                        </div>
-
-                        {/* Button */}
-                        <div className="control-group">
-                          <label className="control-label" ></label>
-                          <div className="controls">
-                            <button id="confirmsignup" name="confirmsignup" className="btn btn-success">Sign Up</button>
-                          </div>
-                        </div>
-                      </fieldset>
-                    </form>
                   </div>
                 </div>
               </div>
               <div className="modal-footer">
                 <center>
-                  <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" className="btn btn-danger ribbon menu-button" data-dismiss="modal">Close</button>
                 </center>
               </div>
             </div>
