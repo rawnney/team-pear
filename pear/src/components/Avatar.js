@@ -1,0 +1,20 @@
+// @ flow
+import React, { Component } from 'react'
+
+export default class Avatar extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {}
+    this.props = {}
+  }
+  render () {
+    return <img src={this.props.pic} style={styles.avatar}/>
+  }
+}
+
+let styles = {
+  avatar: {
+    height: '50px',
+    width: '50px'
+  }
+}

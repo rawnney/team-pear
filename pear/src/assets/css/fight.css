@@ -3,7 +3,6 @@
 .Wrapper {
   /* height: 100vh; */
   flex: 1;
-  justify-content: space-between;
   display: flex;
   flex-direction: column;
   margin-top: 10px;
@@ -21,13 +20,3 @@
 }
 
 /*FightView ends */
-
-/* Enemy */
-
-.EnemyWrapper {
-  flex: 1
-}
-
-.Enemy {
-
-}
