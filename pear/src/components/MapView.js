@@ -37,9 +37,9 @@ class MapView extends Component {
         lat={coords.latitude}
         accuracy={coords.accuracy}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
-        loadingElement={<div className="bgmap" style={styles.mapStyle} />}
-        containerElement={<div className="bgmap" style={styles.mapStyle} />}
-        mapElement={<div className="bgmap" style={styles.mapStyle} />}
+        loadingElement={<div style={styles.mapStyle} />}
+        containerElement={<div style={styles.mapStyle} />}
+        mapElement={<div style={styles.mapStyle} />}
         markers={[
           {id: 1, latitude: 59.314396, longitude: 18.111512, icon: Monster},
           {id: 2, latitude: 59.312396, longitude: 18.112112, icon: Monster},
@@ -61,7 +61,7 @@ let styles = {
   mapStyle: {
     position: 'fixed',
     width: '100%',
-    height: '100%',
+    height: '100vh',
     zIndex: -1000
   },
   infoMsg: {
@@ -70,10 +70,5 @@ let styles = {
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center'
-  },
-  chrill: {
-    height: '50px',
-    width: '50px',
-    borderRadius: '25'
   }
 }
