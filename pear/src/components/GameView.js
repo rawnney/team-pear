@@ -35,3 +35,5 @@ export default class GameView extends Component {
       this.innerRef = ref
     }
 }
+
+// <FightView />

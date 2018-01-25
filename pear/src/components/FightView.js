@@ -50,7 +50,6 @@ export default class FightView extends Component {
       enemyHP: eHP
     })
     if (eHP === 0) {
-
     }
   }
 }
@@ -64,5 +63,4 @@ let styles = {
     width: '10%',
     margin: 'auto'
   }
-
 }
