@@ -1,9 +1,9 @@
-// @ flow
+// @flow
 import React, { Component } from 'react'
 import Avatar from './Avatar'
 import Monster from '../assets/img/icons/monster-icon.png'
 
-export default class EnemyComponent extends Component {
+export default class EnemyComponent extends Component<{}, {}> {
   render () {
     return (
       <div className='EnemyWrapper'style={styles.wrapper}>

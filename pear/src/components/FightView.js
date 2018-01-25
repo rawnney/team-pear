@@ -10,7 +10,7 @@ export default class FightView extends Component {
     this.state = {
       enemyHP: 100,
       playerHP: 100,
-      onClick: Function
+      winnerIsSet: false
     }
   }
 
@@ -19,37 +19,31 @@ export default class FightView extends Component {
   }
 
   render () {
-    return (
-      <div className='FightWrapper' styles={styles.wrapper}>
-        <EnemyComponent enemyHP={this.state.enemyHP} name={'Enemy'}/>
-        {/* TODO this.status */}
-        <PlayerComponent playerHP={this.state.playerHP} name={'Robin'}/>
-        <div style={styles.fightButton}>
-          <FightButton onClick={this.handleClickEvent} text={'Attack'} />
-        </div>
+    let {winnerIsSet, playerHP, enemyHP} = this.state
+    return <div className='FightWrapper' styles={styles.wrapper}>
+      <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
+      <PlayerComponent playerHP={playerHP} name={'Robin'}/>
+      <div style={styles.fightButton}>
+        <FightButton onClick={this.handleClickEvent} text={'Attack'} />
       </div>
-    )
+      {winnerIsSet ? this.renderWinner() : <div />}
+    </div>
+  }
+
+  renderWinner = () => {
+    return <div style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', height: '200px', width: '200px'}}>
+    YOU ARE FUCKING WINNER! ARRR!!!!
+    </div>
   }
 
   handleClickEvent = () => {
-    let eHP = this.state.enemyHP
-    let pHP = this.state.playerHP
-    this.setState({enemyHP: eHP, playerHP: pHP})
-    let attack
-    if (this.state.enemyHP === 0 || this.state.meHP === 0) {
-      { /* declareWinner() */ }
-    } else if (this.state.enemyHP > 0) {
-      attack()
-    }
-  }
-
-  attack = () => {
-    let eHP = this.state.enemyHP
-    eHP = eHP - 10
-    this.setState({
-      enemyHP: eHP
-    })
-    if (eHP === 0) {
+    let {enemyHP, playerHP} = this.state
+    if (enemyHP > 0) {
+      this.setState({enemyHP: enemyHP - 10}, () => {
+        if (enemyHP === 10 || playerHP === 10) {
+          this.setState({winnerIsSet: true})
+        }
+      })
     }
   }
 }

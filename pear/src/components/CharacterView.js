@@ -6,11 +6,12 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 export default class CharacterView extends Component {
   constructor (props) {
     super(props)
+    // let {user} = this.props
     this.state = {
-      username: 'sTor-Lazze',
-      name: 'Lasse',
-      lastname: 'Kroner',
-      email: 'Lasse@kroner.iDid',
+      username: 'sTor-Lazze', // user.username
+      name: 'Lasse', // user.name
+      lastname: 'Kroner', // user.lastname
+      email: 'Lasse@kroner.iDid', // user.email
 
       sword: '+25',
       blockChance: '5%',
@@ -20,8 +21,8 @@ export default class CharacterView extends Component {
   }
 
   render () {
+    let {username} = this.state
     return (
-
       <section style={{display: 'flex', justifyContent: 'center'}}>
         <button style={{width: '10%'}} type="button" className="btn btn-success menu-button" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Menu</button>
         <div className="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -43,7 +44,7 @@ export default class CharacterView extends Component {
                     <ModalHeader toggle={this.toggle}>My Account</ModalHeader>
                     <br/>
                     <ul style={{listStyle: 'none'}}>
-                      <li><p>USERNAME: {this.state.username}</p> </li>
+                      <li><p>USERNAME: {username}</p> </li> /* onChange={(text) => this.setState({username: text})} */
                       <li><p>FIRST NAME: {this.state.name}</p></li>
                       <li><p>LAST NAME: {this.state.lastname}</p></li>
                       <li><p>EMAIL: {this.state.email}</p></li>
@@ -81,7 +82,7 @@ export default class CharacterView extends Component {
               </div>
               <div className="modal-footer">
                 <center>
-                  <button type="button" className="btn btn-danger  menu-button" data-dismiss="modal">Close</button>
+                  <button type="button" className="btn btn-danger  menu-button" data-dismiss="modal">Close</button> /* saveButton = this.saveUser(this.state.user) */
                 </center>
               </div>
             </div>
