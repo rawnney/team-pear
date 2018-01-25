@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
-import FightView from './FightView'
+// import FightView from './FightView'
 
 export default class GameView extends Component {
   innerRef
@@ -20,7 +20,7 @@ export default class GameView extends Component {
     return (
       <div className='GameView'>
         <CharacterView />
-        <FightView />
+      
         <MapView ref={this.setRef} />
       </div>
     )
@@ -35,3 +35,5 @@ export default class GameView extends Component {
       this.innerRef = ref
     }
 }
+
+// <FightView />

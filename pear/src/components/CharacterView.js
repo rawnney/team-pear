@@ -5,12 +5,17 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class CharacterView extends Component {
   constructor(props) {
-super(props);
-this.state = {
-  username: 'sTor-Lazze',
-  name: 'Lasse',
-  lastname: 'Kroner',
-  email: 'Lasse@kroner.iDid',
+    super(props);
+    this.state = {
+      username: 'sTor-Lazze',
+      name: 'Lasse',
+      lastname: 'Kroner',
+      email: 'Lasse@kroner.iDid',
+
+      sword: '+25',
+      blockChance: '5%',
+      magic: '+10'
+
 
 
    };
@@ -21,17 +26,17 @@ this.state = {
 
 
       <section style={{display: 'flex', justifyContent: 'center'}}>
-        <button style={{width: '10%'}} type="button" className="btn btn-success ribbon menu-button" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Menu</button>
+        <button style={{width: '10%'}} type="button" className="btn btn-success menu-button" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Menu</button>
         <div className="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-sm">
             <div className="modal-content">
               <br/>
               <div className="bs-example bs-example-tabs">
                 <ul id="myTab" className="nav nav-tabs">
-                  <li className="btn btn-primary ribbon menu-button"><a style={{textDecoration: 'none', color: 'inherit'}} href="#MyAccount" data-toggle="tab">My Account</a></li>
-                  <li className="btn btn-primary ribbon menu-button"><a style={{textDecoration: 'none', color: 'inherit'}}
+                  <li className="btn btn-primary  menu-button"><a style={{textDecoration: 'none', color: 'inherit'}} href="#MyAccount" data-toggle="tab">My Account</a></li>
+                  <li className="btn btn-primary  menu-button"><a style={{textDecoration: 'none', color: 'inherit'}}
                    href="#inventory" data-toggle="tab">Inventory</a></li>
-                  <li className="active btn btn-primary ribbon menu-button"><a style={{textDecoration: 'none', color: 'inherit'}} href="#skills" data-toggle="tab">Skills</a></li>
+                  <li className="active btn btn-primary  menu-button"><a style={{textDecoration: 'none', color: 'inherit'}} href="#skills" data-toggle="tab">Skills</a></li>
 
 
                 </ul>
@@ -52,7 +57,12 @@ this.state = {
                   </div>
                   <div className="tab-pane fade active in" id="skills">
                     <ModalHeader toggle={this.toggle}>Skillz</ModalHeader>
-
+                    <br/>
+                    <ul style={{listStyle: 'none'}}>
+                      <li><p>MEELE DAMAGE: {this.state.sword}</p> </li>
+                      <li><p>BLOCK CHANCE: {this.state.blockChance}</p></li>
+                      <li><p>SPELL DAMAGE: {this.state.magic}</p></li>
+                    </ul>
                   </div>
                   <div className="tab-pane fade" id="inventory">
                   <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
@@ -76,7 +86,7 @@ this.state = {
               </div>
               <div className="modal-footer">
                 <center>
-                  <button type="button" className="btn btn-danger ribbon menu-button" data-dismiss="modal">Close</button>
+                  <button type="button" className="btn btn-danger  menu-button" data-dismiss="modal">Close</button>
                 </center>
               </div>
             </div>
