@@ -20,7 +20,7 @@ export default class GameView extends Component {
     return (
       <div className='GameView'>
         <CharacterView />
-      
+
         <MapView ref={this.setRef} />
       </div>
     )
