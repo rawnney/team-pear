@@ -5,7 +5,6 @@ import registerServiceWorker from './registerServiceWorker'
 import { BrowserRouter } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import './assets/css/main.css'
-import './assets/css/fight.css'
 
 ReactDOM.render((
   <BrowserRouter>

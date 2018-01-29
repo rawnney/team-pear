@@ -1,18 +1,16 @@
 // @ flow
 import React, { Component } from 'react'
-import { Button } from 'reactstrap'
-// import Monster from '../assets/img/monster-icon.png'
+import FightButton from './FightButton'
+import EnemyComponent from './EnemyComponent'
+import PlayerComponent from './PlayerComponent'
 
 export default class FightView extends Component {
   constructor (props) {
     super(props)
     this.state = {
       enemyHP: 100,
-      meHP: 100,
-      onClick: Function
-    }
-    this.props = {
-
+      playerHP: 100,
+      winnerIsSet: false
     }
   }
 
@@ -21,48 +19,42 @@ export default class FightView extends Component {
   }
 
   render () {
-    return (
-      <div className='Wrapper'>
-        <div className='FightViewWrapper'>
-          <div className='Enemy'>
-            <h3> Enemy </h3>
-            <h3> {this.state.enemyHP} </h3>
-          </div>
-          <div className='Me'>
-            <h3>You </h3>
-            <h3> {this.state.meHP} </h3>
-          </div>
-        </div>
-        <div>
-          <ul className='optionBar'>
-            <Button onClick={this.onAttack}><li>Attack</li></Button>
-          </ul>
-        </div>
+    let {winnerIsSet, playerHP, enemyHP} = this.state
+    return <div className='FightWrapper' styles={styles.wrapper}>
+      <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
+      <PlayerComponent playerHP={playerHP} name={'Robin'}/>
+      <div style={styles.fightButton}>
+        <FightButton onClick={this.handleClickEvent} text={'Attack'} />
       </div>
-    )
+      {winnerIsSet ? this.renderWinner() : <div />}
+    </div>
   }
 
-  onAttack = () => {
-    let eHP = this.state.enemyHP
-    eHP = eHP - 10
-    this.setState({
-      enemyHP: eHP
-    })
-    if (this.state.enemyHP === 0) {
-      return (
-        <div className="winner">
-          <div>YOU WON!</div>
-        </div>
-      )
-    } else {
-      return (
-        <div className="winner">
-          <div>YOU WON!</div>
-        </div>
-      )
+  renderWinner = () => {
+    return <div style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', height: '200px', width: '200px'}}>
+    YOU ARE FUCKING WINNER! ARRR!!!!
+    </div>
+  }
+
+  handleClickEvent = () => {
+    let {enemyHP, playerHP} = this.state
+    if (enemyHP > 0) {
+      this.setState({enemyHP: enemyHP - 10}, () => {
+        if (enemyHP === 10 || playerHP === 10) {
+          this.setState({winnerIsSet: true})
+        }
+      })
     }
   }
+}
 
-  declareWinner () {
+let styles = {
+  wrapper: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  fightButton: {
+    width: '10%',
+    margin: 'auto'
   }
 }
