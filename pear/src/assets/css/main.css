@@ -1,26 +1,26 @@
-.Nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333; }
-.Nav li {
-  float: left; }
-.Nav a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none; }
+#myTab.nav{
+  padding-left: 18px;
+}
+
+#myTab li.general {
+    padding: 6px;
+    background: #dedede;
+    margin-right: 10px;
+    margin-bottom: -1px;
+    border-radius: 5px 5px 0px 0px;
+}
 
 .Welcome {
-  margin-top: 20px; }
-  .Welcome ul {
-    width: 600px;
-    margin: 0 auto;
-    list-style: none; }
-  .Welcome li {
-    color: red; }
+  margin-top: 20px;
+}
+.Welcome ul {
+  width: 600px;
+  margin: 0 auto;
+  list-style: none;
+}
+.Welcome li {
+  color: red;
+}
 
 /*# sourceMappingURL=main.css.map */
 /*css classes for nav*/
@@ -109,5 +109,6 @@ button {
   background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
   background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
+
 
 /*css classes for nav ends*/
