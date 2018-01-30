@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
-//  import '../assets/css/main.css'
 
-class Welcome extends Component {
-  render () {
-    return (
-      <div className="Welcome">
-        <ul>
-          <li>There are several rules to play our game </li>
-          <li>1. Single player mode</li>
-          <li>2. Multi player mode</li>
-        </ul>
-      </div>
-    )
-  }
+const Welcome = ({user, onSignOut}) => {
+  // This is a dumb "stateless" component
+  return (
+    <div>
+      Welcome <strong>{user.username}</strong>!
+      <button type="button" className="btn btn-danger ribbon" onClick={onSignOut} >Sign Out</button>
+
+    </div>
+  )
 }
 
 export default Welcome
