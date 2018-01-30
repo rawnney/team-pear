@@ -1,0 +1,5 @@
+2 separate components that should be rendered
+inside the modal menu that will be in the gameview
+
+Inventory - What are you carrying (weapon, armor, shield)
+Character - Info (skills), avatar?
