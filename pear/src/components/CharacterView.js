@@ -5,11 +5,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, Ca
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
 
-let {Sword} = Images
-let {Dagger} = Images
-let {Shield} = Images
-let {Armor} = Images
-let {Wand} = Images
+let {Sword, Dagger, Shield, Armor, Wand } = Images
 
 export default class CharacterView extends Component {
   constructor (props) {
