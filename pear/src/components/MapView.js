@@ -36,7 +36,7 @@ class MapView extends Component {
         lng={coords.longitude}
         lat={coords.latitude}
         accuracy={coords.accuracy}
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1CHz42Gc1V8DoQD_MgXAiLawATQlS6bA&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div className="bgmap" style={styles.mapStyle} />}
         containerElement={<div className="bgmap" style={styles.mapStyle} />}
         mapElement={<div className="bgmap" style={styles.mapStyle} />}

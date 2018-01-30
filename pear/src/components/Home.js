@@ -1,38 +1,43 @@
 import React, { Component } from 'react'
+import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom'
-import Routes from '../Routes'
+import Welcome from './Welcome'
+import Database from '../Database'
+// import Routes from '../Routes'
 
 export default class Home extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      username: '1',
-      password: '1'
+      user: null
     }
+  }
+
+  signIn (username, password) {
+    // This is where you would call Firebase, an API etc...
+    // calling setState will re-render the entire app (efficiently!)
+    this.setState({
+      user: {
+        username,
+        password
+      }
+    })
+  }
+
+  signOut () {
+    // clear out user from state
+    this.setState({user: null})
   }
 
   // validateForm () {
   //   return this.state.email.length > 0 && this.state.password.length > 0
   // }
 
-  handleChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    })
-  }
-
-  handleSubmit = event => {
-    event.preventDefault()
-  }
-
   render () {
     return (
 
       <div>
         <header className="col-md-12">
-          <div className="logo-image" >
-            <img src="../assets/img/Red-Pear-PNG-image.png" alt=""/>
-          </div>
           <div className="slogan">
             <h1>Team Pear Game Page</h1>
           </div>
@@ -43,7 +48,23 @@ export default class Home extends Component {
           <div className="buttons">
             <hr className="prettyline" />
             <div className="button-div">
-              <button type="button" className="btn btn-success ribbon" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Start</button>
+              {
+                (this.state.user)
+                  ? <Welcome
+                    user={this.state.user}
+                    onSignOut={this.signOut.bind(this)}
+                  />
+                  : <button type="button" className="btn btn-success ribbon" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In / Sign Up</button>
+              }
+            </div>
+            <div className="button-div">
+              {
+                (this.state.user)
+                  ? <Link to='/GameView'>
+                    <button id="signin" name="signin" className="btn btn-success ribbon" type="submit">Go To GameView</button>
+                  </Link>
+                  : <div></div>
+              }
             </div>
             <div className="button-div">
               <button type="button" className="btn btn-primary ribbon">Leaderboard</button>
@@ -65,60 +86,26 @@ export default class Home extends Component {
             <div className="modal-dialog modal-sm">
               <div className="modal-content">
                 <br/>
-                <div className="bs-example bs-example-tabs">
+                <div className="bs-example">
                   <ul id="myTab" className="nav nav-tabs">
-                    <li className="active"><a href="#signin" data-toggle="tab">Sign In</a></li>
-                    <li className=""><a href="#signup" data-toggle="tab">Register</a></li>
-                    <li className=""><a href="#why" data-toggle="tab">Why?</a></li>
+
+                    <li className="general"><a href="#signin" data-toggle="tab">Sign In</a></li>
+                    <li className="general"><a href="#signup" data-toggle="tab">Register</a></li>
+                    <li className="general"><a href="#why" data-toggle="tab">Why?</a></li>
                   </ul>
                 </div>
+
                 <div className="modal-body">
                   <div id="myTabContent" className="tab-content">
                     <div className="tab-pane fade in" id="why">
                     </div>
                     <div className="tab-pane fade active in" id="signin">
-                      <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                        <fieldset>
-                          {/* Sign In Form */}
-                          {/* Text input */}
-                          <div className="control-group">
-                            <label className="control-label">User Name:</label>
-                            <div className="controls">
-                              <input required="" id="userid" name="userid" type="text" className="form-control" placeholder="" className="input-medium" required=""
-                                value={this.state.email} onChange={this.handleChange}/>
-                            </div>
-                          </div>
+                      <div>
+                        {
+                          <LoginForm onSignIn={this.signIn.bind(this)}/>
+                        }
+                      </div>
 
-                          {/* Password input */}
-                          <div className="control-group">
-                            <label className="control-label">Password:</label>
-                            <div className="controls">
-                              <input required="" id="passwordinput" name="passwordinput" className="form-control" type="password" placeholder="********" className="input-medium"
-                                value={this.state.password} onChange={this.handleChange}/>
-                            </div>
-                          </div>
-
-                          {/* - Multiple Checkboxes (inline) */}
-                          <div className="control-group">
-                            <label className="control-label" ></label>
-                            <div className="controls">
-                              <label className="checkbox inline">
-                                <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me" />Remember me
-                              </label>
-                            </div>
-                          </div>
-
-                          {/* Button */}
-                          <div className="control-group">
-                            <label className="control-label"></label>
-                            <div className="controls">
-                              <Link to='/GameView'>
-                                <button id="signin" name="signin" className="btn btn-success" type="submit">Sign In</button>
-                              </Link>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </form>
                     </div>
                     <div className="tab-pane fade" id="signup">
                       <form className="form-horizontal">
@@ -185,7 +172,7 @@ export default class Home extends Component {
                 </div>
                 <div className="modal-footer">
                   <center>
-                    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="close-btn" className="btn btn-default" data-dismiss="modal">Close</button>
                   </center>
                 </div>
               </div>
@@ -196,38 +183,3 @@ export default class Home extends Component {
     )
   }
 }
-
-//   render () {
-//     return (
-//       <div className="Login">
-//         <form onSubmit={this.handleSubmit}>
-//           <FormGroup controlId="email" bsSize="large">
-//             <ControlLabel>Email</ControlLabel>
-//             <FormControl
-//               autoFocus
-//               type="email"
-//               value={this.state.email}
-//               onChange={this.handleChange}
-//             />
-//           </FormGroup>
-//           <FormGroup controlId="password" bsSize="large">
-//             <ControlLabel>Password</ControlLabel>
-//             <FormControl
-//               value={this.state.password}
-//               onChange={this.handleChange}
-//               type="password"
-//             />
-//           </FormGroup>
-//           <Button
-//             block
-//             bsSize="large"
-//             disabled={!this.validateForm()}
-//             type="submit"
-//           >
-//               Login
-//           </Button>
-//         </form>
-//       </div>
-//     )
-//   }
-// }

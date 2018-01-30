@@ -43,11 +43,12 @@ export default class Home extends Component {
                 <br/>
                 <div className="bs-example bs-example-tabs">
                   <ul id="myTab" className="nav nav-tabs">
-                    <li className="active"><a href="#signin" data-toggle="tab">Sign In</a></li>
+                    <li className=" btn active"><a href="#signin" data-toggle="tab">Sign In</a></li>
                     <li className=""><a href="#signup" data-toggle="tab">Register</a></li>
                     <li className=""><a href="#why" data-toggle="tab">Why?</a></li>
                   </ul>
                 </div>
+
                 <div className="modal-body">
                   <div id="myTabContent" className="tab-content">
                     <div className="tab-pane fade in" id="why">
