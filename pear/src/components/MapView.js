@@ -73,11 +73,11 @@ class MapView extends Component<Props, State> {
   }
 
   getMonsterCoord (latitude, longitude, index) {
-    // this is where you set location for monsters
     latitude = latitude + index * 0.5
     longitude = longitude + index * 0.5
     return {latitude, longitude}
   }
+
 }
 
 export default geolocated({
