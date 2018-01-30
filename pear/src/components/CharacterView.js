@@ -1,13 +1,21 @@
 import React, { Component } from 'react'
-import sword from '../assets/img/sword.png'
+
 // import Items from './items'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import Images from '../libs/Imgs'
+import classnames from 'classnames'
+
+let {Sword, Dagger, Shield, Armor, Wand } = Images
 
 export default class CharacterView extends Component {
   constructor (props) {
     super(props)
-    // let {user} = this.props
+    this.togglemod = this.togglemod.bind(this)
+    this.toggle = this.toggle.bind(this)
     this.state = {
+      modal: false,
+      activeTab: '1',
+
       username: 'sTor-Lazze', // user.username
       name: 'Lasse', // user.name
       lastname: 'Kroner', // user.lastname
@@ -20,78 +28,100 @@ export default class CharacterView extends Component {
     }
   }
 
+  togglemod () {
+    this.setState({
+      modal: !this.state.modal
+    })
+  }
+
+  toggle (tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      })
+    }
+  }
+
   render () {
-    let {username} = this.state
     return (
-      <section style={{display: 'flex', justifyContent: 'center'}}>
-        <button style={{width: '10%'}} type="button" className="btn btn-success menu-button" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Menu</button>
-        <div className="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-          <div className="modal-dialog modal-sm">
-            <div className="modal-content">
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <Button style={{width: '10%', position: 'absolute'}} color="success" onClick={this.togglemod}>{this.props.buttonLabel}Menu</Button>
+        <Modal isOpen={this.state.modal} togglemod={this.togglemod} className={this.props.className}>
+          <Nav tabs>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '1' })}
+                onClick={() => { this.toggle('1') }}
+              >
+                My Account
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '2' })}
+                onClick={() => { this.toggle('2') }}
+              >
+                Skillz
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '3' })}
+                onClick={() => { this.toggle('3') }}
+              >
+                Inventory
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <TabContent activeTab={this.state.activeTab}>
+            <TabPane tabId="1">
+              <ModalHeader style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}toggle={this.toggle}>My Account</ModalHeader>
+              <br />
+              <ul style={{listStyle: 'none'}}>
+                <li><p>USERNAME: {this.state.username}</p> </li>
+                <li><p>FIRST NAME: {this.state.name}</p></li>
+                <li><p>LAST NAME: {this.state.lastname}</p></li>
+                <li><p>EMAIL: {this.state.email}</p></li>
+              </ul>
+            </TabPane>
+            <TabPane tabId="2">
+              <ModalHeader toggle={this.toggle}>Skillz</ModalHeader>
               <br/>
-              <div className="bs-example bs-example-tabs">
-                <ul id="myTab" className="nav nav-tabs">
-                  <li className="btn btn-primary  menu-button"><a style={{textDecoration: 'none', color: 'inherit'}} href="#MyAccount" data-toggle="tab">My Account</a></li>
-                  <li className="btn btn-primary  menu-button"><a style={{textDecoration: 'none', color: 'inherit'}}
-                    href="#inventory" data-toggle="tab">Inventory</a></li>
-                  <li className="active btn btn-primary  menu-button"><a style={{textDecoration: 'none', color: 'inherit'}} href="#skills" data-toggle="tab">Skills</a></li>
+              <ul style={{listStyle: 'none'}}>
+                <li><p>MEELE DAMAGE: {this.state.sword}</p> </li>
+                <li><p>BLOCK CHANCE: {this.state.blockChance}</p></li>
+                <li><p>SPELL DAMAGE: {this.state.magic}</p></li>
+              </ul>
+            </TabPane>
+            <TabPane tabId="3">
+              <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
+              <br/>
+              <ul style={{listStyle: 'none'}}>
+                <li>
+                  <img style={{width: '40px', height: '40px'}} src={Sword} />
+                  <img style={{width: '40px', height: '40px'}} src={Dagger} />
+                  <img style={{width: '40px', height: '40px'}} src={Wand} />
+                </li>
+                <br />
+                <li>
+                  <img style={{width: '40px', height: '40px'}} src={Armor} />
+                  <img style={{width: '40px', height: '40px'}} src={Shield} />
+                </li>
 
-                </ul>
-              </div>
-              <div className="modal-body">
-                <div id="myTabContent" className="tab-content">
-                  <div className="tab-pane fade in" id="MyAccount">
-                    <ModalHeader toggle={this.toggle}>My Account</ModalHeader>
-                    <br/>
-                    <ul style={{listStyle: 'none'}}>
-                      <li><p>USERNAME: {username}</p> </li> /* onChange={(text) => this.setState({username: text})} */
-                      <li><p>FIRST NAME: {this.state.name}</p></li>
-                      <li><p>LAST NAME: {this.state.lastname}</p></li>
-                      <li><p>EMAIL: {this.state.email}</p></li>
-                    </ul>
+              </ul>
+            </TabPane>
 
-                    <Button color="success">Edit</Button>
-                  </div>
-                  <div className="tab-pane fade active in" id="skills">
-                    <ModalHeader toggle={this.toggle}>Skillz</ModalHeader>
-                    <br/>
-                    <ul style={{listStyle: 'none'}}>
-                      <li><p>MEELE DAMAGE: {this.state.sword}</p> </li>
-                      <li><p>BLOCK CHANCE: {this.state.blockChance}</p></li>
-                      <li><p>SPELL DAMAGE: {this.state.magic}</p></li>
-                    </ul>
-                  </div>
-                  <div className="tab-pane fade" id="inventory">
-                    <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
-                    <ul style={{listStyle: 'none'}}>
-                      <br/>
-
-                      <li><img style={{width: '40px', height: '40px'}} src={require('../assets/img/sword.png')} />
-                        <img style={{width: '40px', height: '40px'}} src={require('../assets/img/wand.png')} />
-                        <img style={{width: '40px', height: '40px'}} src={require('../assets/img/shield.png')} />
-                      </li>
-                      <br/>
-                      <li><img style={{width: '40px', height: '40px'}} src={require('../assets/img/dagger.png')} />
-                        <img style={{width: '40px', height: '40px'}} src={require('../assets/img/armor.png')} />
-                      </li>
-
-                    </ul>
-
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <center>
-                  <button type="button" className="btn btn-danger  menu-button" data-dismiss="modal">Close</button> /* saveButton = this.saveUser(this.state.user) */
-                </center>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+          </TabContent>
+          <ModalFooter>
+            <Button color="danger" onClick={this.togglemod} data-dismiss="modal">Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
     )
   }
 }
+
+// <button type="button" className="btn btn-danger  menu-button" data-dismiss="modal">Close</button> /* s data-dismiss="modal"aveButton = this.saveUser(this.state.user) */
 
 //
 // <section className='CharacterViewWrapper'>
