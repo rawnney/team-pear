@@ -19,9 +19,15 @@ export default class LoginForm extends Component {
     return (
       <form onSubmit={this.handleSignIn.bind(this)}>
         <h3>Sign in</h3>
-        <input type="text" ref="username" placeholder="enter you username" />
-        <input type="password" ref="password" placeholder="enter password" />
-        <input type="submit" value="Login" />
+        <p>
+          <input type="text" ref="username" placeholder="enter you username" />
+        </p>
+        <p>
+          <input type="password" ref="password" placeholder="enter password" />
+        </p>
+        <p>
+          <input type="submit" value="Login" />
+        </p>
       </form>
     )
   }
