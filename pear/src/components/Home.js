@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Modal} from 'reactstrap'
 import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom'
 import Welcome from './Welcome'
@@ -12,20 +13,17 @@ export default class Home extends Component {
     super(props)
     this.state = {
       user: null,
-      loggedIn: false
+      loggedIn: false,
+      modal: true
     }
   }
 
   signIn (username, password) {
-    // This is where you would call Firebase, an API etc...
-    // calling setState will re-render the entire app (efficiently!)
-    this.setState({
-      loggedIn: true,
-      user: {
-        username,
-        password
-      }
-    })
+    let {loggedIn} = this.state
+    if (loggedIn === false) {
+      this.props.setLoggedIn()
+      return this.setState({loggedIn: true, user: {username, password}})
+    }
   }
 
   signOut () {
@@ -38,9 +36,10 @@ export default class Home extends Component {
   // }
 
   render () {
+    let {togglemod} = this.props
+    let {loggedIn, modal, user} = this.state
     return (
-
-      <div style={styles.test}>
+      <Modal isOpen={modal} togglemod={this.togglemod} style={styles.test}>
         <header className="col-md-12">
           <div className="logo-image" >
             <img src={Pear} />
@@ -62,15 +61,6 @@ export default class Home extends Component {
                     onSignOut={this.signOut.bind(this)}
                   />
                   : <button type="button" className="btn btn-success ribbon" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In / Sign Up</button>
-              }
-            </div>
-            <div className="button-div">
-              {
-                (this.state.user)
-                  ? <Link to='/GameView'>
-                    <button id="signin" name="signin" className="btn btn-success ribbon" type="submit">Go To GameView</button>
-                  </Link>
-                  : <div></div>
               }
             </div>
             <div className="button-div">
@@ -186,7 +176,7 @@ export default class Home extends Component {
             </div>
           </div>
         </section>
-      </div>
+      </Modal>
     )
   }
 }

@@ -7,15 +7,15 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
   return <GoogleMap defaultZoom={12} defaultCenter={{lat, lng}}>
     {<Marker position={{lat, lng}} />}
     {markers.map((marker, index) => (
-      <Marker key={index} position={{lat: marker.latitude, lng: marker.longitude}} icon={marker.icon} clickable onClick={() => onClick(marker.id)} />
+      <Marker key={index} position={{lat: marker.latitude, lng: marker.longitude}} icon={marker.icon} clickable onClick={() => onClick(marker.id, props)} />
     ))}
   </GoogleMap>
 }
 ))
 
-export let onClick = (id: number) => {
+export let onClick = (id: number, props: Object) => {
   console.warn('MONSTER PRESS ID: ' + id)
-  return <FightView/>
+  props.openFightView()
 }
 
 export default MARKERS

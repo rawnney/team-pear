@@ -4,7 +4,8 @@ import FightButton from './FightButton'
 import EnemyComponent from './EnemyComponent'
 import PlayerComponent from './PlayerComponent'
 import MARKERS from './Markers'
-import { Modal } from 'reactstrap'
+import MapView from './MapView'
+import { Modal, Button } from 'reactstrap'
 
 export default class FightView extends Component {
   constructor (props) {
@@ -18,13 +19,12 @@ export default class FightView extends Component {
 
   componentWillMount () {}
 
-  componentDidMount () {
-    this.setState()
-  }
+  componentDidMount () {}
 
   render () {
-    let {winnerIsSet, playerHP, enemyHP} = this.state
+    let {winnerIsSet, playerHP, enemyHP, closeFightView} = this.state
     return <div style={styles.wrapper}>
+      {/* winnerIsSet ? this.renderExit() : <div /> */}
       <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
       {winnerIsSet ? this.renderWinner() : <div />}
       <PlayerComponent playerHP={playerHP} name={'Robin'}/>
@@ -34,8 +34,12 @@ export default class FightView extends Component {
     </div>
   }
 
+  renderExit = () => { return <Button style={styles.exitButton} onClick={this.closeFightView}>X</Button> }
+
+  closeFightView = () => this.setState({fightViewClose: false})
+
   renderWinner = () => {
-    return <div style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', height: '200px', width: '200px'}}>
+    return <div style={styles.winnerText}>
     YOU ARE WINNER!
     </div>
   }
@@ -60,5 +64,17 @@ let styles = {
   fightButton: {
     width: '20%',
     margin: 'auto'
+  },
+  exitButton: {
+    width: '25px',
+    height: '25px',
+    borderRadius: '25'
+  },
+  winnerText: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '200px',
+    width: '200px'
   }
 }
