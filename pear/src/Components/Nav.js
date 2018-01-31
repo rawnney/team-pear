@@ -1,43 +1,14 @@
 import React, { Component } from 'react'
-import LoginForm from './LoginForm'
-import { Link } from 'react-router-dom'
-import Welcome from './Welcome'
-import Database from '../Database'
-// import Routes from '../Routes'
+import '../assets/css/main.css'
 
 export default class Home extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      user: null
-    }
-  }
-
-  signIn (username, password) {
-    // This is where you would call Firebase, an API etc...
-    // calling setState will re-render the entire app (efficiently!)
-    this.setState({
-      user: {
-        username,
-        password
-      }
-    })
-  }
-
-  signOut () {
-    // clear out user from state
-    this.setState({user: null})
-  }
-
-  // validateForm () {
-  //   return this.state.email.length > 0 && this.state.password.length > 0
-  // }
-
   render () {
     return (
-
       <div>
         <header className="col-md-12">
+          <div className="logo-image" >
+            <img src="../assets/img/Red-Pear-PNG-image.png" alt=""/>
+          </div>
           <div className="slogan">
             <h1>Team Pear Game Page</h1>
           </div>
@@ -48,23 +19,7 @@ export default class Home extends Component {
           <div className="buttons">
             <hr className="prettyline" />
             <div className="button-div">
-              {
-                (this.state.user)
-                  ? <Welcome
-                    user={this.state.user}
-                    onSignOut={this.signOut.bind(this)}
-                  />
-                  : <button type="button" className="btn btn-success ribbon" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In / Sign Up</button>
-              }
-            </div>
-            <div className="button-div">
-              {
-                (this.state.user)
-                  ? <Link to='/GameView'>
-                    <button id="signin" name="signin" className="btn btn-success ribbon" type="submit">Go To GameView</button>
-                  </Link>
-                  : <div></div>
-              }
+              <button type="button" className="btn btn-success ribbon" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Start</button>
             </div>
             <div className="button-div">
               <button type="button" className="btn btn-primary ribbon">Leaderboard</button>
@@ -86,12 +41,11 @@ export default class Home extends Component {
             <div className="modal-dialog modal-sm">
               <div className="modal-content">
                 <br/>
-                <div className="bs-example">
+                <div className="bs-example bs-example-tabs">
                   <ul id="myTab" className="nav nav-tabs">
-
-                    <li className="general"><a href="#signin" data-toggle="tab">Sign In</a></li>
-                    <li className="general"><a href="#signup" data-toggle="tab">Register</a></li>
-                    <li className="general"><a href="#why" data-toggle="tab">Why?</a></li>
+                    <li className=" btn active"><a href="#signin" data-toggle="tab">Sign In</a></li>
+                    <li className=""><a href="#signup" data-toggle="tab">Register</a></li>
+                    <li className=""><a href="#why" data-toggle="tab">Why?</a></li>
                   </ul>
                 </div>
 
@@ -100,12 +54,44 @@ export default class Home extends Component {
                     <div className="tab-pane fade in" id="why">
                     </div>
                     <div className="tab-pane fade active in" id="signin">
-                      <div>
-                        {
-                          <LoginForm onSignIn={this.signIn.bind(this)}/>
-                        }
-                      </div>
+                      <form className="form-horizontal">
+                        <fieldset>
+                          {/* Sign In Form */}
+                          {/* Text input */}
+                          <div className="control-group">
+                            <label className="control-label">User Name:</label>
+                            <div className="controls">
+                              <input required="" id="userid" name="userid" type="text" className="form-control" placeholder="" className="input-medium" required="" />
+                            </div>
+                          </div>
 
+                          {/* Password input */}
+                          <div className="control-group">
+                            <label className="control-label">Password:</label>
+                            <div className="controls">
+                              <input required="" id="passwordinput" name="passwordinput" className="form-control" type="password" placeholder="********" className="input-medium" />
+                            </div>
+                          </div>
+
+                          {/* - Multiple Checkboxes (inline) */}
+                          <div className="control-group">
+                            <label className="control-label" ></label>
+                            <div className="controls">
+                              <label className="checkbox inline">
+                                <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me" />Remember me
+                              </label>
+                            </div>
+                          </div>
+
+                          {/* Button */}
+                          <div className="control-group">
+                            <label className="control-label"></label>
+                            <div className="controls">
+                              <button id="signin" name="signin" className="btn btn-success">Sign In</button>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </form>
                     </div>
                     <div className="tab-pane fade" id="signup">
                       <form className="form-horizontal">
@@ -172,7 +158,7 @@ export default class Home extends Component {
                 </div>
                 <div className="modal-footer">
                   <center>
-                    <button type="button" id="close-btn" className="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
                   </center>
                 </div>
               </div>
