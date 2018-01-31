@@ -73,11 +73,16 @@ class MapView extends Component<Props, State> {
   }
 
   getMonsterCoord (latitude, longitude, index) {
-    latitude = latitude + index * 0.5
-    longitude = longitude + index * 0.5
+    let pos = index * 0.001,
+        neg = index * 0.001,
+        result
+
+    result = Math.floor(Math.random() * (pos + neg)) - neg;
+    result = result < 0 ? result : result //+ 1;
+    latitude = latitude + result
+    longitude = longitude + result
     return {latitude, longitude}
   }
-
 }
 
 export default geolocated({
