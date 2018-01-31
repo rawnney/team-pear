@@ -11,7 +11,8 @@ export default class Home extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      user: null
+      user: null,
+      loggedIn: false
     }
   }
 
@@ -19,6 +20,7 @@ export default class Home extends Component {
     // This is where you would call Firebase, an API etc...
     // calling setState will re-render the entire app (efficiently!)
     this.setState({
+      loggedIn: true,
       user: {
         username,
         password
