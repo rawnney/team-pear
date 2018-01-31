@@ -38,7 +38,7 @@ export default class Home extends Component {
   render () {
     return (
 
-      <div>
+      <div style={styles.test}>
         <header className="col-md-12">
           <div className="logo-image" >
             <img src={Pear} />
@@ -186,5 +186,12 @@ export default class Home extends Component {
         </section>
       </div>
     )
+  }
+}
+
+let styles = {
+  test: {
+    height: '100%',
+    width: '100%'
   }
 }
