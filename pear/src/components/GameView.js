@@ -2,46 +2,43 @@ import React, { Component } from 'react'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
 import FightView from './FightView'
+import { Button, Modal } from 'reactstrap'
 
 export default class GameView extends Component {
   innerRef
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      modal: false
+
+    }
+
+    this.togglemod = this.togglemod.bind(this)
   }
 
   componentDidMount () {
     { /* getUser(userName, pass).then(() => {
       this.setState({user})
     }) */ }
-    { /* setInterval(() => {
-      this.getLocation()
-    }, 5000) */ }
+    { /* this.setState() */ }
   }
 
-  // Kör watchPosition istället för denna
+  componentWillMount () {}
 
   render () {
+    let {modal} = this.state
     // let {user} = this.state
     return (
       <div className='GameView'>
         <CharacterView /> {/* user={user} */}
-        <FightView />
         <MapView />
+        <Button onClick={this.togglemod} style={{width: '10%', position: 'absolute'}} className={this.props.className}>FIGHTVIEW</Button>
+        {modal ? <Modal isOpen={this.state.modal} togglemod={this.togglemod}>
+          <FightView />
+        </Modal> : <div />}
       </div>
     )
   }
 
-  // i mapView ->  ref={this.setRef}
-
-    getLocation = () => {
-      if (!this.innerRef || !this.innerRef.getLocation) return
-      this.innerRef.getLocation()
-    }
-
-    setRef = (ref: *) => {
-      this.innerRef = ref
-    }
+  togglemod = () => this.setState({modal: !this.state.modal})
 }
-
-// <FightView />

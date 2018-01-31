@@ -23,8 +23,7 @@ class MapView extends Component<Props, State> {
     }
   }
 
-  componentDidMount () {
-  }
+  componentDidMount () {}
 
   // shouldComponentUpdate (nextProps, nextState) {
   // return nextProps.coords.lat !== this.coords.lat || nextProps.coords.lng !== this.coords.lng
@@ -34,8 +33,7 @@ class MapView extends Component<Props, State> {
     this.setMonsters(nextProps, nextState)
   }
 
-  componentDidUpdate () {
-  }
+  componentDidUpdate () {}
 
   render () {
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
@@ -77,8 +75,8 @@ class MapView extends Component<Props, State> {
         neg = index * 0.001,
         result
 
-    result = Math.floor(Math.random() * (pos + neg)) - neg;
-    result = result < 0 ? result : result //+ 1;
+    result = Math.floor(Math.random() * (pos + neg)) - neg
+    result = result < 0 ? result : result
     latitude = latitude + result
     longitude = longitude + result
     return {latitude, longitude}

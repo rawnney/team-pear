@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import FightButton from './FightButton'
 import EnemyComponent from './EnemyComponent'
 import PlayerComponent from './PlayerComponent'
+import MARKERS from './Markers'
+import { Modal } from 'reactstrap'
 
 export default class FightView extends Component {
   constructor (props) {
@@ -14,25 +16,27 @@ export default class FightView extends Component {
     }
   }
 
+  componentWillMount () {}
+
   componentDidMount () {
     this.setState()
   }
 
   render () {
     let {winnerIsSet, playerHP, enemyHP} = this.state
-    return <div className='FightWrapper' styles={styles.wrapper}>
+    return <div style={styles.wrapper}>
       <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
+      {winnerIsSet ? this.renderWinner() : <div />}
       <PlayerComponent playerHP={playerHP} name={'Robin'}/>
       <div style={styles.fightButton}>
         <FightButton onClick={this.handleClickEvent} text={'Attack'} />
       </div>
-      {winnerIsSet ? this.renderWinner() : <div />}
     </div>
   }
 
   renderWinner = () => {
     return <div style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', height: '200px', width: '200px'}}>
-    YOU ARE FUCKING WINNER! ARRR!!!!
+    YOU ARE WINNER!
     </div>
   }
 
@@ -54,7 +58,7 @@ let styles = {
     alignItems: 'center'
   },
   fightButton: {
-    width: '10%',
+    width: '20%',
     margin: 'auto'
   }
 }

@@ -8,7 +8,7 @@ export default class Avatar extends Component {
   }
 
   render () {
-    return <img src={this.props.pic} style={styles.avatar}/>
+    return <img src={this.props.pic} style={styles.avatar} alt='Avatar'/>
   }
 }
 

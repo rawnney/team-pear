@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Routes from '../Routes'
+import Images from '../libs/Imgs'
+let {Pear} = Images
 
 export default class Home extends Component {
   constructor (props) {
@@ -31,7 +33,7 @@ export default class Home extends Component {
       <div>
         <header className="col-md-12">
           <div className="logo-image" >
-            <img src="../assets/img/Red-Pear-PNG-image.png" alt=""/>
+            <img src={Pear} />
           </div>
           <div className="slogan">
             <h1>Team Pear Game Page</h1>

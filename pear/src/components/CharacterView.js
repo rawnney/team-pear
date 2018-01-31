@@ -5,7 +5,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, Ca
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
 
-let {Sword, Dagger, Shield, Armor, Wand } = Images
+let { Sword, Dagger, Shield, Armor, Wand } = Images
 
 export default class CharacterView extends Component {
   constructor (props) {
@@ -120,18 +120,3 @@ export default class CharacterView extends Component {
     )
   }
 }
-
-// <button type="button" className="btn btn-danger  menu-button" data-dismiss="modal">Close</button> /* s data-dismiss="modal"aveButton = this.saveUser(this.state.user) */
-
-//
-// <section className='CharacterViewWrapper'>
-//   <button />
-//   <div className='CharacterWrapper'>
-//     <div className='CharacterContainer'>
-//   CharacterContainer
-//     </div>
-//     <div className='SkillContainer'>
-//   SkillContainer
-//     </div>
-//   </div>
-// </section>

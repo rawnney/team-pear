@@ -1,5 +1,6 @@
 import React from 'react'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import FightView from './FightView'
 
 const MARKERS = withScriptjs(withGoogleMap(props => {
   let {lng, lat, markers} = props
@@ -13,8 +14,8 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
 ))
 
 export let onClick = (id: number) => {
-  // TODO: puckla på ett monster
   console.warn('MONSTER PRESS ID: ' + id)
+  return <FightView/>
 }
 
 export default MARKERS
