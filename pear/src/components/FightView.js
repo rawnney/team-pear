@@ -33,7 +33,9 @@ export default class FightView extends Component {
 
   renderWinner = () => {
     return
-    <winnerPopUp />
+    <div style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', height: '200px', width: '200px'}}>
+      YOU ARE FUCKING WINNER! ARRR!!!!
+    </div>
   }
 
   handleClickEvent = () => {
@@ -43,7 +45,9 @@ export default class FightView extends Component {
         if (enemyHP === 10 || playerHP === 10) {
           this.setState({winnerIsSet: true})
         }
+        console.log(winnerIsSet);
       })
+      console.log(enemyHP, playerHP);
     }
   }
 }

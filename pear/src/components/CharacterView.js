@@ -120,18 +120,3 @@ export default class CharacterView extends Component {
     )
   }
 }
-
-// <button type="button" className="btn btn-danger  menu-button" data-dismiss="modal">Close</button> /* s data-dismiss="modal"aveButton = this.saveUser(this.state.user) */
-
-//
-// <section className='CharacterViewWrapper'>
-//   <button />
-//   <div className='CharacterWrapper'>
-//     <div className='CharacterContainer'>
-//   CharacterContainer
-//     </div>
-//     <div className='SkillContainer'>
-//   SkillContainer
-//     </div>
-//   </div>
-// </section>
