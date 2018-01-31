@@ -1,33 +1,45 @@
 // @flow
-
 import React, { Component } from 'react'
 import { geolocated } from 'react-geolocated'
 import MARKERS from './Markers'
-import Monster from '../assets/img/icons/monster-icon.png'
+import Images from '../libs/Imgs'
+let {Monster} = Images
 
-class MapView extends Component {
+type Props = {
+  coords: Object,
+  isGeolocationAvailable: boolean,
+  isGeolocationEnabled: boolean
+}
+type State = {
+  monsterMarkers: Array<*>,
+  didSetMonsters: boolean
+}
+class MapView extends Component<Props, State> {
   constructor (props) {
     super(props)
     this.state = {
-      lat: undefined,
-      lng: undefined
+      monsterMarkers: [],
+      didSetMonsters: false
     }
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    // return nextProps.coords.lat !== this.coords.lat || nextProps.coords.lng !== this.coords.lng
-    return true
+  componentDidMount () {
   }
 
-  componentWillUpdate () {
+  // shouldComponentUpdate (nextProps, nextState) {
+  // return nextProps.coords.lat !== this.coords.lat || nextProps.coords.lng !== this.coords.lng
+  // }
+
+  componentWillUpdate (nextProps, nextState) {
+    this.setMonsters(nextProps, nextState)
   }
 
   componentDidUpdate () {
-
   }
 
   render () {
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
+    let {monsterMarkers} = this.state
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) { /* handle error */ }
     if (!coords) return <div style={styles.infoMsg}>Getting the location data&hellip; </div>
@@ -36,32 +48,51 @@ class MapView extends Component {
         lng={coords.longitude}
         lat={coords.latitude}
         accuracy={coords.accuracy}
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1CHz42Gc1V8DoQD_MgXAiLawATQlS6bA&v=3.exp&libraries=geometry,drawing,places"
-        loadingElement={<div className="bgmap" style={styles.mapStyle} />}
-        containerElement={<div className="bgmap" style={styles.mapStyle} />}
-        mapElement={<div className="bgmap" style={styles.mapStyle} />}
-        markers={[
-          {id: 1, latitude: 59.314396, longitude: 18.111512, icon: Monster},
-          {id: 2, latitude: 59.312396, longitude: 18.112112, icon: Monster},
-          {id: 3, latitude: 59.337583, longitude: 18.089587, icon: Monster}
-        ]}
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCerbPPD0V2qOoQC1QJbNSlxfUWsxYAmo&v=3.exp&libraries=geometry,drawing,places"
+        loadingElement={<div style={styles.mapStyle} />}
+        containerElement={<div style={styles.mapStyle} />}
+        mapElement={<div style={styles.mapStyle} />}
+        markers={monsterMarkers}
       />
     </div>
   }
+
+  setMonsters (nextProps, nextState) {
+    let {latitude, longitude} = nextProps.coords
+    let {monsterMarkers, didSetMonsters} = nextState
+    if (!latitude || !longitude) return
+    if (didSetMonsters) return
+    let monsterCount = 5
+    let monsters = new Array(monsterCount).fill(0)
+    let monstersToRender = []
+    monsters.map((item, index) => {
+      let coord = this.getMonsterCoord(latitude, longitude, index)
+      monstersToRender.push({id: index, latitude: coord.latitude, longitude: coord.longitude, icon: Monster})
+    })
+    this.setState({monsterMarkers: monstersToRender, didSetMonsters: true})
+  }
+
+  getMonsterCoord (latitude, longitude, index) {
+    latitude = latitude + index * 0.5
+    longitude = longitude + index * 0.5
+    return {latitude, longitude}
+  }
+
 }
 
 export default geolocated({
   positionOptions: {
     enableHighAccuracy: false
   },
-  userDecisionTimeout: 5000
+  userDecisionTimeout: 5000,
+  watchPosition: true
 })(MapView)
 
 let styles = {
   mapStyle: {
     position: 'fixed',
     width: '100%',
-    height: '100%',
+    height: '100vh',
     zIndex: -1000
   },
   infoMsg: {
@@ -70,10 +101,5 @@ let styles = {
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center'
-  },
-  chrill: {
-    height: '50px',
-    width: '50px',
-    borderRadius: '25'
   }
 }
