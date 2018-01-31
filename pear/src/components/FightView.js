@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import FightButton from './FightButton'
 import EnemyComponent from './EnemyComponent'
 import PlayerComponent from './PlayerComponent'
+import winnerPopUp from './winnerPopUp'
 
 export default class FightView extends Component {
   constructor (props) {
@@ -31,9 +32,8 @@ export default class FightView extends Component {
   }
 
   renderWinner = () => {
-    return <div style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', height: '200px', width: '200px'}}>
-    YOU ARE FUCKING WINNER! ARRR!!!!
-    </div>
+    return
+    <winnerPopUp />
   }
 
   handleClickEvent = () => {

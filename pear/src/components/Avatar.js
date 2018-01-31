@@ -1,21 +1,22 @@
+/*eslint-disable*/
 // @ flow
-import React, { Component } from 'react'
+import React, { component } from "react";
 
 export default class Avatar extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
+	constructor (props) {
+		super(props);
+		this.state = {};
+	}
 
-  render () {
-    return <img src={this.props.pic} style={styles.avatar}/>
-  }
+	render () {
+		return <img src={this.props.pic} style={styles.avatar}/>;
+	}
 }
 
 let styles = {
-  avatar: {
-    height: '50px',
-    width: '50px',
-    borderRadius: '50%'
-  }
-}
+	avatar: {
+		height: "50px",
+		width: "50px",
+		borderRadius: "50%"
+	}
+};
