@@ -119,7 +119,7 @@ export default class CharacterView extends Component {
               </ul>
             </TabPane>
             <TabPane tabId="4">
-              <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
+              <ModalHeader toggle={this.toggle}>Leaderboard</ModalHeader>
               <br/>
               <table className="table">
                 <thead>
