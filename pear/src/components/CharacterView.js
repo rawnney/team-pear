@@ -70,6 +70,14 @@ export default class CharacterView extends Component {
                 Inventory
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '4' })}
+                onClick={() => { this.toggle('4') }}
+              >
+                Leaderboard
+              </NavLink>
+            </NavItem>
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
@@ -107,6 +115,41 @@ export default class CharacterView extends Component {
                 </li>
 
               </ul>
+            </TabPane>
+            <TabPane tabId="4">
+              <ModalHeader toggle={this.toggle}>Leaderboard</ModalHeader>
+              <br/>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Account-ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>001</td>
+                    <td>Ted</td>
+                    <td>Gärestad</td>
+                    <td>1200</td>
+                  </tr>
+                  <tr>
+                    <td>002</td>
+                    <td>Olof</td>
+                    <td>Palme</td>
+                    <td>850</td>
+                  </tr>
+                  <tr>
+                    <td>003</td>
+                    <td>Larry</td>
+                    <td>Page</td>
+                    <td>660</td>
+                  </tr>
+                </tbody>
+              </table>
+
             </TabPane>
 
           </TabContent>
