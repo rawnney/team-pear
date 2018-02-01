@@ -36,25 +36,6 @@ export default class Home extends Component {
   // }
 
   render () {
-    return (
-
-      <div>
-        <header className="col-md-12">
-          <div className="slogan">
-            <h1>Team Pear Game Page</h1>
-          </div>
-        </header>
-
-        <section className="section-padding button-container">
-
-          <div className="buttons">
-            <hr className="prettyline" />
-
-  {/* validateForm () {
-    return this.state.email.length > 0 && this.state.password.length > 0
-   } */}
-
-  render () {
     let {togglemod} = this.props
     let {loggedIn, modal, user} = this.state
     return (
@@ -83,35 +64,6 @@ export default class Home extends Component {
               }
             </div>
             <div className="button-div">
-              {
-                (this.state.user)
-                  ? <Link to='/GameView'>
-                    <button id="signin" name="signin" className="btn btn-success ribbon" type="submit">Go To GameView</button>
-                  </Link>
-                  : <div></div>
-              }
-            </div>
-            <div className="button-div">
-              <button type="button" className="btn btn-primary ribbon">Leaderboard</button>
-            </div>
-            <div className="button-div">
-              <button type="button" className="btn btn-info ribbon">Info/Rules</button>
-            </div>
-            <div className="button-div">
-              <button type="button" className="btn btn-warning ribbon">Övrigt</button>
-            </div>
-            <hr className="prettyline" />
-          </div>
-
-        </section>
-        {/* modal starts */}
-        <section>
-
-          <div className="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-sm">
-              <div className="modal-content">
-                <br/>
-                <div className="bs-example">
               <button type="button" className="btn btn-primary ribbon">Leaderboard</button>
             </div>
             <div className="button-div">
@@ -218,16 +170,6 @@ export default class Home extends Component {
                 <div className="modal-footer">
                   <center>
                     <button type="button" id="close-btn" className="btn btn-default" data-dismiss="modal">Close</button>
-                  </center>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    )
-  }
-}
                   </center>
                 </div>
               </div>
