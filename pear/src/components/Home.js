@@ -31,7 +31,6 @@ export default class Home extends Component {
     this.setState({user: null})
   }
 
-<<<<<<< HEAD
   // validateForm () {
   //   return this.state.email.length > 0 && this.state.password.length > 0
   // }
@@ -50,10 +49,10 @@ export default class Home extends Component {
 
           <div className="buttons">
             <hr className="prettyline" />
-=======
-  // validateForm () {
-  //   return this.state.email.length > 0 && this.state.password.length > 0
-  // }
+
+  {/* validateForm () {
+    return this.state.email.length > 0 && this.state.password.length > 0
+   } */}
 
   render () {
     let {togglemod} = this.props
@@ -73,7 +72,6 @@ export default class Home extends Component {
 
           <div className="buttons">
             <hr className="prettyline" />
->>>>>>> master
             <div className="button-div">
               {
                 (this.state.user)
@@ -85,7 +83,6 @@ export default class Home extends Component {
               }
             </div>
             <div className="button-div">
-<<<<<<< HEAD
               {
                 (this.state.user)
                   ? <Link to='/GameView'>
@@ -115,7 +112,6 @@ export default class Home extends Component {
               <div className="modal-content">
                 <br/>
                 <div className="bs-example">
-=======
               <button type="button" className="btn btn-primary ribbon">Leaderboard</button>
             </div>
             <div className="button-div">
@@ -136,7 +132,6 @@ export default class Home extends Component {
               <div className="modal-content">
                 <br/>
                 <div className="bs-example">
->>>>>>> master
                   <ul id="myTab" className="nav nav-tabs">
 
                     <li className="general"><a href="#signin" data-toggle="tab">Sign In</a></li>
