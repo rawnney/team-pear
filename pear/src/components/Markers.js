@@ -15,7 +15,7 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
 
 export let onClick = (id: number, props: Object) => {
   console.warn('MONSTER PRESS ID: ' + id)
-  props.openFightView()
+  props.toggleFightView()
 }
 
 export default MARKERS

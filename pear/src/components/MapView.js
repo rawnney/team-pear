@@ -43,7 +43,7 @@ class MapView extends Component<Props, State> {
       <Markers
         lng={coords.longitude}
         lat={coords.latitude}
-        openFightView={this.openFightView}
+        toggleFightView={this.toggleFightView}
         accuracy={coords.accuracy}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCerbPPD0V2qOoQC1QJbNSlxfUWsxYAmo&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={styles.mapStyle} />}
@@ -51,15 +51,14 @@ class MapView extends Component<Props, State> {
         mapElement={<div style={styles.mapStyle} />}
         markers={monsterMarkers}
       />
-      <Modal isOpen={fightViewOpened} togglemod={this.openFightView}>
-        <Button onClick={this.closeFightView} style={styles.closeButton}>X</Button>
+      <Modal isOpen={fightViewOpened} togglemod={this.toggleFightView}>
+        <Button onClick={this.toggleFightView} style={styles.closeButton}>X</Button>
         <FightView {...this.state}/>
       </Modal>
     </div>
   }
 
-  closeFightView = () => this.setState({fightViewOpened: false})
-  openFightView = () => this.setState({fightViewOpened: true})
+  toggleFightView = () => this.setState({fightViewOpened: !this.state.fightViewOpened})
 
   setMonsters (nextProps, nextState) {
     let {latitude, longitude} = nextProps.coords
