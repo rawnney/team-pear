@@ -1,27 +1,29 @@
 import React, { Component } from 'react'
+import {Modal} from 'reactstrap'
 import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom'
 import Welcome from './Welcome'
 import Database from '../Database'
+import Images from '../libs/Imgs'
+let {Pear} = Images
 // import Routes from '../Routes'
 
 export default class Home extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      user: null
+      user: null,
+      loggedIn: false,
+      modal: true
     }
   }
 
   signIn (username, password) {
-    // This is where you would call Firebase, an API etc...
-    // calling setState will re-render the entire app (efficiently!)
-    this.setState({
-      user: {
-        username,
-        password
-      }
-    })
+    let {loggedIn} = this.state
+    if (loggedIn === false) {
+      this.props.setLoggedIn()
+      return this.setState({loggedIn: true, user: {username, password}})
+    }
   }
 
   signOut () {
@@ -29,6 +31,7 @@ export default class Home extends Component {
     this.setState({user: null})
   }
 
+<<<<<<< HEAD
   // validateForm () {
   //   return this.state.email.length > 0 && this.state.password.length > 0
   // }
@@ -47,6 +50,30 @@ export default class Home extends Component {
 
           <div className="buttons">
             <hr className="prettyline" />
+=======
+  // validateForm () {
+  //   return this.state.email.length > 0 && this.state.password.length > 0
+  // }
+
+  render () {
+    let {togglemod} = this.props
+    let {loggedIn, modal, user} = this.state
+    return (
+      <Modal isOpen={modal} togglemod={this.togglemod} style={styles.test}>
+        <header className="col-md-12">
+          <div className="logo-image" >
+            <img src={Pear} />
+          </div>
+          <div className="slogan">
+            <h1>Team Pear Game Page</h1>
+          </div>
+        </header>
+
+        <section className="section-padding button-container">
+
+          <div className="buttons">
+            <hr className="prettyline" />
+>>>>>>> master
             <div className="button-div">
               {
                 (this.state.user)
@@ -58,6 +85,7 @@ export default class Home extends Component {
               }
             </div>
             <div className="button-div">
+<<<<<<< HEAD
               {
                 (this.state.user)
                   ? <Link to='/GameView'>
@@ -87,6 +115,28 @@ export default class Home extends Component {
               <div className="modal-content">
                 <br/>
                 <div className="bs-example">
+=======
+              <button type="button" className="btn btn-primary ribbon">Leaderboard</button>
+            </div>
+            <div className="button-div">
+              <button type="button" className="btn btn-info ribbon">Info/Rules</button>
+            </div>
+            <div className="button-div">
+              <button type="button" className="btn btn-warning ribbon">Övrigt</button>
+            </div>
+            <hr className="prettyline" />
+          </div>
+
+        </section>
+        {/* modal starts */}
+        <section>
+
+          <div className="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-sm">
+              <div className="modal-content">
+                <br/>
+                <div className="bs-example">
+>>>>>>> master
                   <ul id="myTab" className="nav nav-tabs">
 
                     <li className="general"><a href="#signin" data-toggle="tab">Sign In</a></li>
@@ -173,6 +223,7 @@ export default class Home extends Component {
                 <div className="modal-footer">
                   <center>
                     <button type="button" id="close-btn" className="btn btn-default" data-dismiss="modal">Close</button>
+<<<<<<< HEAD
                   </center>
                 </div>
               </div>
@@ -183,3 +234,22 @@ export default class Home extends Component {
     )
   }
 }
+=======
+                  </center>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Modal>
+    )
+  }
+}
+
+let styles = {
+  test: {
+    height: '100%',
+    width: '100%'
+  }
+}
+>>>>>>> master
