@@ -7,7 +7,18 @@ import MARKERS from './Markers'
 import MapView from './MapView'
 import { Modal, Button } from 'reactstrap'
 
-export default class FightView extends Component {
+type Props = {
+  name: String,
+  enemyHP: Number
+}
+
+type State = {
+  enemyHP: Number,
+  playerHP: Number,
+  winnerIsSet: Boolean
+}
+
+export default class FightView extends Component<Props, State> {
   constructor (props) {
     super(props)
     this.state = {

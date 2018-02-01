@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
@@ -10,7 +11,7 @@ import LoginForm from './LoginForm'
 import Images from '../libs/Imgs'
 let {Pear} = Images
 
-export default class GameView extends Component {
+export default class GameView extends Component<Props, State> {
   // onödig constructor
   constructor (props) {
     super(props)

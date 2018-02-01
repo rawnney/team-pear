@@ -3,10 +3,15 @@ import React, { Component } from 'react'
 import Avatar from './Avatar'
 import Monster from '../assets/img/icons/monster-icon.png'
 
-export default class EnemyComponent extends Component<{}, {}> {
+type Props = {
+  name: String,
+  enemyHP: Number
+}
+
+export default class EnemyComponent extends Component<Props> {
   render () {
     return (
-      <div className='EnemyWrapper'style={styles.wrapper}>
+      <div style={styles.wrapper}>
         <Avatar pic={Monster} />
         <h3> {this.props.name} </h3>
         <h3> {this.props.enemyHP} / 100 </h3>
