@@ -218,7 +218,6 @@ export default class Home extends Component {
                 <div className="modal-footer">
                   <center>
                     <button type="button" id="close-btn" className="btn btn-default" data-dismiss="modal">Close</button>
-<<<<<<< HEAD
                   </center>
                 </div>
               </div>
@@ -229,7 +228,6 @@ export default class Home extends Component {
     )
   }
 }
-=======
                   </center>
                 </div>
               </div>
@@ -247,4 +245,3 @@ let styles = {
     width: '100%'
   }
 }
->>>>>>> master
