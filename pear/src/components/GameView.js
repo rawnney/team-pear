@@ -29,8 +29,8 @@ export default class GameView extends Component<Props, State> {
     let {loggedIn, modal, user} = this.state
     if (loggedIn === false) return notLoggedIn
     return <div>
-      <CharacterView />
-      <MapView />
+      <CharacterView {...this.state}/>
+      <MapView {...this.state}/>
     </div>
   }
 

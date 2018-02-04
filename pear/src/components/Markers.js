@@ -4,10 +4,10 @@ import FightView from './FightView'
 
 const MARKERS = withScriptjs(withGoogleMap(props => {
   let {lng, lat, markers} = props
-  return <GoogleMap defaultZoom={12} defaultCenter={{lat, lng}}>
+  return <GoogleMap defaultZoom={16} defaultCenter={{lat, lng}}>
     {<Marker position={{lat, lng}} />}
     {markers.map((marker, index) => (
-      <Marker key={index} position={{lat: marker.latitude, lng: marker.longitude}} icon={marker.icon} clickable onClick={() => onClick(marker.id, props)} />
+      <Marker key={index} position={{lat: marker.latitude, lng: marker.longitude}} icon={marker.icon} clickable onClick={() => onClick(marker.id, props)} removeIfDead={marker.removeIfDead} />
     ))}
   </GoogleMap>
 }
@@ -16,6 +16,11 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
 export let onClick = (id: number, props: Object) => {
   console.warn('MONSTER PRESS ID: ' + id)
   props.toggleFightView()
+}
+
+export let removeIfDead = (id: number, props: Object) => {
+  console.warn('REMOVE MONSTER ID: ' + id)
+  props.removeIfDead()
 }
 
 export default MARKERS

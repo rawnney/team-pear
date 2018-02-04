@@ -16,6 +16,8 @@ type State = {
   monsterMarkers: Array<*>,
   didSetMonsters: boolean,
   fightViewOpened: boolean,
+  monsterCount: Number,
+  winnerIsSet: false
 }
 class MapView extends Component<Props, State> {
   constructor (props) {
@@ -24,6 +26,7 @@ class MapView extends Component<Props, State> {
       monsterMarkers: [],
       didSetMonsters: false,
       fightViewOpened: false,
+      monsterClose: false
     }
   }
 
@@ -38,12 +41,13 @@ class MapView extends Component<Props, State> {
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) { /* handle error */ }
-    if (!coords) return <div style={styles.infoMsg}>Getting the location data&hellip; </div>
-    return <div className="gmap">
+    if (!coords) return <div tyle={styles.infoMsg}>Getting the location data&hellip; </div>
+    return <div>
       <Markers
         lng={coords.longitude}
         lat={coords.latitude}
         toggleFightView={this.toggleFightView}
+        removeIfDead={this.removeIfDead}
         accuracy={coords.accuracy}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCerbPPD0V2qOoQC1QJbNSlxfUWsxYAmo&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={styles.mapStyle} />}
@@ -53,20 +57,30 @@ class MapView extends Component<Props, State> {
       />
       <Modal isOpen={fightViewOpened} togglemod={this.toggleFightView}>
         <Button onClick={this.toggleFightView} style={styles.closeButton}>X</Button>
-        <FightView {...this.state}/>
+        <FightView {...this.state} checkForWinner={this.checkForWinner} />
       </Modal>
     </div>
   }
 
   toggleFightView = () => this.setState({fightViewOpened: !this.state.fightViewOpened})
 
+  checkForWinner = (winnerIsSet, removeIfDead) => {
+    if (winnerIsSet === true) return (
+      removeIfDead = (index) => {
+      this.setState((prevState) => ({
+        monsterMarkers: prevState.monsterMarkers.filter((_, i) => i !== index)
+      }))
+    })
+  }
+
+
   setMonsters (nextProps, nextState) {
+    let {monsterCount} = this.state
     let {latitude, longitude} = nextProps.coords
     let {monsterMarkers, didSetMonsters} = nextState
     if (!latitude || !longitude) return
     if (latitude === null || longitude === null) return
     if (didSetMonsters) return
-    let monsterCount = 5
     let monsters = new Array(monsterCount).fill(0)
     let monstersToRender = []
     monsters.map((item, index) => {
