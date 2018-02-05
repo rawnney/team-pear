@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import FightButton from './FightButton'
 import EnemyComponent from './EnemyComponent'
 import PlayerComponent from './PlayerComponent'
-import winnerPopUp from './winnerPopUp'
+import WinnerPopUp from './WinnerPopUp'
 
 export default class FightView extends Component {
   constructor (props) {
@@ -11,7 +11,8 @@ export default class FightView extends Component {
     this.state = {
       enemyHP: 100,
       playerHP: 100,
-      winnerIsSet: false
+      winnerIsSet: false,
+      modal: false
     }
   }
 
@@ -20,7 +21,7 @@ export default class FightView extends Component {
   }
 
   render () {
-    let {winnerIsSet, playerHP, enemyHP} = this.state
+    let {winnerIsSet, playerHP, enemyHP, modal} = this.state
     return <div className='FightWrapper' styles={styles.wrapper}>
       <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
       <PlayerComponent playerHP={playerHP} name={'Robin'}/>
@@ -31,25 +32,21 @@ export default class FightView extends Component {
     </div>
   }
 
-  renderWinner = () => {
-    return
-    <div style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', height: '200px', width: '200px'}}>
-      YOU ARE FUCKING WINNER! ARRR!!!!
-    </div>
-  }
+ renderWinner = () => {
+   return <WinnerPopUp />
+ }
 
-  handleClickEvent = () => {
-    let {enemyHP, playerHP} = this.state
-    if (enemyHP > 0) {
-      this.setState({enemyHP: enemyHP - 10}, () => {
-        if (enemyHP === 10 || playerHP === 10) {
-          this.setState({winnerIsSet: true})
-        }
-        console.log(winnerIsSet);
-      })
-      console.log(enemyHP, playerHP);
-    }
-  }
+ handleClickEvent = () => {
+   let {enemyHP, playerHP} = this.state
+   if (enemyHP > 0) {
+     this.setState({enemyHP: enemyHP - 10}, () => {
+       if (enemyHP === 10 || playerHP === 10) {
+         this.setState({winnerIsSet: true})
+       }
+     })
+     console.log(enemyHP, playerHP)
+   }
+ }
 }
 
 let styles = {
