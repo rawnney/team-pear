@@ -1,27 +1,29 @@
 import React, { Component } from 'react'
+import {Modal} from 'reactstrap'
 import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom'
 import Welcome from './Welcome'
 import Database from '../Database'
+import Images from '../libs/Imgs'
+let {Pear} = Images
 // import Routes from '../Routes'
 
 export default class Home extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      user: null
+      user: null,
+      loggedIn: false,
+      modal: true
     }
   }
 
   signIn (username, password) {
-    // This is where you would call Firebase, an API etc...
-    // calling setState will re-render the entire app (efficiently!)
-    this.setState({
-      user: {
-        username,
-        password
-      }
-    })
+    let {loggedIn} = this.state
+    if (loggedIn === false) {
+      this.props.setLoggedIn()
+      return this.setState({loggedIn: true, user: {username, password}})
+    }
   }
 
   signOut () {
@@ -34,10 +36,14 @@ export default class Home extends Component {
   // }
 
   render () {
+    let {togglemod} = this.props
+    let {loggedIn, modal, user} = this.state
     return (
-
-      <div>
+      <Modal isOpen={modal} togglemod={this.togglemod} style={styles.test}>
         <header className="col-md-12">
+          <div className="logo-image" >
+            <img src={Pear} />
+          </div>
           <div className="slogan">
             <h1>Team Pear Game Page</h1>
           </div>
@@ -55,15 +61,6 @@ export default class Home extends Component {
                     onSignOut={this.signOut.bind(this)}
                   />
                   : <button type="button" className="btn btn-success ribbon" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In / Sign Up</button>
-              }
-            </div>
-            <div className="button-div">
-              {
-                (this.state.user)
-                  ? <Link to='/GameView'>
-                    <button id="signin" name="signin" className="btn btn-success ribbon" type="submit">Go To GameView</button>
-                  </Link>
-                  : <div></div>
               }
             </div>
             <div className="button-div">
@@ -179,7 +176,14 @@ export default class Home extends Component {
             </div>
           </div>
         </section>
-      </div>
+      </Modal>
     )
+  }
+}
+
+let styles = {
+  test: {
+    height: '100%',
+    width: '100%'
   }
 }

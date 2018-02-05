@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class LoginForm extends Component {
   // Using a class based component here because we're accessing DOM refs
 
-  handleSignIn (e) {
+  handleSignIn = (e) => {
     e.preventDefault()
     let username = this.refs.username.value
     let password = this.refs.password.value
@@ -11,13 +11,11 @@ export default class LoginForm extends Component {
     this.closeModal()
   }
 
-  closeModal () {
-    document.getElementById('close-btn').click()
-  }
+  closeModal = () => document.getElementById('close-btn').click()
 
   render () {
     return (
-      <form onSubmit={this.handleSignIn.bind(this)}>
+      <form onSubmit={this.handleSignIn}>
         <h3>Sign in</h3>
         <p>
           <input type="text" ref="username" placeholder="enter you username" />
