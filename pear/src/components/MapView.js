@@ -1,10 +1,14 @@
-// @flow
+
 import React, { Component } from 'react'
 import { geolocated } from 'react-geolocated'
 import {Modal, Button} from 'reactstrap'
+import fakeServerData from '../fakeServerData';
+import EnemyComponent from './EnemyComponent';
+import FightButton from './FightButton';
 import Markers from './Markers'
 import Images from '../libs/Imgs'
 import FightView from './FightView'
+import PlayerComponent from './PlayerComponent';
 let {Monster} = Images
 
 type Props = {
@@ -19,14 +23,20 @@ type State = {
   monsterCount: Number,
   winnerIsSet: false
 }
+
 class MapView extends Component<Props, State> {
   constructor (props) {
     super(props)
     this.state = {
+      user: {fakeServerData},
       monsterMarkers: [],
       didSetMonsters: false,
       fightViewOpened: false,
-      monsterClose: false
+      monsterClose: false,
+      winnerIsSet: false,
+      enemyHP: 100,
+      playerHP: 100
+
     }
   }
 
@@ -37,7 +47,7 @@ class MapView extends Component<Props, State> {
   }
 
   render () {
-    let {monsterMarkers, fightViewOpened} = this.state
+    let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP} = this.state
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) { /* handle error */ }
@@ -56,23 +66,57 @@ class MapView extends Component<Props, State> {
         markers={monsterMarkers}
       />
       <Modal isOpen={fightViewOpened} togglemod={this.toggleFightView}>
-        <Button onClick={this.toggleFightView} style={styles.closeButton}>X</Button>
-        <FightView {...this.state} checkForWinner={this.checkForWinner} />
-      </Modal>
+      <div style={styles.wrapper}>
+        {winnerIsSet ? this.renderExit() : <div />}
+        <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
+        {winnerIsSet ? this.renderWinner() : <div />}
+        <PlayerComponent playerHP={playerHP} name={fakeServerData.user[0].name}/>
+        <div style={styles.fightButton}>
+          <FightButton onClick={this.handleClickEvent} text={'Attack'} />
+        </div>
+      </div>
+    </Modal>
     </div>
   }
 
-  toggleFightView = () => this.setState({fightViewOpened: !this.state.fightViewOpened})
+  toggleFightView = () => {
+    if (this.state.enemyHP === 0) {
+    return this.setState({fightViewOpened: !this.state.fightViewOpened, enemyHP: 100, winnerIsSet: false})
+    } else {
+    return this.setState({fightViewOpened: !this.state.fightViewOpened})
+    }
+  }
 
   checkForWinner = (winnerIsSet, removeIfDead) => {
     if (winnerIsSet === true) return (
       removeIfDead = (index) => {
-      this.setState((prevState) => ({
-        monsterMarkers: prevState.monsterMarkers.filter((_, i) => i !== index)
+      this.setState(() => ({
+        monsterMarkers: this.monsterMarkers.filter((_, i) => i !== index)
       }))
     })
   }
 
+  renderWinner = () => {
+    return <div style={styles.winnerText}>
+    YOU ARE WINNER!
+    </div>
+  }
+
+  renderExit = () => {
+    return <Button onClick={this.toggleFightView} style={styles.closeButton}>X</Button>
+  }
+
+  handleClickEvent = () => {
+    let {enemyHP, playerHP} = this.state
+    if (enemyHP > 0) {
+      this.setState({enemyHP: enemyHP - 10}, () => {
+        if (enemyHP === 10 || playerHP === 10) {
+          this.setState({winnerIsSet: true})
+          this.props.checkForWinner()
+        }
+      })
+    }
+  }
 
   setMonsters (nextProps, nextState) {
     let {monsterCount} = this.state
@@ -123,7 +167,8 @@ let styles = {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    textAlign: 'center'
   },
   closeButton: {
     width: '35px',
@@ -133,5 +178,16 @@ let styles = {
     justifyContent: 'center',
     backgroundColor: 'red',
     marginLeft: '20px'
+  },
+  wrapper: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  fightButton: {
+    width: '20%',
+    margin: 'auto'
+  },
+  winnerText: {
+    textAlign: 'center'
   }
 }

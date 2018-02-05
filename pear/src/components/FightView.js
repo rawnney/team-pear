@@ -1,5 +1,6 @@
 // @ flow
 import React, { Component } from 'react'
+import fakeServerData from '../fakeServerData';
 import FightButton from './FightButton'
 import EnemyComponent from './EnemyComponent'
 import PlayerComponent from './PlayerComponent'
@@ -34,7 +35,7 @@ export default class FightView extends Component<Props, State> {
       {/* winnerIsSet ? this.renderExit() : <div /> */}
       <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
       {winnerIsSet ? this.renderWinner() : <div />}
-      <PlayerComponent playerHP={playerHP} name={'Robin'}/>
+      <PlayerComponent playerHP={playerHP} name={fakeServerData.user.name}/>
       <div style={styles.fightButton}>
         <FightButton onClick={this.handleClickEvent} text={'Attack'} />
       </div>
