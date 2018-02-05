@@ -5,13 +5,11 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, Ca
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
 
-let {Sword, Dagger, Shield, Armor, Wand } = Images
+let { Sword, Dagger, Shield, Armor, Wand } = Images
 
 export default class CharacterView extends Component {
   constructor (props) {
     super(props)
-    this.togglemod = this.togglemod.bind(this)
-    this.toggle = this.toggle.bind(this)
     this.state = {
       modal: false,
       activeTab: '1',
@@ -28,13 +26,13 @@ export default class CharacterView extends Component {
     }
   }
 
-  togglemod () {
+  togglemod = () => {
     this.setState({
       modal: !this.state.modal
     })
   }
 
-  toggle (tab) {
+  toggle = (tab) => {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab

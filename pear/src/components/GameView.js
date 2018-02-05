@@ -1,47 +1,46 @@
+// @flow
 import React, { Component } from 'react'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
 import FightView from './FightView'
+import { Button, Modal } from 'reactstrap'
+import Home from './Home'
+import Welcome from './Welcome'
+import Database from '../Database'
+import LoginForm from './LoginForm'
+import Images from '../libs/Imgs'
+let {Pear} = Images
 
-export default class GameView extends Component {
-  innerRef
+export default class GameView extends Component<Props, State> {
+  // onödig constructor
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      user: undefined,
+      loggedIn: false,
+      modal: false
+    }
   }
-
-  componentDidMount () {
-    { /* getUser(userName, pass).then(() => {
-      this.setState({user})
-    }) */ }
-    { /* setInterval(() => {
-      this.getLocation()
-    }, 5000) */ }
-  }
-
-  // Kör watchPosition istället för denna
 
   render () {
-    // let {user} = this.state
-    return (
-      <div className='GameView'>
-        <CharacterView /> {/* user={user} */}
-        <FightView />
-        <MapView />
-      </div>
-    )
+    let {signOut} = this.props
+    let notLoggedIn = <Home {...this.state} setLoggedIn={() => this.setState({loggedIn: true})} />
+    let {togglemod} = this.props
+    let {loggedIn, modal, user} = this.state
+    if (loggedIn === false) return notLoggedIn
+    return <div>
+      <CharacterView />
+      <MapView />
+    </div>
   }
 
-  // i mapView ->  ref={this.setRef}
+  togglemod = () => this.setState({modal: !this.state.modal})
 
-    getLocation = () => {
-      if (!this.innerRef || !this.innerRef.getLocation) return
-      this.innerRef.getLocation()
-    }
+  signIn = (username, password) => {
+    this.setState({loggedIn: true, user: {username, password}})
+  }
 
-    setRef = (ref: *) => {
-      this.innerRef = ref
-    }
+  signOut = () => {
+    this.setState({loggedIn: false, user: null})
+  }
 }
-
-// <FightView />

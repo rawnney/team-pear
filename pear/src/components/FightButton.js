@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import { Button } from 'reactstrap'
 
-export default class FightButton extends Component {
+type Props = {
+  onClick: Function,
+  text: String
+}
+
+export default class FightButton extends Component<Props> {
   render () {
     return <Button onClick={this.props.onClick}>
       {this.props.text}

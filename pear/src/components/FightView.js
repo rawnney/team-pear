@@ -3,9 +3,22 @@ import React, { Component } from 'react'
 import FightButton from './FightButton'
 import EnemyComponent from './EnemyComponent'
 import PlayerComponent from './PlayerComponent'
-import WinnerPopUp from './WinnerPopUp'
+import MARKERS from './Markers'
+import MapView from './MapView'
+import { Modal, Button } from 'reactstrap'
 
-export default class FightView extends Component {
+type Props = {
+  name: String,
+  enemyHP: Number
+}
+
+type State = {
+  enemyHP: Number,
+  playerHP: Number,
+  winnerIsSet: Boolean
+}
+
+export default class FightView extends Component<Props, State> {
   constructor (props) {
     super(props)
     this.state = {
@@ -16,25 +29,32 @@ export default class FightView extends Component {
     }
   }
 
-  componentDidMount () {
-    this.setState()
-  }
+  componentWillMount () {}
+
+  componentDidMount () {}
 
   render () {
-    let {winnerIsSet, playerHP, enemyHP, modal} = this.state
-    return <div className='FightWrapper' styles={styles.wrapper}>
+    let {winnerIsSet, playerHP, enemyHP, closeFightView} = this.state
+    return <div style={styles.wrapper}>
+      {/* winnerIsSet ? this.renderExit() : <div /> */}
       <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
+      {winnerIsSet ? this.renderWinner() : <div />}
       <PlayerComponent playerHP={playerHP} name={'Robin'}/>
       <div style={styles.fightButton}>
         <FightButton onClick={this.handleClickEvent} text={'Attack'} />
       </div>
-      {winnerIsSet ? this.renderWinner() : <div />}
     </div>
   }
 
- renderWinner = () => {
-   return <WinnerPopUp />
- }
+  renderExit = () => { return <Button style={styles.exitButton} onClick={this.closeFightView}>X</Button> }
+
+  closeFightView = () => this.setState({fightViewClose: false})
+
+  renderWinner = () => {
+    return <div style={styles.winnerText}>
+    YOU ARE WINNER!
+    </div>
+  }
 
  handleClickEvent = () => {
    let {enemyHP, playerHP} = this.state
@@ -55,7 +75,19 @@ let styles = {
     alignItems: 'center'
   },
   fightButton: {
-    width: '10%',
+    width: '20%',
     margin: 'auto'
+  },
+  exitButton: {
+    width: '25px',
+    height: '25px',
+    borderRadius: '25'
+  },
+  winnerText: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '200px',
+    width: '200px'
   }
 }

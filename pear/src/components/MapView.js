@@ -1,8 +1,10 @@
 // @flow
 import React, { Component } from 'react'
 import { geolocated } from 'react-geolocated'
-import MARKERS from './Markers'
+import {Modal, Button} from 'reactstrap'
+import Markers from './Markers'
 import Images from '../libs/Imgs'
+import FightView from './FightView'
 let {Monster} = Images
 
 type Props = {
@@ -12,41 +14,36 @@ type Props = {
 }
 type State = {
   monsterMarkers: Array<*>,
-  didSetMonsters: boolean
+  didSetMonsters: boolean,
+  fightViewOpened: boolean,
 }
 class MapView extends Component<Props, State> {
   constructor (props) {
     super(props)
     this.state = {
       monsterMarkers: [],
-      didSetMonsters: false
+      didSetMonsters: false,
+      fightViewOpened: false,
     }
   }
 
-  componentDidMount () {
-  }
-
-  // shouldComponentUpdate (nextProps, nextState) {
-  // return nextProps.coords.lat !== this.coords.lat || nextProps.coords.lng !== this.coords.lng
-  // }
+  componentDidMount () {}
 
   componentWillUpdate (nextProps, nextState) {
     this.setMonsters(nextProps, nextState)
   }
 
-  componentDidUpdate () {
-  }
-
   render () {
+    let {monsterMarkers, fightViewOpened} = this.state
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
-    let {monsterMarkers} = this.state
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) { /* handle error */ }
     if (!coords) return <div style={styles.infoMsg}>Getting the location data&hellip; </div>
     return <div className="gmap">
-      <MARKERS
+      <Markers
         lng={coords.longitude}
         lat={coords.latitude}
+        openFightView={this.openFightView}
         accuracy={coords.accuracy}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCerbPPD0V2qOoQC1QJbNSlxfUWsxYAmo&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={styles.mapStyle} />}
@@ -54,13 +51,21 @@ class MapView extends Component<Props, State> {
         mapElement={<div style={styles.mapStyle} />}
         markers={monsterMarkers}
       />
+      <Modal isOpen={fightViewOpened} togglemod={this.openFightView}>
+        <Button onClick={this.closeFightView} style={styles.closeButton}>X</Button>
+        <FightView {...this.state}/>
+      </Modal>
     </div>
   }
+
+  closeFightView = () => this.setState({fightViewOpened: false})
+  openFightView = () => this.setState({fightViewOpened: true})
 
   setMonsters (nextProps, nextState) {
     let {latitude, longitude} = nextProps.coords
     let {monsterMarkers, didSetMonsters} = nextState
     if (!latitude || !longitude) return
+    if (latitude === null || longitude === null) return
     if (didSetMonsters) return
     let monsterCount = 5
     let monsters = new Array(monsterCount).fill(0)
@@ -77,8 +82,8 @@ class MapView extends Component<Props, State> {
         neg = index * 0.001,
         result
 
-    result = Math.floor(Math.random() * (pos + neg)) - neg;
-    result = result < 0 ? result : result //+ 1;
+    result = Math.floor(Math.random() * (pos + neg)) - neg
+    result = result < 0 ? result : result
     latitude = latitude + result
     longitude = longitude + result
     return {latitude, longitude}
@@ -106,5 +111,14 @@ let styles = {
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center'
+  },
+  closeButton: {
+    width: '35px',
+    height: '35px',
+    borderRadius: '50%',
+    textAlign: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
+    marginLeft: '20px'
   }
 }
