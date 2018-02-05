@@ -4,6 +4,7 @@ import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom'
 import Welcome from './Welcome'
 import Database from '../Database'
+import fakeServerData from '../fakeServerData'
 import Images from '../libs/Imgs'
 let {Pear} = Images
 // import Routes from '../Routes'
@@ -18,11 +19,11 @@ export default class Home extends Component {
     }
   }
 
-  signIn (username, password) {
+  signIn = (username, password) => {
     let {loggedIn} = this.state
     if (loggedIn === false) {
-      this.props.setLoggedIn()
-      return this.setState({loggedIn: true, user: {username, password}})
+      this.props.setLoggedIn(fakeServerData.user)
+      return this.setState({loggedIn: true, user: fakeServerData.user})
     }
   }
 
@@ -99,7 +100,7 @@ export default class Home extends Component {
                     <div className="tab-pane fade active in" id="signin">
                       <div>
                         {
-                          <LoginForm onSignIn={this.signIn.bind(this)}/>
+                          <LoginForm onSignIn={this.signIn}/>
                         }
                       </div>
 

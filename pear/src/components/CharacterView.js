@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import fakeServerData from '../fakeServerData'
 // import Items from './items'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import Images from '../libs/Imgs'
@@ -12,17 +12,7 @@ export default class CharacterView extends Component {
     super(props)
     this.state = {
       modal: false,
-      activeTab: '1',
-
-      username: 'sTor-Lazze', // user.username
-      name: 'Lasse', // user.name
-      lastname: 'Kroner', // user.lastname
-      email: 'Lasse@kroner.iDid', // user.email
-
-      sword: '+25',
-      blockChance: '5%',
-      magic: '+10'
-
+      activeTab: '1'
     }
   }
 
@@ -41,6 +31,10 @@ export default class CharacterView extends Component {
   }
 
   render () {
+    let {activeTab} = this.state
+    // let {fakeServerData} = this.props
+    let {username, name, lastname, email} = this.props
+    let {sword, blockChance, magic} = this.props
     return (
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <Button style={{width: '10%', position: 'absolute'}} color="success" onClick={this.togglemod}>{this.props.buttonLabel}Menu</Button>
@@ -48,7 +42,7 @@ export default class CharacterView extends Component {
           <Nav tabs>
             <NavItem>
               <NavLink
-                className={classnames({ active: this.state.activeTab === '1' })}
+                className={classnames({ active: activeTab === '1' })}
                 onClick={() => { this.toggle('1') }}
               >
                 My Account
@@ -56,7 +50,7 @@ export default class CharacterView extends Component {
             </NavItem>
             <NavItem>
               <NavLink
-                className={classnames({ active: this.state.activeTab === '2' })}
+                className={classnames({ active: activeTab === '2' })}
                 onClick={() => { this.toggle('2') }}
               >
                 Skillz
@@ -64,7 +58,7 @@ export default class CharacterView extends Component {
             </NavItem>
             <NavItem>
               <NavLink
-                className={classnames({ active: this.state.activeTab === '3' })}
+                className={classnames({ active: activeTab === '3' })}
                 onClick={() => { this.toggle('3') }}
               >
                 Inventory
@@ -72,31 +66,31 @@ export default class CharacterView extends Component {
             </NavItem>
             <NavItem>
               <NavLink
-                className={classnames({ active: this.state.activeTab === '4' })}
+                className={classnames({ active: activeTab === '4' })}
                 onClick={() => { this.toggle('4') }}
               >
                 Leaderboard
               </NavLink>
             </NavItem>
           </Nav>
-          <TabContent activeTab={this.state.activeTab}>
+          <TabContent activeTab={activeTab}>
             <TabPane tabId="1">
               <ModalHeader style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}toggle={this.toggle}>My Account</ModalHeader>
               <br />
               <ul style={{listStyle: 'none'}}>
-                <li><p>USERNAME: {this.state.username}</p> </li>
-                <li><p>FIRST NAME: {this.state.name}</p></li>
-                <li><p>LAST NAME: {this.state.lastname}</p></li>
-                <li><p>EMAIL: {this.state.email}</p></li>
+                <li><p>USERNAME: {username}</p> </li>
+                <li><p>FIRST NAME: {name}</p></li>
+                <li><p>LAST NAME: {lastname}</p></li>
+                <li><p>EMAIL: {email}</p></li>
               </ul>
             </TabPane>
             <TabPane tabId="2">
               <ModalHeader toggle={this.toggle}>Skillz</ModalHeader>
               <br/>
               <ul style={{listStyle: 'none'}}>
-                <li><p>MEELE DAMAGE: {this.state.sword}</p> </li>
-                <li><p>BLOCK CHANCE: {this.state.blockChance}</p></li>
-                <li><p>SPELL DAMAGE: {this.state.magic}</p></li>
+                <li><p>MEELE DAMAGE: {sword}</p> </li>
+                <li><p>BLOCK CHANCE: {blockChance}</p></li>
+                <li><p>SPELL DAMAGE: {magic}</p></li>
               </ul>
             </TabPane>
             <TabPane tabId="3">
