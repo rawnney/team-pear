@@ -66,16 +66,9 @@ export default class Home extends Component {
 
           <div className="buttons">
             <hr className="prettyline" />
-            <div className="button-div">
-              {
-                (this.state.user)
-                  ? <Welcome
-                    user={this.state.user}
-                    onSignOut={this.signOut.bind(this)}
-                  />
-                  : <button type="button" className="btn btn-success ribbon" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In / Sign Up</button>
-              }
-            </div>
+            <Button color="success" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In / Sign Up</Button>
+            <br />
+
             <br />
             <Button color="primary">Leaderboard</Button>
             {/* <div className="button-div">
@@ -122,13 +115,13 @@ export default class Home extends Component {
                         <FormGroup row>
                           <Label for="exampleEmail" sm={4}>Email</Label>
                           <Col sm={8}>
-                            <Input type="email" name="email" id="exampleEmail" placeholder="Your email" />
+                            <Input type="email" name="email" id="exampleEmail" placeholder="Your email" valid={{}} />
                           </Col>
                         </FormGroup>
                         <FormGroup row>
                           <Label for="Alias" sm={4}>Alias</Label>
                           <Col sm={8}>
-                            <Input type="alias" name="alias" id="alias" placeholder="Ex: 'BootyWarrior'" />
+                            <Input type="alias" name="alias" id="alias" placeholder="Ex: 'BootyWarrior'" valid={{}} />
                           </Col>
                         </FormGroup>
                         <FormGroup row>
@@ -148,9 +141,9 @@ export default class Home extends Component {
                           <Col sm={{ size: 8 }}>
                             <FormGroup check>
                               <Label check>
-                                <Input type="checkbox" id="checkbox2" />{'Team Red'}
+                                <Input color="danger" type="checkbox" id="checkbox2" />{'Team Red'}
                                 <br />
-                                <Input type="checkbox" id="checkbox2" />{'Team Blue'}
+                                <Input color="primary" type="checkbox" id="checkbox2" />{'Team Blue'}
                               </Label>
                             </FormGroup>
                           </Col>
