@@ -24,7 +24,8 @@ export default class FightView extends Component<Props, State> {
     this.state = {
       enemyHP: 100,
       playerHP: 100,
-      winnerIsSet: false
+      winnerIsSet: false,
+      modal: false
     }
   }
 
@@ -55,16 +56,17 @@ export default class FightView extends Component<Props, State> {
     </div>
   }
 
-  handleClickEvent = () => {
-    let {enemyHP, playerHP} = this.state
-    if (enemyHP > 0) {
-      this.setState({enemyHP: enemyHP - 10}, () => {
-        if (enemyHP === 10 || playerHP === 10) {
-          this.setState({winnerIsSet: true})
-        }
-      })
-    }
-  }
+ handleClickEvent = () => {
+   let {enemyHP, playerHP} = this.state
+   if (enemyHP > 0) {
+     this.setState({enemyHP: enemyHP - 10}, () => {
+       if (enemyHP === 10 || playerHP === 10) {
+         this.setState({winnerIsSet: true})
+       }
+     })
+     console.log(enemyHP, playerHP)
+   }
+ }
 }
 
 let styles = {
