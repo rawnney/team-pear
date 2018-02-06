@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Lottie from 'react-lottie'
 import * as animationData from '../assets/lottieAnimations/pinjump.json'
 
-export default class LottieControl extends Component {
+export default class Pinjump extends Component {
   constructor (props) {
     super(props)
     this.state = {isStopped: false, isPaused: false}

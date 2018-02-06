@@ -5,7 +5,7 @@ import {Modal, Button} from 'reactstrap'
 import fakeServerData from '../fakeServerData'
 import EnemyComponent from './EnemyComponent'
 import FightButton from './FightButton'
-import LottieControl from './LottieControl';
+import Pinjump from './Pinjump';
 import Markers from './Markers'
 import Images from '../libs/Imgs'
 import FightView from './FightView'
@@ -55,7 +55,7 @@ class MapView extends Component<Props, State> {
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) { /* handle error */ }
-    if (!coords) return <LottieControl />
+    if (!coords) return <Pinjump />
     return <div>
       <Markers
         lng={coords.longitude}
