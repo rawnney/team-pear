@@ -5,6 +5,7 @@ import {Modal, Button} from 'reactstrap'
 import fakeServerData from '../fakeServerData'
 import EnemyComponent from './EnemyComponent'
 import FightButton from './FightButton'
+import LottieControl from './LottieControl';
 import Markers from './Markers'
 import Images from '../libs/Imgs'
 import FightView from './FightView'
@@ -47,12 +48,14 @@ class MapView extends Component<Props, State> {
     // this.removeMonster()
   }
 
+// <div style={styles.infoMsg}>Getting the location data&hellip; </div>
+
   render () {
     let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP} = this.state
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) { /* handle error */ }
-    if (!coords) return <div style={styles.infoMsg}>Getting the location data&hellip; </div>
+    if (!coords) return <LottieControl />
     return <div>
       <Markers
         lng={coords.longitude}
