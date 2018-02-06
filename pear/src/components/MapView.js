@@ -61,7 +61,7 @@ class MapView extends Component<Props, State> {
         lng={coords.longitude}
         lat={coords.latitude}
         toggleFightView={this.toggleFightView}
-        removeIfDead={this.removeMonster}
+        // removeIfDead={this.removeMonster}
         accuracy={coords.accuracy}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCerbPPD0V2qOoQC1QJbNSlxfUWsxYAmo&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={styles.mapStyle} />}
@@ -126,15 +126,13 @@ class MapView extends Component<Props, State> {
   //   })))
   // }
 
-  // removeMonster = (id) => {
-  //   let {monsterMarkers, monsterCount} = this.state
-  //     let newMonsterCount = monsterCount - 1
-  //     let newMonsterMarkers = monsterMarkers
-  //     newMonsterMarkers((id) => {
-  //     newMonsterMarkers.pop({id})
-  //     })
-  //   this.setState({monsterMarkers: newMonsterMarkers, monsterCount: newMonsterCount})
-  // }
+  removeMonster = (id) => {
+    let {monsterMarkers, monsterCount} = this.state
+      let newMonsterCount = monsterCount - 1
+      let newMonsterMarkers = monsterMarkers
+      newMonsterMarkers.pop({id})
+    this.setState({monsterMarkers: newMonsterMarkers, monsterCount: newMonsterCount})
+  }
 
   setMonsters (nextProps, nextState) {
     let {monsterCount} = this.state
