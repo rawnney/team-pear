@@ -36,12 +36,8 @@ export default class GameView extends Component<Props, State> {
         blockChance={fakeServerData.user[0].blockChance}
         magic={fakeServerData.user[0].magic}
       />
-      <MapView {...this.state} checkForWinner={() => this.setState({winnerIsSet: true, enemyHP: 100, playerHP: 100})}/>
+      <MapView {...this.state} resetFight={() => this.setState({winnerIsSet: true, enemyHP: 100, playerHP: 100})}/>
     </div>
-  }
-
-  signIn = (username, password) => {
-    this.setState({loggedIn: true, user: {username, password}})
   }
 
   signOut = () => {

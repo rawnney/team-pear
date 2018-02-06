@@ -7,7 +7,6 @@ import Database from '../Database'
 import fakeServerData from '../fakeServerData'
 import Images from '../libs/Imgs'
 let {Pear} = Images
-// import Routes from '../Routes'
 
 export default class Home extends Component {
   constructor (props) {
@@ -28,7 +27,6 @@ export default class Home extends Component {
   }
 
   signOut () {
-    // clear out user from state
     this.setState({user: null})
   }
 

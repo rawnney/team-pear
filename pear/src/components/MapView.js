@@ -2,13 +2,13 @@
 import React, { Component } from 'react'
 import { geolocated } from 'react-geolocated'
 import {Modal, Button} from 'reactstrap'
-import fakeServerData from '../fakeServerData';
-import EnemyComponent from './EnemyComponent';
-import FightButton from './FightButton';
+import fakeServerData from '../fakeServerData'
+import EnemyComponent from './EnemyComponent'
+import FightButton from './FightButton'
 import Markers from './Markers'
 import Images from '../libs/Imgs'
 import FightView from './FightView'
-import PlayerComponent from './PlayerComponent';
+import PlayerComponent from './PlayerComponent'
 let {Monster} = Images
 
 type Props = {
@@ -35,8 +35,8 @@ class MapView extends Component<Props, State> {
       monsterClose: false,
       winnerIsSet: false,
       enemyHP: 100,
-      playerHP: 100
-
+      playerHP: 100,
+      monsterCount: 5
     }
   }
 
@@ -44,6 +44,7 @@ class MapView extends Component<Props, State> {
 
   componentWillUpdate (nextProps, nextState) {
     this.setMonsters(nextProps, nextState)
+    // this.removeMonster()
   }
 
   render () {
@@ -51,13 +52,13 @@ class MapView extends Component<Props, State> {
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) { /* handle error */ }
-    if (!coords) return <div tyle={styles.infoMsg}>Getting the location data&hellip; </div>
+    if (!coords) return <div style={styles.infoMsg}>Getting the location data&hellip; </div>
     return <div>
       <Markers
         lng={coords.longitude}
         lat={coords.latitude}
         toggleFightView={this.toggleFightView}
-        removeIfDead={this.removeIfDead}
+        removeIfDead={this.removeMonster}
         accuracy={coords.accuracy}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCerbPPD0V2qOoQC1QJbNSlxfUWsxYAmo&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={styles.mapStyle} />}
@@ -66,34 +67,27 @@ class MapView extends Component<Props, State> {
         markers={monsterMarkers}
       />
       <Modal isOpen={fightViewOpened} togglemod={this.toggleFightView}>
-      <div style={styles.wrapper}>
-        {winnerIsSet ? this.renderExit() : <div />}
-        <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
-        {winnerIsSet ? this.renderWinner() : <div />}
-        <PlayerComponent playerHP={playerHP} name={fakeServerData.user[0].name}/>
-        <div style={styles.fightButton}>
-          <FightButton onClick={this.handleClickEvent} text={'Attack'} />
+        <div style={styles.wrapper}>
+          {winnerIsSet ? this.renderExit() : <div />}
+          <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
+          {winnerIsSet ? this.renderWinner() : <div />}
+          <PlayerComponent playerHP={playerHP} name={fakeServerData.user[0].name}/>
+          <div style={styles.fightButton}>
+            <FightButton onClick={this.handleClickEvent} text={'Attack'} />
+          </div>
         </div>
-      </div>
-    </Modal>
+      </Modal>
     </div>
   }
 
-  toggleFightView = () => {
+  toggleFightView = (id) => {
+    console.log(id);
     if (this.state.enemyHP === 0) {
+      this.removeMonster(id)
     return this.setState({fightViewOpened: !this.state.fightViewOpened, enemyHP: 100, winnerIsSet: false})
     } else {
     return this.setState({fightViewOpened: !this.state.fightViewOpened})
     }
-  }
-
-  checkForWinner = (winnerIsSet, removeIfDead) => {
-    if (winnerIsSet === true) return (
-      removeIfDead = (index) => {
-      this.setState(() => ({
-        monsterMarkers: this.monsterMarkers.filter((_, i) => i !== index)
-      }))
-    })
   }
 
   renderWinner = () => {
@@ -112,11 +106,32 @@ class MapView extends Component<Props, State> {
       this.setState({enemyHP: enemyHP - 10}, () => {
         if (enemyHP === 10 || playerHP === 10) {
           this.setState({winnerIsSet: true})
-          this.props.checkForWinner()
+          this.props.resetFight()
         }
       })
     }
   }
+
+  // selectMonster = (e) => {
+  //   this.setState({monsterMarkers: newMonsterMarkers.concat([e.target.value])})
+  // }
+
+  // removeIfDead = (id, winnerIsSet) => {
+  //   let {monsterMarkers} = this.state
+  //   if (winnerIsSet === true) return (
+  //     this.setState(() => ({monsterMarkers: this.monsterMarkers.filter((_, i) => i !== id)
+  //   })))
+  // }
+
+  // removeMonster = (id) => {
+  //   let {monsterMarkers, monsterCount} = this.state
+  //     let newMonsterCount = monsterCount - 1
+  //     let newMonsterMarkers = monsterMarkers
+  //     newMonsterMarkers((id) => {
+  //     newMonsterMarkers.pop({id})
+  //     })
+  //   this.setState({monsterMarkers: newMonsterMarkers, monsterCount: newMonsterCount})
+  // }
 
   setMonsters (nextProps, nextState) {
     let {monsterCount} = this.state
@@ -163,6 +178,7 @@ let styles = {
     zIndex: -1000
   },
   infoMsg: {
+    marginTop: '100px',
     height: '100%',
     width: '100%',
     display: 'flex',
