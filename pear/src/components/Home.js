@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Modal} from 'reactstrap'
+import {Modal, ModalHeader, Button, Form, FormGroup, Label, Input, FormText, Col} from 'reactstrap'
 import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom'
 import Welcome from './Welcome'
@@ -31,6 +31,12 @@ export default class Home extends Component {
     this.setState({user: null})
   }
 
+  togglemod = () => {
+    this.setState({
+      modal: !this.state.modal
+    })
+  }
+
   // validateForm () {
   //   return this.state.email.length > 0 && this.state.password.length > 0
   // }
@@ -40,7 +46,13 @@ export default class Home extends Component {
     let {loggedIn, modal, user} = this.state
     return (
       <Modal isOpen={modal} togglemod={this.togglemod} style={styles.test}>
-        <header className="col-md-12">
+        <ModalHeader toggle={this.toggle} style={{textAlign: 'center', display: 'flex', justifyContent: 'center'}}>
+          <img style={{width: '100px', height: '160px'}} src={Pear} />
+          <br />
+          <h1>Team Pear Game Page</h1>
+        </ModalHeader>
+        {/*
+          <header className="col-md-12">
           <div className="logo-image" >
             <img src={Pear} />
           </div>
@@ -48,6 +60,7 @@ export default class Home extends Component {
             <h1>Team Pear Game Page</h1>
           </div>
         </header>
+        */}
 
         <section className="section-padding button-container">
 
@@ -63,15 +76,15 @@ export default class Home extends Component {
                   : <button type="button" className="btn btn-success ribbon" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In / Sign Up</button>
               }
             </div>
-            <div className="button-div">
+            <br />
+            <Button color="primary">Leaderboard</Button>
+            {/* <div className="button-div">
               <button type="button" className="btn btn-primary ribbon">Leaderboard</button>
-            </div>
-            <div className="button-div">
-              <button type="button" className="btn btn-info ribbon">Info/Rules</button>
-            </div>
-            <div className="button-div">
-              <button type="button" className="btn btn-warning ribbon">Övrigt</button>
-            </div>
+            </div> */}
+            <br />
+            <Button color="info">Info/Rules</Button>
+            <br />
+            <Button color="warning">Övrigt</Button>
             <hr className="prettyline" />
           </div>
 
@@ -88,7 +101,7 @@ export default class Home extends Component {
 
                     <li className="general"><a href="#signin" data-toggle="tab">Sign In</a></li>
                     <li className="general"><a href="#signup" data-toggle="tab">Register</a></li>
-                    <li className="general"><a href="#why" data-toggle="tab">Why?</a></li>
+                    <li className="general"><a href="#why" data-toggle="tab">Whdy?</a></li>
                   </ul>
                 </div>
 
@@ -105,71 +118,55 @@ export default class Home extends Component {
 
                     </div>
                     <div className="tab-pane fade" id="signup">
-                      <form className="form-horizontal">
-                        <fieldset>
-
-                          {/* Sign Up Form Text input */}
-                          <div className="control-group">
-                            <label className="control-label">Email:</label>
-                            <div className="controls">
-                              <input id="Email" name="Email" className="form-control" type="text" placeholder="youremail@example.com" className="input-large" required=""/>
-                            </div>
-                          </div>
-
-                          {/* Text input */}
-                          <div className="control-group">
-                            <label className="control-label" >Alias:</label>
-                            <div className="controls">
-                              <input id="userid" name="userid" className="form-control" type="text" placeholder="JoeSixpack" className="input-large" required=""/>
-                            </div>
-                          </div>
-
-                          {/* Password input */}
-                          <div className="control-group">
-                            <label className="control-label">Password:</label>
-                            <div className="controls">
-                              <input id="password" name="password" className="form-control" type="password" placeholder="********" className="input-large" required=""/>
-                              <em>1-8 Characters</em>
-                            </div>
-                          </div>
-
-                          {/* Text input */}
-                          <div className="control-group">
-                            <label className="control-label" >Re-Enter Password:</label>
-                            <div className="controls">
-                              <input id="reenterpassword" className="form-control" name="reenterpassword" type="password" placeholder="********" className="input-large" required=""/>
-                            </div>
-                          </div>
-
-                          {/* Multiple Radios (inline) */}
-                          <br/>
-                          <div className="control-group">
-                            <label className="control-label">Humanity Check:</label>
-                            <div className="controls">
-                              <label className="radio inline">
-                                <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked" />I am a Robot
-                              </label>
-                              <label className="radio inline" >
-                                <input type="radio" name="humancheck" id="humancheck-1" value="human"/>I am Human
-                              </label>
-                            </div>
-                          </div>
-
-                          {/* Button */}
-                          <div className="control-group">
-                            <label className="control-label" ></label>
-                            <div className="controls">
-                              <button id="confirmsignup" name="confirmsignup" className="btn btn-success">Sign Up</button>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </form>
+                      <Form>
+                        <FormGroup row>
+                          <Label for="exampleEmail" sm={4}>Email</Label>
+                          <Col sm={8}>
+                            <Input type="email" name="email" id="exampleEmail" placeholder="Your email" />
+                          </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                          <Label for="Alias" sm={4}>Alias</Label>
+                          <Col sm={8}>
+                            <Input type="alias" name="alias" id="alias" placeholder="Ex: 'BootyWarrior'" />
+                          </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                          <Label for="examplePassword" sm={4}>Password</Label>
+                          <Col sm={8}>
+                            <Input type="password" name="password" id="examplePassword" placeholder="*******" />
+                          </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                          <Label for="examplePassword" sm={4}>Re-Enter Password</Label>
+                          <Col sm={8}>
+                            <Input type="password" name="password" id="examplePassword" placeholder="*******" />
+                          </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                          <Label for="checkbox2" sm={4}></Label>
+                          <Col sm={{ size: 8 }}>
+                            <FormGroup check>
+                              <Label check>
+                                <Input type="checkbox" id="checkbox2" />{'Team Red'}
+                                <br />
+                                <Input type="checkbox" id="checkbox2" />{'Team Blue'}
+                              </Label>
+                            </FormGroup>
+                          </Col>
+                        </FormGroup>
+                        <FormGroup check row>
+                          <Col sm={{ size: 10, offset: 1 }}>
+                            <Button color="primary">Submit</Button>
+                          </Col>
+                        </FormGroup>
+                      </Form>
                     </div>
                   </div>
                 </div>
                 <div className="modal-footer">
                   <center>
-                    <button type="button" id="close-btn" className="btn btn-default" data-dismiss="modal">Close</button>
+                    <Button color="danger" data-dismiss="modal">Close</Button>
                   </center>
                 </div>
               </div>
