@@ -1,13 +1,13 @@
 // @ flow
 import React, { Component } from 'react'
-import Avatar from './Avatar'
-import Robin from '../assets/img/icons/robin.png'
+// import Avatar from './Avatar'
+// import Robin from '../assets/img/icons/robin.png'
 
 export default class PlayerComponent extends Component {
   render () {
     return (
       <div className='PlayerWrapper' style={styles.wrapper}>
-        <Avatar pic={Robin} />
+        <img src={this.props.avatar} style={styles.avatar} alt='Avatar'/>
         <h3> {this.props.name} </h3>
         <h3> {this.props.playerHP} / 100 </h3>
       </div>
@@ -22,5 +22,10 @@ let styles = {
     textAlign: 'center',
     alignItems: 'center',
     marginTop: '10px'
+  },
+  avatar: {
+    height: '50px',
+    width: '50px',
+    borderRadius: '50%'
   }
 }

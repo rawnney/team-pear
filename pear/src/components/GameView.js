@@ -16,12 +16,13 @@ export default class GameView extends Component<Props, State> {
     this.state = {
       user: {fakeServerData},
       loggedIn: false,
-      winnerIsSet: false
+      monstersKilled: 0,
+      coins: 0
     }
   }
 
   render () {
-    let {signOut} = this.props
+    let {monstersKilled, coins} = this.state
     let notLoggedIn = <Home setLoggedIn={() => this.setState({loggedIn: true, user: fakeServerData.user})} />
     let {loggedIn, user} = this.state
     if (loggedIn === false) return notLoggedIn
@@ -36,7 +37,11 @@ export default class GameView extends Component<Props, State> {
         blockChance={fakeServerData.user[0].blockChance}
         magic={fakeServerData.user[0].magic}
       />
-      <MapView {...this.state} resetFight={() => this.setState({winnerIsSet: true, enemyHP: 100, playerHP: 100})}/>
+      <MapView {...this.state} resetFight={() => this.setState({winnerIsSet: false, enemyHP: 100, playerHP: 100, monstersKilled: monstersKilled + 1, coins: coins + 2})}/>
+      <div style={{fontSize: '50px', backgroundColor: 'red'}}>
+        <div>Kills: {monstersKilled}</div>
+        <div>Coins:{coins}</div>
+        </div>
     </div>
   }
 

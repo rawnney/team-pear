@@ -6,6 +6,6 @@ export default {
   Wand: require('../assets/img/wand.png'),
   Shield: require('../assets/img/shield.png'),
   Dagger: require('../assets/img/dagger.png'),
-  Armor: require('../assets/img/armor.png')
+  Armor: require('../assets/img/armor.png'),
+  QMark: require('../assets/img/icons/q-icon.png')
 }
-//  Working

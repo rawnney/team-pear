@@ -10,7 +10,7 @@ import Markers from './Markers'
 import Images from '../libs/Imgs'
 import FightView from './FightView'
 import PlayerComponent from './PlayerComponent'
-let {Monster} = Images
+let {Monster, Robin, QMark} = Images
 
 type Props = {
   coords: Object,
@@ -29,15 +29,21 @@ class MapView extends Component<Props, State> {
   constructor (props) {
     super(props)
     this.state = {
-      user: {fakeServerData},
+      loggedIn: false,
+      user: fakeServerData.user,
+      monster: fakeServerData.monster,
+      activeMonsterName: undefined,
+      activeMonsterAvatar: undefined,
+      activeMonsterCoins: undefined,
       monsterMarkers: [],
       didSetMonsters: false,
       fightViewOpened: false,
       monsterClose: false,
       winnerIsSet: false,
-      enemyHP: 100,
+      enemyHP: 10,
       playerHP: 100,
-      monsterCount: 5
+      monsterCount: fakeServerData.monster.length,
+      monstersKilled: 0
     }
   }
 
@@ -45,13 +51,10 @@ class MapView extends Component<Props, State> {
 
   componentWillUpdate (nextProps, nextState) {
     this.setMonsters(nextProps, nextState)
-    // this.removeMonster()
   }
 
-// <div style={styles.infoMsg}>Getting the location data&hellip; </div>
-
   render () {
-    let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP} = this.state
+    let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP, activeMonsterName, activeMonsterAvatar} = this.state
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) { /* handle error */ }
@@ -61,7 +64,6 @@ class MapView extends Component<Props, State> {
         lng={coords.longitude}
         lat={coords.latitude}
         toggleFightView={this.toggleFightView}
-        // removeIfDead={this.removeMonster}
         accuracy={coords.accuracy}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCerbPPD0V2qOoQC1QJbNSlxfUWsxYAmo&v=3.exp&libraries=geometry,drawing,places"
         loadingElement={<div style={styles.mapStyle} />}
@@ -72,9 +74,9 @@ class MapView extends Component<Props, State> {
       <Modal isOpen={fightViewOpened} togglemod={this.toggleFightView}>
         <div style={styles.wrapper}>
           {winnerIsSet ? this.renderExit() : <div />}
-          <EnemyComponent enemyHP={enemyHP} name={'Enemy'}/>
+          <EnemyComponent enemyHP={enemyHP} name={activeMonsterName} avatar={activeMonsterAvatar}/>
           {winnerIsSet ? this.renderWinner() : <div />}
-          <PlayerComponent playerHP={playerHP} name={fakeServerData.user[0].name}/>
+          <PlayerComponent playerHP={playerHP} name={fakeServerData.user[0].name} avatar={fakeServerData.user[0].avatar}/>
           <div style={styles.fightButton}>
             <FightButton onClick={this.handleClickEvent} text={'Attack'} />
           </div>
@@ -83,15 +85,26 @@ class MapView extends Component<Props, State> {
     </div>
   }
 
+
   toggleFightView = (id) => {
+    let {fightViewOpened} = this.state
     console.log(id);
     if (this.state.enemyHP === 0) {
+      // this.setActiveMonsterCoins(id)
+      this.killCounter()
+      this.incCoins(id)
       this.removeMonster(id)
-    return this.setState({fightViewOpened: !this.state.fightViewOpened, enemyHP: 100, winnerIsSet: false})
+    return this.setState({fightViewOpened: !fightViewOpened, enemyHP: 100, winnerIsSet: false, })
     } else {
-    return this.setState({fightViewOpened: !this.state.fightViewOpened})
+    this.setActiveMonsterName(id)
+    this.setActiveMonsterAvatar(id)
+    return this.setState({fightViewOpened: !fightViewOpened, activeMonsterName: this.setActiveMonsterName(id), activeMonsterAvatar: this.setActiveMonsterAvatar(id)})
     }
   }
+
+  setActiveMonsterName = (id) => {return fakeServerData.monster[id].name}
+  setActiveMonsterAvatar = (id) => {return fakeServerData.monster[id].avatar}
+  // setActiveMonsterCoins = (id) => {return fakeServerData.monster[id].coins}
 
   renderWinner = () => {
     return <div style={styles.winnerText}>
@@ -115,26 +128,30 @@ class MapView extends Component<Props, State> {
     }
   }
 
-  // selectMonster = (e) => {
-  //   this.setState({monsterMarkers: newMonsterMarkers.concat([e.target.value])})
-  // }
-
-  // removeIfDead = (id, winnerIsSet) => {
-  //   let {monsterMarkers} = this.state
-  //   if (winnerIsSet === true) return (
-  //     this.setState(() => ({monsterMarkers: this.monsterMarkers.filter((_, i) => i !== id)
-  //   })))
-  // }
-
-  removeMonster = (id) => {
-    let {monsterMarkers, monsterCount} = this.state
-      let newMonsterCount = monsterCount - 1
-      let newMonsterMarkers = monsterMarkers
-      newMonsterMarkers.pop({id})
-    this.setState({monsterMarkers: newMonsterMarkers, monsterCount: newMonsterCount})
+  killCounter = () => {
+    let {monstersKilled} = this.state
+    this.setState({monstersKilled: monstersKilled + 1})
   }
 
-  setMonsters (nextProps, nextState) {
+  incCoins = (id) => {
+    let {coins} = this.state
+    this.setState({coins: coins + 2 }) // 1 * id
+  }
+
+  removeMonster = (id, latitude, longitude) => {
+    let {monsterMarkers, monsterCount} = this.state
+      monsterMarkers.splice(id, 1)
+    this.setState({monsterMarkers: monsterMarkers, monsterCount: monsterCount -1})
+  }
+
+  // respawnMonster = () => {
+  //   let {monsterCount, monsterMarkers} = this.state
+  //   let addMonsters = newMonsterMarkers
+  //   if (monsterCount > 5) return addMonster((monsterMarkers) => {
+  //   })
+  // }
+
+  setMonsters = (nextProps, nextState) => {
     let {monsterCount} = this.state
     let {latitude, longitude} = nextProps.coords
     let {monsterMarkers, didSetMonsters} = nextState
@@ -145,10 +162,16 @@ class MapView extends Component<Props, State> {
     let monstersToRender = []
     monsters.map((item, index) => {
       let coord = this.getMonsterCoord(latitude, longitude, index)
-      monstersToRender.push({id: index, latitude: coord.latitude, longitude: coord.longitude, icon: Monster})
+      let images = QMark //this.randomIcon()
+      monstersToRender.push({id: index, latitude: coord.latitude, longitude: coord.longitude, icon: images})
     })
     this.setState({monsterMarkers: monstersToRender, didSetMonsters: true})
   }
+
+  // randomIcon = () => {
+  // let images = [Monster, Robin]
+  //   return images[Math.floor(Math.random() * images.length)]
+  // }
 
   getMonsterCoord (latitude, longitude, index) {
     let pos = index * 0.001,
@@ -179,7 +202,7 @@ let styles = {
     zIndex: -1000
   },
   infoMsg: {
-    marginTop: '100px',
+    marginTop: '200px',
     height: '100%',
     width: '100%',
     display: 'flex',
