@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Welcome from './Welcome'
 import Database from '../Database'
 import Images from '../libs/Imgs'
+import 'whatwg-fetch'
 let {Pear} = Images
 // import Routes from '../Routes'
 
@@ -37,6 +38,18 @@ export default class Home extends Component {
     })
   }
 
+//   fetch('http://localhost:3000/api/users/', {
+//   method: 'POST',
+//   headers: {
+//     'Accept': 'application/x-www- form-urlencoded',
+//     'Content-Type': 'application/x-www-form-urlencoded',
+//   },
+//   body: JSON.stringify({
+//     firstParam: 'yourValue',
+//     secondParam: 'yourOtherValue',
+//   })
+// })
+
   // validateForm () {
   //   return this.state.email.length > 0 && this.state.password.length > 0
   // }
@@ -66,6 +79,7 @@ export default class Home extends Component {
 
           <div className="buttons">
             <hr className="prettyline" />
+            <br />
             <Button color="success" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In / Sign Up</Button>
             <br />
 
@@ -113,9 +127,9 @@ export default class Home extends Component {
                     <div className="tab-pane fade" id="signup">
                       <Form>
                         <FormGroup row>
-                          <Label for="exampleEmail" sm={4}>Email</Label>
+                          <Label for="email" sm={4}>Email</Label>
                           <Col sm={8}>
-                            <Input type="email" name="email" id="exampleEmail" placeholder="Your email" valid={{}} />
+                            <Input type="email" name="email" id="email" placeholder="Your email" valid={{}} />
                           </Col>
                         </FormGroup>
                         <FormGroup row>

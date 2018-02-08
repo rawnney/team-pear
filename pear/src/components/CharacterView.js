@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
+import 'whatwg-fetch'
 
 let { Sword, Dagger, Shield, Armor, Wand } = Images
 
@@ -13,15 +14,19 @@ export default class CharacterView extends Component {
     this.state = {
       modal: false,
       activeTab: '1',
+      Usersr: [],
 
-      username: 'sTor-Lazze', // user.username
-      name: 'Lasse', // user.name
       lastname: 'Kroner', // user.lastname
-      email: 'Lasse@kroner.iDid', // user.email
+      emaill: undefined, // user.email
 
       sword: '+25',
       blockChance: '5%',
-      magic: '+10'
+      magic: '+10',
+      pictures: [],
+      names: [],
+      last: [],
+      usernamee: undefined,
+      teamm: undefined
 
     }
   }
@@ -38,6 +43,42 @@ export default class CharacterView extends Component {
         activeTab: tab
       })
     }
+  }
+
+  componentDidMount () {
+    fetch('http://localhost:3000/api/users/12')
+      .then(Users => {
+        return Users.json()
+      }).then(data => {
+        let usernamee = data.Users.map((las) => {
+          return (
+            <div key={las.Users}>
+              <p>{las.username}</p>
+            </div>
+
+          )
+        })
+        let teamm = data.Users.map((las) => {
+          return (
+            <div key={las.Users}>
+              <p>{las.team}</p>
+            </div>
+
+          )
+        })
+        let emaill = data.Users.map((las) => {
+          return (
+            <div key={las.Users}>
+              <p>{las.email}</p>
+            </div>
+
+          )
+        })
+        this.setState({teamm: teamm})
+        this.setState({emaill: emaill})
+        this.setState({usernamee: usernamee})
+        console.log('state', this.state.pictures, this.state.names)
+      })
   }
 
   render () {
@@ -84,10 +125,9 @@ export default class CharacterView extends Component {
               <ModalHeader style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}toggle={this.toggle}>My Account</ModalHeader>
               <br />
               <ul style={{listStyle: 'none'}}>
-                <li><p>USERNAME: {this.state.username}</p> </li>
-                <li><p>FIRST NAME: {this.state.name}</p></li>
-                <li><p>LAST NAME: {this.state.lastname}</p></li>
-                <li><p>EMAIL: {this.state.email}</p></li>
+                <li><p>USERNAME: {this.state.usernamee}</p> </li>
+                <li>TEAM: {this.state.teamm}</li>
+                <li><p>EMAIL: {this.state.emaill}</p></li>
               </ul>
             </TabPane>
             <TabPane tabId="2">
@@ -104,7 +144,8 @@ export default class CharacterView extends Component {
               <br/>
               <ul style={{listStyle: 'none'}}>
                 <li>
-                  <img style={{width: '40px', height: '40px'}} src={Sword} />
+                  {this.state.names}
+                  {this.state.pictures}
                   <img style={{width: '40px', height: '40px'}} src={Dagger} />
                   <img style={{width: '40px', height: '40px'}} src={Wand} />
                 </li>
