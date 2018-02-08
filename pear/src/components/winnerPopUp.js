@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Img } from 'reactstrap'
+import coin from '../assets/img/coin.png'
 
-export default class winnerPopUp extends Component {
+export default class WinnerPopUp extends Component {
   constructor (props) {
     super(props)
-    this.state = {Modal: false}
+    this.state = {modal: true}
     // console.log(this.props);//without super(props) the readout will be undefined (but in this case the readout will be the contense of props)
-
-    this.toggle = this.toggle.bind(this)
   }
 
-  toggle () {
+  toggle = () => {
     this.setState({
       modal: !this.state.modal
     })
@@ -19,16 +18,16 @@ export default class winnerPopUp extends Component {
   render () {
     return (
       <div style={styles.WinnerPopUp}>
-        <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
-        <Modal inOpen={this.state.modal} modalTransition={{ timeout: 20 }} backdropTransition={{ timeout: 10 }}
+        {/*<Button color="danger" onClick={this.toggle}>Button</Button>*/}
+        <Modal isOpen={this.state.modal} modalTransition={{ timeout: 20 }} backdropTransition={{ timeout: 10 }}
           toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Modal Title</ModalHeader>
           <ModalBody>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <img src={coin} style={styles.Coin} alt='coin' className="mx-auto d-block" />
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Do Something</Button>{''}
-            <Button color='secondary' onClick={this.toggle}>Cansel</Button>
+            <Button color="primary" onClick={this.toggle}>Collect coin</Button>{''}
+            <Button color='secondary' onClick={this.toggle}>Give coin</Button>
           </ModalFooter>
         </Modal>
       </div>
@@ -41,5 +40,12 @@ let styles = {
     height: '50px',
     width: '50px',
     borderRadius: '50%'
+  },
+
+  Coin: {
+    height: 'auto',
+    width: '80%'
   }
 }
+
+// the link to img (https://pixabay.com/en/bitcoin-blockchain-currency-coin-3125488/)

@@ -5,6 +5,7 @@ import EnemyComponent from './EnemyComponent'
 import PlayerComponent from './PlayerComponent'
 import MARKERS from './Markers'
 import MapView from './MapView'
+import WinnerPopUp from './WinnerPopUp'
 import { Modal, Button } from 'reactstrap'
 
 type Props = {
@@ -51,9 +52,9 @@ export default class FightView extends Component<Props, State> {
   closeFightView = () => this.setState({fightViewClose: false})
 
   renderWinner = () => {
-    return <div style={styles.winnerText}>
-    YOU ARE WINNER!
-    </div>
+    return (
+      <WinnerPopUp />
+    )
   }
 
  handleClickEvent = () => {
