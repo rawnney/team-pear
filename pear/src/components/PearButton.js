@@ -6,10 +6,8 @@ type Props = {
   text: String
 }
 
-export default class FightButton extends Component<Props> {
+export default class PearButton extends Component<Props> {
   render () {
-    return <Button onClick={this.props.onClick}>
-      {this.props.text}
-    </Button>
+    return <Button onClick={this.props.onClick}>{this.props.text}</Button>
   }
 }

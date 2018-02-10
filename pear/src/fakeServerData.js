@@ -7,7 +7,7 @@ const fakeServerData = {
     {
       userid: '1',
       username: 'Rawnney',
-      password: 'hej',
+      password: 'password',
       name: 'Hugo',
       lastname: 'Rune',
       avatar: Robin,
@@ -21,6 +21,7 @@ const fakeServerData = {
     {
       userid: '2',
       username: 'lol',
+      password: 'password',
       name: 'Kalle',
       lastname: 'Rune',
       avatar: Robin,
@@ -34,6 +35,7 @@ const fakeServerData = {
     {
       userid: '3',
       username: 'lol',
+      password: 'password',
       name: 'Orvar',
       lastname: 'Rune',
       avatar: Robin,
@@ -47,6 +49,7 @@ const fakeServerData = {
     {
       userid: '4',
       username: 'lol',
+      password: 'password',
       name: 'Stina',
       lastname: 'Rune',
       avatar: Robin,

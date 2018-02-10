@@ -1,4 +1,4 @@
-// @flow
+
 import React, { Component } from 'react'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
@@ -9,43 +9,39 @@ import fakeServerData from '../fakeServerData'
 let {Pear} = Images
 
 
+// get user som props
+
 export default class GameView extends Component<Props, State> {
   // onödig constructor
   constructor (props) {
     super(props)
     this.state = {
-      user: {fakeServerData},
+      user: null, //{fakeServerData},
       loggedIn: false,
-      monstersKilled: 0,
-      coins: 0
+
     }
   }
 
   render () {
-    let {monstersKilled, coins} = this.state
-    let notLoggedIn = <Home setLoggedIn={() => this.setState({loggedIn: true, user: fakeServerData.user})} />
+    let {monstersKilled, coins, username} = this.state
+    let notLoggedIn = <Home setLoggedIn={this.getUser} /> // fakeServerData.user
     let {loggedIn, user} = this.state
     if (loggedIn === false) return notLoggedIn
     return <div>
       <CharacterView
-        name={fakeServerData.user[0].name}
-        lastname={fakeServerData.user[0].lastname}
-        username={fakeServerData.user[0].username}
-        email={fakeServerData.user[0].email}
-
-        sword={fakeServerData.user[0].sword}
-        blockChance={fakeServerData.user[0].blockChance}
-        magic={fakeServerData.user[0].magic}
+        user={fakeServerData.user[0]}
+        signOut={this.signOut}
       />
-      <MapView {...this.state} resetFight={() => this.setState({winnerIsSet: false, enemyHP: 100, playerHP: 100, monstersKilled: monstersKilled + 1, coins: coins + 2})}/>
-      <div style={{fontSize: '50px', backgroundColor: 'red'}}>
-        <div>Kills: {monstersKilled}</div>
-        <div>Coins:{coins}</div>
-        </div>
+      <MapView resetFight={(monstersKilled) => this.setState({winnerIsSet: false, enemyHP: 100, playerHP: 100, monstersKilled, coins: coins + 2})}/>
     </div>
   }
 
   signOut = () => {
     this.setState({loggedIn: false, user: {}})
   }
+
+  getUser = (user) => {
+    {(username) => this.setState({loggedIn: true, user: username})}
+  }
+
 }

@@ -6,7 +6,7 @@ import Monster from '../assets/img/icons/monster-icon.png'
 type Props = {
   name: String,
   enemyHP: Number,
-  // avatar: Image
+  avatar: Object
 }
 
 export default class EnemyComponent extends Component<Props> {

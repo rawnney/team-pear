@@ -4,7 +4,7 @@ import { geolocated } from 'react-geolocated'
 import {Modal, Button} from 'reactstrap'
 import fakeServerData from '../fakeServerData'
 import EnemyComponent from './EnemyComponent'
-import FightButton from './FightButton'
+import PearButton from './PearButton'
 import Pinjump from './Pinjump';
 import Markers from './Markers'
 import Images from '../libs/Imgs'
@@ -29,7 +29,6 @@ class MapView extends Component<Props, State> {
   constructor (props) {
     super(props)
     this.state = {
-      loggedIn: false,
       user: fakeServerData.user,
       monster: fakeServerData.monster,
       activeMonsterName: undefined,
@@ -38,7 +37,6 @@ class MapView extends Component<Props, State> {
       monsterMarkers: [],
       didSetMonsters: false,
       fightViewOpened: false,
-      monsterClose: false,
       winnerIsSet: false,
       enemyHP: 10,
       playerHP: 100,
@@ -57,7 +55,7 @@ class MapView extends Component<Props, State> {
     let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP, activeMonsterName, activeMonsterAvatar} = this.state
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
-    if (!isGeolocationEnabled) { /* handle error */ }
+    if (!isGeolocationEnabled) return <div style={styles.infoMsg}>You must enable Geolocation to play this game!</div>
     if (!coords) return <Pinjump />
     return <div>
       <Markers
@@ -78,7 +76,7 @@ class MapView extends Component<Props, State> {
           {winnerIsSet ? this.renderWinner() : <div />}
           <PlayerComponent playerHP={playerHP} name={fakeServerData.user[0].name} avatar={fakeServerData.user[0].avatar}/>
           <div style={styles.fightButton}>
-            <FightButton onClick={this.handleClickEvent} text={'Attack'} />
+            <PearButton onClick={this.handleClickEvent} text={'Attack'} />
           </div>
         </div>
       </Modal>
@@ -117,12 +115,12 @@ class MapView extends Component<Props, State> {
   }
 
   handleClickEvent = () => {
-    let {enemyHP, playerHP} = this.state
+    let {enemyHP, playerHP, monstersKilled} = this.state
     if (enemyHP > 0) {
       this.setState({enemyHP: enemyHP - 10}, () => {
         if (enemyHP === 10 || playerHP === 10) {
           this.setState({winnerIsSet: true})
-          this.props.resetFight()
+          this.props.resetFight({monstersKilled: monstersKilled + 1})
         }
       })
     }
