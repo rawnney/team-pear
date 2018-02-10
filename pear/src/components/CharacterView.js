@@ -77,7 +77,6 @@ export default class CharacterView extends Component {
         this.setState({teamm: teamm})
         this.setState({emaill: emaill})
         this.setState({usernamee: usernamee})
-        console.log('state', this.state.pictures, this.state.names)
       })
   }
 
