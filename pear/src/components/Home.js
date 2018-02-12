@@ -18,7 +18,8 @@ export default class Home extends Component {
       modal: true,
       username: '',
       password: '',
-      email: ''
+      email: '',
+      team: ''
 
     }
   }
@@ -55,16 +56,16 @@ export default class Home extends Component {
  onSubmit = (e) => {
    e.preventDefault()
    // get our form data out of state
-   const { username, password, email } = this.state
+   const { username, password, email, team } = this.state
 
-   axios.post('http://localhost:3000/api/users', { username, password, email })
+   axios.post('http://localhost:3000/api/users', { username, password, email, team })
      .then((result) => {
        // access the results here....
      })
  }
 
  render () {
-   const { username, password, email } = this.state
+   const { username, password, email, team } = this.state
    let {togglemod} = this.props
    let {loggedIn, modal, user} = this.state
    return (
@@ -165,9 +166,9 @@ export default class Home extends Component {
                          <Col sm={{ size: 8 }}>
                            <FormGroup check>
                              <Label check>
-                               <Input color="danger" type="checkbox" id="checkbox2" />{'Team Red'}
+                               <Input type="checkbox" name="team" onChange={this.onChange} value={team} id="team" />{'Team Red'}
                                <br />
-                               <Input color="primary" type="checkbox" id="checkbox2" />{'Team Blue'}
+                               <Input type="checkbox" name="team" value={team} onChange={this.onChange} id="team" />{'Team Blue'}
                              </Label>
                            </FormGroup>
                          </Col>
