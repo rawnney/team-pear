@@ -48,7 +48,6 @@ export default class FightView extends Component<Props, State> {
     </div>
   }
 
-<<<<<<< HEAD
   handleClickEvent = () => {
     let {enemyHP, playerHP} = this.state
     if (enemyHP > 0) {
@@ -60,19 +59,6 @@ export default class FightView extends Component<Props, State> {
       })
     }
   }
-=======
- handleClickEvent = () => {
-   let {enemyHP, playerHP} = this.state
-   if (enemyHP > 0) {
-     this.setState({enemyHP: enemyHP - 10}, () => {
-       if (enemyHP === 10 || playerHP === 10) {
-         this.setState({winnerIsSet: true})
-       }
-     })
-     console.log(enemyHP, playerHP)
-   }
- }
->>>>>>> master
 }
 
 let styles = {
