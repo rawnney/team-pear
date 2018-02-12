@@ -51,7 +51,7 @@ export default class CharacterView extends Component {
   }
 
   componentDidMount () {
-    fetch('http://localhost:3000/api/users/12')
+    fetch('http://localhost:5000/api/users/2')
       .then(Users => {
         return Users.json()
       }).then(data => {
