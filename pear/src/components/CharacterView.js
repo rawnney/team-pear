@@ -24,7 +24,7 @@ export default class CharacterView extends Component {
       names: [],
       last: [],
       usernamee: undefined,
-      teamm: undefined
+      teamm: undefined,
 
       activeTab: '1'
     }
@@ -83,9 +83,9 @@ export default class CharacterView extends Component {
         this.setState({emaill: emaill})
         this.setState({usernamee: usernamee})
       })
-  getUser = (user) => {
-    this.setState({user})
   }
+
+
 
   render () {
     let {activeTab} = this.state

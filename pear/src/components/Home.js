@@ -18,11 +18,6 @@ export default class Home extends Component {
     super(props)
     this.state = {
       loggedIn: false,
-      modal: true,
-      username: '',
-      password: '',
-      email: '',
-      team: ''
 
       modal: false,
       activeTab: '1'
@@ -59,21 +54,6 @@ export default class Home extends Component {
       })
     }
   }
-
-  // validateForm () {
-  //   return this.state.email.length > 0 && this.state.password.length > 0
-  // }
-  onChange = (e) => {
-
-    const state = this.state
-    state[e.target.name] = e.target.value
-    this.setState(state)
-  }
-
- onSubmit = (e) => {
-   e.preventDefault()
-   // get our form data out of state
-   const { username, password, email, team } = this.state
 
   render () {
     let {modal, activeTab} = this.state
