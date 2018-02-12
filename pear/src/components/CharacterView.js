@@ -34,13 +34,8 @@ export default class CharacterView extends Component {
     }
   }
 
-  getUser = (user) => {
-    this.setState({user})
-  }
-
   render () {
-    let {activeTab} = this.state
-    let {sword, blockChance, magic, monstersKilled, coins, user} = this.state
+    let {activeTab, monstersKilled, coins, getUser} = this.state
     return (
       <div>
         <nav style={styles.buttonWrapper}>
@@ -78,16 +73,12 @@ export default class CharacterView extends Component {
             <TabPane tabId="1">
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>My Account</ModalHeader>
               <br />
-              {user ? this.renderUserInfo() : <div/>}
+              {getUser ? this.renderUserInfo() : <div/>}
             </TabPane>
             <TabPane tabId="2">
               <ModalHeader toggle={this.toggle}>Skills</ModalHeader>
               <br/>
-              <ul style={{listStyle: 'none'}}>
-                <li><p>Melee damage: {sword}</p> </li>
-                <li><p>Block chance: {blockChance}</p></li>
-                <li><p>Spell damage: {magic}</p></li>
-              </ul>
+              {getUser ? this.renderUserSkills() : <div />}
             </TabPane>
             <TabPane tabId="3">
               <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
@@ -157,17 +148,25 @@ export default class CharacterView extends Component {
     )
   }
 
+  renderUserSkills = () => {
+    let {getUser} = this.props
+    let {sword, blockChance, magic} = getUser
+    return <ul style={{listStyle: 'none'}}>
+      <li><p>Melee damage: {sword}</p> </li>
+      <li><p>Block chance: {blockChance}</p></li>
+      <li><p>Spell damage: {magic}</p></li>
+    </ul>
+  }
+
   renderUserInfo = () => {
-    let {user} = this.state
-    let {username, name, lastname, email} = user
-    return (
-      <ul style={{listStyle: 'none'}}>
-        <li><p>Username: {username}</p> </li>
-        <li><p>First name: {name}</p></li>
-        <li><p>Last name: {lastname}</p></li>
-        <li><p>Email: {email}</p></li>
-      </ul>
-    )
+    let {getUser} = this.state
+    let {username, name, lastname, email} = getUser
+    return <ul style={{listStyle: 'none'}}>
+      <li><p>Username: {username}</p> </li>
+      <li><p>First name: {name}</p></li>
+      <li><p>Last name: {lastname}</p></li>
+      <li><p>Email: {email}</p></li>
+    </ul>
   }
   // <div>
   //     <br/>

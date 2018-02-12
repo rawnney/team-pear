@@ -17,6 +17,7 @@ export default class GameView extends Component<Props, State> {
     super(props)
     this.state = {
       loggedIn: false,
+      user: undefined
     }
   }
 
@@ -26,11 +27,12 @@ export default class GameView extends Component<Props, State> {
     if (!loggedIn) return notLoggedIn
     return <div>
       <CharacterView
-        getUser={this.getUser}
+        getUser={user}
         signOut={this.signOut}
       />
-      <MapView resetFight={this.resetFight}
-
+      <MapView
+      getUser={user}
+      resetFight={this.resetFight}
       />
     </div>
   }

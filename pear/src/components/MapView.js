@@ -39,7 +39,8 @@ class MapView extends Component<Props, State> {
       enemyHP: 10,
       playerHP: 100,
       monsterCount: fakeServerData.monster.length,
-      monstersKilled: 0
+      monstersKilled: 0,
+      user: this.props.getUser
     }
   }
 
@@ -51,8 +52,8 @@ class MapView extends Component<Props, State> {
 
   render () {
     let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP, activeMonsterName, activeMonsterAvatar, user} = this.state
-    let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
-    if (!!user) return <div/>
+    let {coords, isGeolocationAvailable, isGeolocationEnabled, getUser} = this.props
+    // if (!!user) return <div/>
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) return <div style={styles.infoMsg}>You must enable Geolocation to play this game!</div>
     if (!coords) return <Pinjump />
@@ -73,7 +74,7 @@ class MapView extends Component<Props, State> {
           {winnerIsSet ? this.renderExit() : <div />}
           <EnemyComponent enemyHP={enemyHP} name={activeMonsterName} avatar={activeMonsterAvatar}/>
           {winnerIsSet ? this.renderWinner() : <div />}
-          <PlayerComponent playerHP={playerHP} username={user} avatar={user}/>
+          <PlayerComponent playerHP={playerHP} username={getUser.username} avatar={getUser.avatar}/>
           <div style={styles.fightButton}>
             <Button onClick={this.handleClickEvent} color='danger'>Attack</Button>
           </div>
