@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Modal, ModalHeader, Button, Form, FormGroup, Label, Input, FormText, Col, Nav, NavItem, NavLink, TabContent, TabPane, Table, ModalFooter, ModalBody} from 'reactstrap'
 import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom'
+import NoRegComponent from './NoRegComponent'
 import SignUpComponent from './SignUpComponent'
 import Welcome from './Welcome'
 import Database from '../Database'
@@ -21,24 +22,21 @@ export default class Home extends Component {
     }
   }
 
-  myCallback = (dataFromChild) => {
-    let {response} = this.state
-    let clear = null
-    if (response === null || response !== dataFromChild) return this.setState({response: dataFromChild})
-    if (response === dataFromChild) return this.setState({response: clear})
+  signIn = (user) => {
+    let {getUser} = this.props
+    this.setState({user, modal: false})
+    if (getUser) getUser(user)
   }
 
-  signIn = (e, user) => {
-    e.preventDefault()
-    let {loggedIn, tempUser} = this.state
-    this.props.setLoggedIn(tempUser) // fakeServerData.user
-    if (loggedIn === false) {
-      return this.setState({loggedIn: true, user: tempUser}) // fakeServerData.user
-    }
+  setLoggedIn = () => {
+    let {loggedIn} = this.state
+    let {setLoggedIn} = this.props
+    this.setState({loggedIn: true})
+    if (setLoggedIn) setLoggedIn(loggedIn)
   }
 
-  signOut () {
-    this.setState({user: null})
+  signOut = () => {
+    this.setState({user: null, loggedIn: false})
   }
 
   togglemod = () => {
@@ -60,18 +58,15 @@ export default class Home extends Component {
   // }
 
   render () {
-    let {} = this.props
-    let {loggedIn, modal, user, activeTab, tempUser} = this.state
+    let {modal, activeTab} = this.state
     return <main style={styles.wrapper}>
       <header>
         <img style={styles.logo} src={Pear} />
         <h1>Pear Game</h1>
-        {this.renderUser()}
-        {tempUser ? this.renderTempUser() : <div />}
       </header>
       <section style={styles.section}>
         <div style={styles.buttoncontainer}>
-          <Button style={styles.button} onClick={this.togglemod} color="success">Sign In / Sign Up</Button>
+          {this.renderLoginExit()}
           <Button style={styles.button} onClick={this.togglemod} color="primary">Leaderboard</Button>
           <Button style={styles.button} onClick={this.togglemod} color="info">Info</Button>
         </div>
@@ -90,16 +85,26 @@ export default class Home extends Component {
               Sign up
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink className={classnames({ active: activeTab === '3' })} onClick={() => { this.toggle('3') }}>
+              Play now!
+              </NavLink>
+            </NavItem>
           </Nav>
           <TabContent activeTab={activeTab}>
             <TabPane tabId="1">
               <ModalBody>
-                <LoginForm onSignIn={this.signIn}/>
+                <LoginForm onSignIn={this.signIn} />
               </ModalBody>
             </TabPane>
             <TabPane tabId="2">
               <ModalBody>
                 <SignUpComponent/>
+              </ModalBody>
+            </TabPane>
+            <TabPane tabId="3">
+              <ModalBody>
+                <NoRegComponent onSignIn={this.signIn} />
               </ModalBody>
             </TabPane>
           </TabContent>
@@ -111,11 +116,10 @@ export default class Home extends Component {
     </main>
   }
 
-  renderUser () {
-    let {user, tempUser} = this.state
-    if (!user || !tempUser) return <div />
-    if (user) return {user}
-    if (!tempUser) return {tempUser}
+  renderLoginExit = () => {
+    let {user} = this.state
+    if (user != null) return <Welcome user={user.username} goToGame={this.setLoggedIn} signOut={this.signOut}/>
+    else return <Button style={styles.button} onClick={this.togglemod} color="success">Sign In / Sign Up</Button>
   }
 }
 

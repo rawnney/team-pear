@@ -16,32 +16,46 @@ export default class GameView extends Component<Props, State> {
   constructor (props) {
     super(props)
     this.state = {
-      user: null, //{fakeServerData},
       loggedIn: false,
-
     }
   }
 
   render () {
-    let {monstersKilled, coins, username} = this.state
-    let notLoggedIn = <Home setLoggedIn={this.getUser} /> // fakeServerData.user
     let {loggedIn, user} = this.state
-    if (loggedIn === false) return notLoggedIn
+    let notLoggedIn = <Home {...this.state} getUser={this.getUser} setLoggedIn={this.setLoggedIn}/>
+    if (!loggedIn) return notLoggedIn
     return <div>
       <CharacterView
-        user={fakeServerData.user[0]}
+        getUser={this.getUser}
         signOut={this.signOut}
       />
-      <MapView resetFight={(monstersKilled) => this.setState({winnerIsSet: false, enemyHP: 100, playerHP: 100, monstersKilled, coins: coins + 2})}/>
+      <MapView resetFight={this.resetFight}
+
+      />
     </div>
   }
 
+  resetFight = (monstersKilled, coins) => {
+    this.setState({monstersKilled, coins: coins + 2})
+  }
+
+  setLoggedIn = (loggedIn) => {
+    this.setState({loggedIn: true})
+  }
+
   signOut = () => {
-    this.setState({loggedIn: false, user: {}})
+    this.setState({loggedIn: false, user: null})
   }
 
   getUser = (user) => {
-    {(username) => this.setState({loggedIn: true, user: username})}
+    this.setState({user})
   }
 
 }
+//
+// myCallback = (dataFromChild) => {
+//   let {response} = this.state
+//   let clear = null
+//   if (response === null || response !== dataFromChild) return this.setState({response: dataFromChild})
+//   if (response === dataFromChild) return this.setState({response: clear})
+// }

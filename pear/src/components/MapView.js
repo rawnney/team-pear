@@ -4,7 +4,6 @@ import { geolocated } from 'react-geolocated'
 import {Modal, Button} from 'reactstrap'
 import fakeServerData from '../fakeServerData'
 import EnemyComponent from './EnemyComponent'
-import PearButton from './PearButton'
 import Pinjump from './Pinjump';
 import Markers from './Markers'
 import Images from '../libs/Imgs'
@@ -29,7 +28,6 @@ class MapView extends Component<Props, State> {
   constructor (props) {
     super(props)
     this.state = {
-      user: fakeServerData.user,
       monster: fakeServerData.monster,
       activeMonsterName: undefined,
       activeMonsterAvatar: undefined,
@@ -52,8 +50,9 @@ class MapView extends Component<Props, State> {
   }
 
   render () {
-    let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP, activeMonsterName, activeMonsterAvatar} = this.state
+    let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP, activeMonsterName, activeMonsterAvatar, user} = this.state
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
+    if (!!user) return <div/>
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) return <div style={styles.infoMsg}>You must enable Geolocation to play this game!</div>
     if (!coords) return <Pinjump />
@@ -74,9 +73,9 @@ class MapView extends Component<Props, State> {
           {winnerIsSet ? this.renderExit() : <div />}
           <EnemyComponent enemyHP={enemyHP} name={activeMonsterName} avatar={activeMonsterAvatar}/>
           {winnerIsSet ? this.renderWinner() : <div />}
-          <PlayerComponent playerHP={playerHP} name={fakeServerData.user[0].name} avatar={fakeServerData.user[0].avatar}/>
+          <PlayerComponent playerHP={playerHP} username={user} avatar={user}/>
           <div style={styles.fightButton}>
-            <PearButton onClick={this.handleClickEvent} text={'Attack'} />
+            <Button onClick={this.handleClickEvent} color='danger'>Attack</Button>
           </div>
         </div>
       </Modal>

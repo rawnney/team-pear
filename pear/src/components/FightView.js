@@ -1,7 +1,6 @@
 // @ flow
 import React, { Component } from 'react'
 import fakeServerData from '../fakeServerData';
-import PearButton from './PearButton'
 import EnemyComponent from './EnemyComponent'
 import PlayerComponent from './PlayerComponent'
 import MARKERS from './Markers'
@@ -37,7 +36,7 @@ export default class FightView extends Component<Props, State> {
       {winnerIsSet ? this.renderWinner() : <div />}
       <PlayerComponent playerHP={playerHP} name={fakeServerData.user.name}/>
       <div style={styles.fightButton}>
-        <PearButton onClick={this.handleClickEvent} text={'Attack'} />
+        <Button onClick={this.handleClickEvent} text={'Attack'} />
       </div>
     </div>
   }

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import fakeServerData from '../fakeServerData'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
-import PearButton from './PearButton'
 
 let { Sword, Dagger, Shield, Armor, Wand } = Images
 
@@ -17,7 +15,9 @@ export default class CharacterView extends Component {
   }
 
   signOut = () => {
+    let {loggedIn} = this.state
     this.setState({loggedIn: false, user: {}})
+    this.props.signOut(loggedIn)
   }
 
   togglemod = () => {
@@ -34,12 +34,13 @@ export default class CharacterView extends Component {
     }
   }
 
+  getUser = (user) => {
+    this.setState({user})
+  }
+
   render () {
-    // if (!coords) return <div />
     let {activeTab} = this.state
-    // let {fakeServerData} = this.props
-    let {user} = this.props
-    let {sword, blockChance, magic, monstersKilled, coins, username, name, lastname, email} = user
+    let {sword, blockChance, magic, monstersKilled, coins, user} = this.state
     return (
       <div>
         <nav style={styles.buttonWrapper}>
@@ -77,12 +78,7 @@ export default class CharacterView extends Component {
             <TabPane tabId="1">
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>My Account</ModalHeader>
               <br />
-              <ul style={{listStyle: 'none'}}>
-                <li><p>Username: {username}</p> </li>
-                <li><p>First name: {name}</p></li>
-                <li><p>Last name: {lastname}</p></li>
-                <li><p>Email: {email}</p></li>
-              </ul>
+              {user ? this.renderUserInfo() : <div/>}
             </TabPane>
             <TabPane tabId="2">
               <ModalHeader toggle={this.toggle}>Skills</ModalHeader>
@@ -153,13 +149,32 @@ export default class CharacterView extends Component {
             </TabPane>
           </TabContent>
           <ModalFooter>
-            <Button color="danger" onClick={this.togglemod} data-dismiss="modal">Close</Button>
-            <PearButton text={'Sign out'} onClick={this.props.signOut} />
+            <Button color="info" onClick={this.togglemod} data-dismiss="modal">Close</Button>
+            <Button color="danger" onClick={this.signOut}>Sign out</Button>
           </ModalFooter>
         </Modal>
       </div>
     )
   }
+
+  renderUserInfo = () => {
+    let {user} = this.state
+    let {username, name, lastname, email} = user
+    return (
+      <ul style={{listStyle: 'none'}}>
+        <li><p>Username: {username}</p> </li>
+        <li><p>First name: {name}</p></li>
+        <li><p>Last name: {lastname}</p></li>
+        <li><p>Email: {email}</p></li>
+      </ul>
+    )
+  }
+  // <div>
+  //     <br/>
+  //     <p>Register to save your progress!</p>
+  //     <Button onClick={this.props.saveProgress} color="success">Save progress</Button>
+  //   </div>
+  // }
 }
 
 let styles = {

@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
+import {Button} from 'reactstrap'
 
-const Welcome = ({user, onSignOut}) => {
-  // This is a dumb "stateless" component
-  return (
-    <div>
-   Welcome <strong>{user.username}</strong>!
-      <button type="button" className="btn btn-danger ribbon" onClick={onSignOut} >Sign Out</button>
+export default class Welcome extends Component {
+  render () {
+    return <div>
+      <h3>Welcome {this.props.user}!</h3>
+      <Button style={styles.button} onClick={this.props.goToGame} color="success">Play</Button>
+      <Button style={styles.button} onClick={this.props.signOut} color="danger">Sign out</Button>
     </div>
-  )
+  }
 }
-export default Welcome
+
+let styles = {
+  button: {
+    margin: '10px',
+    width: '200px'
+  }
+}

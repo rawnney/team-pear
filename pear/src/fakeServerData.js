@@ -1,9 +1,25 @@
+import React from 'react'
 import Images from './libs/Imgs'
 
 let {Monster, Robin} = Images
 
-const fakeServerData = {
-  user: [
+let fakeServerData = {
+  users: [
+    {
+      userid: '0',
+      username: undefined,
+      password: undefined,
+      name: 'Love',
+      lastname: 'Stenkastare',
+      avatar: Robin,
+      email: undefined,
+      sword: '25%',
+      blockChance: '25%',
+      magic: '25%',
+      monstersKilled: '0',
+      coins: '0',
+      type: 'temp'
+    },
     {
       userid: '1',
       username: 'Rawnney',
@@ -16,7 +32,8 @@ const fakeServerData = {
       blockChance: '100%',
       magic: '100%',
       monstersKilled: '25',
-      coins: '0'
+      coins: '0',
+      type: 'full'
     },
     {
       userid: '2',
@@ -30,7 +47,8 @@ const fakeServerData = {
       blockChance: '100%',
       magic: '100%',
       monstersKilled: '25',
-      coins: '0'
+      coins: '0',
+      type: 'full'
     },
     {
       userid: '3',
@@ -44,7 +62,8 @@ const fakeServerData = {
       blockChance: '100%',
       magic: '100%',
       monstersKilled: '25',
-      coins: '0'
+      coins: '0',
+      type: 'full'
     },
     {
       userid: '4',
@@ -58,7 +77,8 @@ const fakeServerData = {
       blockChance: '100%',
       magic: '100%',
       monstersKilled: '25',
-      coins: '0'
+      coins: '0',
+      type: 'full'
     }],
 
   monster: [

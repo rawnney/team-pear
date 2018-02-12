@@ -8,7 +8,7 @@ export default class PlayerComponent extends Component {
     return (
       <div className='PlayerWrapper' style={styles.wrapper}>
         <img src={this.props.avatar} style={styles.avatar} alt='Avatar'/>
-        <h3> {this.props.name} </h3>
+        <h3> {this.props.username} </h3>
         <h3> {this.props.playerHP} / 100 </h3>
       </div>
     )

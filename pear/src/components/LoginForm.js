@@ -6,17 +6,7 @@ export default class LoginForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      user: fakeServerData.user,
-      tempUser: {
-        tempName: null,
-        tempPass: null
-      }
-      // tempName: null,
-      // tempPass: null
-      // user: [{
-      //   username: null,
-      //   password: null
-      // }]
+      user: fakeServerData.users[0]
     }
   }
 
@@ -32,38 +22,45 @@ export default class LoginForm extends Component {
   //     if (user[index].username === user[index].password) return console.log(username, password)
   //   })
   // }
+
+  // this.check()
+  //  if (username === null || password === null) return
+
+  // validateLoginIn = () => {
+  //   if () return
+  // }
+
   handleSignIn = (e) => {
-    // e.preventDefault()
-    let {tempUser} = this.state
-    // this.check()
-    //  if (username === null || password === null) return
-    this.props.onSignIn(tempUser)
+    e.preventDefault()
+    let {user} = this.state
+    let {onSignIn} = this.props
+    // this.validateLoginIn(password, username)
+    this.setState({user})
+    if (user) onSignIn(user)
   }
 
   handleUsername = (name) => {
-    let {tempUser: {tempPass}} = this.state
-    this.setState({tempUser: {tempName: name.target.value, tempPass}})
+    this.setState({user: {username: name.target.value}})
   }
 
   handlePassword = (pass) => {
-    let {tempUser: {tempName}} = this.state
-    this.setState({tempUser: {tempPass: pass.target.value, tempName}})
+    this.setState({user: {password: pass.target.value}})
   }
 
   render () {
-    let {tempName, tempPass} = this.state
+    let {username, password} = this.state
     return (
       <Form onSubmit={this.handleSignIn}>
         <FormGroup row>
           <Label for="username" sm={4}>Username</Label>
           <Col sm={8}>
-            <Input type="text" onChange={this.handleUsername} value={tempName} placeholder="Your Username" />
+            <Input type="text" onChange={this.handleUsername} value={username} placeholder="Your Username" />
           </Col>
         </FormGroup>
         <FormGroup row>
           <Label for="Password" sm={4}>Password</Label>
           <Col sm={8}>
-            <Input type="password" onChange={this.handlePassword} value={tempPass} placeholder="*******" />
+            <Input type="password" onChange={this.handlePassword} value={password} placeholder="*******" />
           </Col>
         </FormGroup>
         <FormGroup>
