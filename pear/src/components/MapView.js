@@ -36,11 +36,12 @@ class MapView extends Component<Props, State> {
       didSetMonsters: false,
       fightViewOpened: false,
       winnerIsSet: false,
-      enemyHP: 10,
+      enemyHP: 10, // Set to 100!
       playerHP: 100,
       monsterCount: fakeServerData.monster.length,
-      monstersKilled: 0,
-      user: this.props.getUser
+      monstersKilled: this.props.setUser.monstersKilled,
+      user: this.props.setUser,
+      coins: this.props.setUser.coins
     }
   }
 
@@ -52,8 +53,8 @@ class MapView extends Component<Props, State> {
 
   render () {
     let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP, activeMonsterName, activeMonsterAvatar, user} = this.state
-    let {coords, isGeolocationAvailable, isGeolocationEnabled, getUser} = this.props
-    // if (!!user) return <div/>
+    let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
+    if (!user) return <div/>
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) return <div style={styles.infoMsg}>You must enable Geolocation to play this game!</div>
     if (!coords) return <Pinjump />
@@ -74,7 +75,7 @@ class MapView extends Component<Props, State> {
           {winnerIsSet ? this.renderExit() : <div />}
           <EnemyComponent enemyHP={enemyHP} name={activeMonsterName} avatar={activeMonsterAvatar}/>
           {winnerIsSet ? this.renderWinner() : <div />}
-          <PlayerComponent playerHP={playerHP} username={getUser.username} avatar={getUser.avatar}/>
+          <PlayerComponent playerHP={playerHP} username={user.username} avatar={user.avatar}/>
           <div style={styles.fightButton}>
             <Button onClick={this.handleClickEvent} color='danger'>Attack</Button>
           </div>
@@ -85,14 +86,16 @@ class MapView extends Component<Props, State> {
 
 
   toggleFightView = (id) => {
-    let {fightViewOpened} = this.state
+    let {fightViewOpened, user, monstersKilled, coins} = this.state
+    let {updateUser} = this.props
     console.log(id);
     if (this.state.enemyHP === 0) {
-      // this.setActiveMonsterCoins(id)
+    // TODO: randomize coindrop (depending on monster)  // this.setActiveMonsterCoins(id)
       this.killCounter()
       this.incCoins(id)
       this.removeMonster(id)
-    return this.setState({fightViewOpened: !fightViewOpened, enemyHP: 100, winnerIsSet: false, })
+      updateUser(monstersKilled, coins)
+    return this.setState({fightViewOpened: !fightViewOpened, enemyHP: 10, winnerIsSet: false, }) // Set to 100!
     } else {
     this.setActiveMonsterName(id)
     this.setActiveMonsterAvatar(id)
@@ -102,7 +105,7 @@ class MapView extends Component<Props, State> {
 
   setActiveMonsterName = (id) => {return fakeServerData.monster[id].name}
   setActiveMonsterAvatar = (id) => {return fakeServerData.monster[id].avatar}
-  // setActiveMonsterCoins = (id) => {return fakeServerData.monster[id].coins}
+  // TODO: randomize coindrop  // setActiveMonsterCoins = (id) => {return fakeServerData.monster[id].coins}
 
   renderWinner = () => {
     return <div style={styles.winnerText}>
@@ -115,12 +118,11 @@ class MapView extends Component<Props, State> {
   }
 
   handleClickEvent = () => {
-    let {enemyHP, playerHP, monstersKilled} = this.state
+    let {enemyHP, playerHP} = this.state
     if (enemyHP > 0) {
       this.setState({enemyHP: enemyHP - 10}, () => {
         if (enemyHP === 10 || playerHP === 10) {
           this.setState({winnerIsSet: true})
-          this.props.resetFight({monstersKilled: monstersKilled + 1})
         }
       })
     }
@@ -133,7 +135,7 @@ class MapView extends Component<Props, State> {
 
   incCoins = (id) => {
     let {coins} = this.state
-    this.setState({coins: coins + 2 }) // 1 * id
+    this.setState({coins: coins + 2 })
   }
 
   removeMonster = (id, latitude, longitude) => {
@@ -141,6 +143,8 @@ class MapView extends Component<Props, State> {
       monsterMarkers.splice(id, 1)
     this.setState({monsterMarkers: monsterMarkers, monsterCount: monsterCount -1})
   }
+
+// TODO: Respawn monsters!
 
   // respawnMonster = () => {
   //   let {monsterCount, monsterMarkers} = this.state
@@ -166,6 +170,7 @@ class MapView extends Component<Props, State> {
     this.setState({monsterMarkers: monstersToRender, didSetMonsters: true})
   }
 
+  // TODO: If we don't want the ?-icon we can randomize icons
   // randomIcon = () => {
   // let images = [Monster, Robin]
   //   return images[Math.floor(Math.random() * images.length)]

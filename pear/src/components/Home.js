@@ -23,20 +23,26 @@ export default class Home extends Component {
   }
 
   signIn = (user) => {
-    let {getUser} = this.props
+    let {setUser} = this.props
     this.setState({user, modal: false})
-    if (getUser) getUser(user)
+    if (setUser) setUser(user)
   }
 
   setLoggedIn = () => {
-    let {loggedIn} = this.state
     let {setLoggedIn} = this.props
-    this.setState({loggedIn: true})
-    if (setLoggedIn) setLoggedIn(loggedIn)
+    this.setState({loggedIn: setLoggedIn()})
   }
 
-  signOut = () => {
+  signOut = (user) => {
+    this.saveProgress()
     this.setState({user: null, loggedIn: false})
+  }
+
+  saveProgress = (user) => {
+    let {monstersKilled, coins} = this.state
+    let {updateUser} = this.props
+    updateUser(monstersKilled, coins)
+    this.setState({user: {...user, monstersKilled, coins}})
   }
 
   togglemod = () => {
@@ -53,6 +59,7 @@ export default class Home extends Component {
     }
   }
 
+  // TODO: Validate with db
   // validateForm () {
   //   return this.state.email.length > 0 && this.state.password.length > 0
   // }
@@ -71,7 +78,6 @@ export default class Home extends Component {
           <Button style={styles.button} onClick={this.togglemod} color="info">Info</Button>
         </div>
       </section>
-      {/* modal starts */}
       <Modal style={{display: 'flex', justifyContent: 'center'}} isOpen={modal} togglemod={this.togglemod} className={this.props.className}>
         <ModalHeader>
           <Nav tabs>

@@ -8,11 +8,7 @@ import Images from '../libs/Imgs'
 import fakeServerData from '../fakeServerData'
 let {Pear} = Images
 
-
-// get user som props
-
 export default class GameView extends Component<Props, State> {
-  // onödig constructor
   constructor (props) {
     super(props)
     this.state = {
@@ -23,22 +19,19 @@ export default class GameView extends Component<Props, State> {
 
   render () {
     let {loggedIn, user} = this.state
-    let notLoggedIn = <Home {...this.state} getUser={this.getUser} setLoggedIn={this.setLoggedIn}/>
-    if (!loggedIn) return notLoggedIn
+    let notLoggedIn = <Home setUser={this.setUser} setLoggedIn={this.setLoggedIn}/>
+    if (!loggedIn || !user) return notLoggedIn
     return <div>
       <CharacterView
-        getUser={user}
+      // TODO: items  // updateUser={this.updateUser}
+        setUser={user}
         signOut={this.signOut}
       />
       <MapView
-      getUser={user}
-      resetFight={this.resetFight}
+      setUser={user}
+      updateUser={this.updateUser}
       />
     </div>
-  }
-
-  resetFight = (monstersKilled, coins) => {
-    this.setState({monstersKilled, coins: coins + 2})
   }
 
   setLoggedIn = (loggedIn) => {
@@ -46,18 +39,16 @@ export default class GameView extends Component<Props, State> {
   }
 
   signOut = () => {
+    // TODO: save user
     this.setState({loggedIn: false, user: null})
   }
 
-  getUser = (user) => {
+  setUser = (user) => {
     this.setState({user})
   }
 
+  updateUser = (monstersKilled, coins) => {
+    let {user} = this.state
+    this.setState({user: {...user, monstersKilled: monstersKilled + 1, coins: coins + 2}})
+  }
 }
-//
-// myCallback = (dataFromChild) => {
-//   let {response} = this.state
-//   let clear = null
-//   if (response === null || response !== dataFromChild) return this.setState({response: dataFromChild})
-//   if (response === dataFromChild) return this.setState({response: clear})
-// }

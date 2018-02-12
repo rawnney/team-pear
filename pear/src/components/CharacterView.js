@@ -10,7 +10,9 @@ export default class CharacterView extends Component {
     super(props)
     this.state = {
       modal: false,
-      activeTab: '1'
+      activeTab: '1',
+      user: this.props.setUser,
+      monstersKilled: this.props.monstersKilled
     }
   }
 
@@ -21,9 +23,9 @@ export default class CharacterView extends Component {
   }
 
   togglemod = () => {
-    this.setState({
-      modal: !this.state.modal
-    })
+    let {setUser} = this.props
+    this.setState({modal: !this.state.modal, user: setUser})
+    // if (setUser) setUser(setUser)
   }
 
   toggle = (tab) => {
@@ -35,7 +37,7 @@ export default class CharacterView extends Component {
   }
 
   render () {
-    let {activeTab, monstersKilled, coins, getUser} = this.state
+    let {activeTab, monstersKilled, coins, user} = this.state
     return (
       <div>
         <nav style={styles.buttonWrapper}>
@@ -73,12 +75,12 @@ export default class CharacterView extends Component {
             <TabPane tabId="1">
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>My Account</ModalHeader>
               <br />
-              {getUser ? this.renderUserInfo() : <div/>}
+              {user ? this.renderUserInfo() : <div/>}
             </TabPane>
             <TabPane tabId="2">
               <ModalHeader toggle={this.toggle}>Skills</ModalHeader>
               <br/>
-              {getUser ? this.renderUserSkills() : <div />}
+              {user ? this.renderUserSkills() : <div />}
             </TabPane>
             <TabPane tabId="3">
               <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
@@ -133,10 +135,7 @@ export default class CharacterView extends Component {
             <TabPane tabId="5">
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>Stats</ModalHeader>
               <br />
-              <ul style={styles.listStyle}>
-                <li><p>Monsters killed: {monstersKilled}</p> </li>
-                <li><p>Coins: {coins}</p></li>
-              </ul>
+              {user ? this.renderUserStats() : <div/>}
             </TabPane>
           </TabContent>
           <ModalFooter>
@@ -149,9 +148,9 @@ export default class CharacterView extends Component {
   }
 
   renderUserSkills = () => {
-    let {getUser} = this.props
-    let {sword, blockChance, magic} = getUser
-    return <ul style={{listStyle: 'none'}}>
+    let {user} = this.state
+    let {sword, blockChance, magic} = user
+    return <ul style={styles.none}>
       <li><p>Melee damage: {sword}</p> </li>
       <li><p>Block chance: {blockChance}</p></li>
       <li><p>Spell damage: {magic}</p></li>
@@ -159,13 +158,22 @@ export default class CharacterView extends Component {
   }
 
   renderUserInfo = () => {
-    let {getUser} = this.state
-    let {username, name, lastname, email} = getUser
-    return <ul style={{listStyle: 'none'}}>
+    let {user} = this.state
+    let {username, name, lastname, email} = user
+    return <ul style={styles.none}>
       <li><p>Username: {username}</p> </li>
       <li><p>First name: {name}</p></li>
       <li><p>Last name: {lastname}</p></li>
       <li><p>Email: {email}</p></li>
+    </ul>
+  }
+
+  renderUserStats = () => {
+    let {user} = this.state
+    let {monstersKilled, coins} = user
+    return <ul style={styles.listStyle}>
+      <li><p>Monsters killed: {monstersKilled}</p></li>
+      <li><p>Coins: {coins}</p></li>
     </ul>
   }
   // <div>
@@ -174,6 +182,7 @@ export default class CharacterView extends Component {
   //     <Button onClick={this.props.saveProgress} color="success">Save progress</Button>
   //   </div>
   // }
+  // <div><Button onClick={this.saveProgress}>Register</Button></div>
 }
 
 let styles = {
@@ -205,6 +214,9 @@ let styles = {
   items: {
     width: '40px',
     height: '40px'
+  },
+  none: {
+    listStyle: 'none'
   }
 
 }
