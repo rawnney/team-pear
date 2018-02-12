@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
-import {Modal, ModalHeader, Button, Form, FormGroup, Label, Input, FormText, Col} from 'reactstrap'
+import {Modal, ModalHeader, Button, Form, FormGroup, Label, Input, FormText, Col, Nav, NavItem, NavLink, TabContent, TabPane, Table, ModalFooter, ModalBody} from 'reactstrap'
 import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom'
+import NoRegComponent from './NoRegComponent'
+import SignUpComponent from './SignUpComponent'
 import Welcome from './Welcome'
 import Database from '../Database'
+import fakeServerData from '../fakeServerData'
 import Images from '../libs/Imgs'
 import axios from 'axios'
+import classnames from 'classnames'
+
 let {Pear} = Images
-// import Routes from '../Routes'
 
 export default class Home extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      user: null,
       loggedIn: false,
       modal: true,
       username: '',
@@ -21,26 +24,40 @@ export default class Home extends Component {
       email: '',
       team: ''
 
+      modal: false,
+      activeTab: '1'
     }
   }
 
-  signIn (username, password) {
+  signIn = (user) => {
+    let {getUser} = this.props
+    this.setState({user, modal: false})
+    if (getUser) getUser(user)
+  }
+
+  setLoggedIn = () => {
     let {loggedIn} = this.state
-    if (loggedIn === false) {
-      this.props.setLoggedIn()
-      return this.setState({loggedIn: true, user: {username, password}})
-    }
+    let {setLoggedIn} = this.props
+    this.setState({loggedIn: true})
+    if (setLoggedIn) setLoggedIn(loggedIn)
   }
 
-  signOut () {
-    // clear out user from state
-    this.setState({user: null})
+  signOut = () => {
+    this.setState({user: null, loggedIn: false})
   }
 
   togglemod = () => {
     this.setState({
       modal: !this.state.modal
     })
+  }
+
+  toggle = (tab) => {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      })
+    }
   }
 
   // validateForm () {
@@ -58,147 +75,91 @@ export default class Home extends Component {
    // get our form data out of state
    const { username, password, email, team } = this.state
 
-   axios.post('http://localhost:3000/api/users', { username, password, email, team })
-     .then((result) => {
-       // access the results here....
-     })
- }
+  render () {
+    let {modal, activeTab} = this.state
+    return <main style={styles.wrapper}>
+      <header>
+        <img style={styles.logo} src={Pear} />
+        <h1>Pear Game</h1>
+      </header>
+      <section style={styles.section}>
+        <div style={styles.buttoncontainer}>
+          {this.renderLoginExit()}
+          <Button style={styles.button} onClick={this.togglemod} color="primary">Leaderboard</Button>
+          <Button style={styles.button} onClick={this.togglemod} color="info">Info</Button>
+        </div>
+      </section>
+      {/* modal starts */}
+      <Modal style={{display: 'flex', justifyContent: 'center'}} isOpen={modal} togglemod={this.togglemod} className={this.props.className}>
+        <ModalHeader>
+          <Nav tabs>
+            <NavItem>
+              <NavLink className={classnames({ active: activeTab === '1' })} onClick={() => { this.toggle('1') }}>
+              Sign In
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className={classnames({ active: activeTab === '2' })} onClick={() => { this.toggle('2') }}>
+              Sign up
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className={classnames({ active: activeTab === '3' })} onClick={() => { this.toggle('3') }}>
+              Play now!
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <TabContent activeTab={activeTab}>
+            <TabPane tabId="1">
+              <ModalBody>
+                <LoginForm onSignIn={this.signIn} />
+              </ModalBody>
+            </TabPane>
+            <TabPane tabId="2">
+              <ModalBody>
+                <SignUpComponent/>
+              </ModalBody>
+            </TabPane>
+            <TabPane tabId="3">
+              <ModalBody>
+                <NoRegComponent onSignIn={this.signIn} />
+              </ModalBody>
+            </TabPane>
+          </TabContent>
+          <ModalFooter style={styles.section}>
+            <Button color="danger" onClick={this.togglemod} data-dismiss="modal">Cancel</Button>
+          </ModalFooter>
+        </ModalHeader>
+      </Modal>
+    </main>
+  }
 
- render () {
-   const { username, password, email, team } = this.state
-   let {togglemod} = this.props
-   let {loggedIn, modal, user} = this.state
-   return (
-     <Modal isOpen={modal} togglemod={this.togglemod} style={styles.test}>
-       <ModalHeader toggle={this.toggle} style={{textAlign: 'center', display: 'flex', justifyContent: 'center'}}>
-         <img style={{width: '100px', height: '160px'}} src={Pear} />
-         <br />
-         <h1>Team Pear Game Page</h1>
-       </ModalHeader>
-       {/*
-          <header className="col-md-12">
-          <div className="logo-image" >
-            <img src={Pear} />
-          </div>
-          <div className="slogan">
-            <h1>Team Pear Game Page</h1>
-          </div>
-        </header>
-        */}
-
-       <section className="section-padding button-container">
-
-         <div className="buttons">
-           <hr className="prettyline" />
-           <br />
-           <Button color="success" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In / Sign Up</Button>
-           <br />
-
-           <br />
-           <Button color="primary">Leaderboard</Button>
-           {/* <div className="button-div">
-              <button type="button" className="btn btn-primary ribbon">Leaderboard</button>
-            </div> */}
-           <br />
-           <Button color="info">Info/Rules</Button>
-           <br />
-           <Button color="warning">Övrigt</Button>
-           <hr className="prettyline" />
-         </div>
-
-       </section>
-       {/* modal starts */}
-       <section>
-
-         <div className="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-           <div className="modal-dialog modal-sm">
-             <div className="modal-content">
-               <br/>
-               <div className="bs-example">
-                 <ul id="myTab" className="nav nav-tabs">
-
-                   <li className="general"><a href="#signin" data-toggle="tab">Sign In</a></li>
-                   <li className="general"><a href="#signup" data-toggle="tab">Register</a></li>
-                   <li className="general"><a href="#why" data-toggle="tab">Whdy?</a></li>
-                 </ul>
-               </div>
-
-               <div className="modal-body">
-                 <div id="myTabContent" className="tab-content">
-                   <div className="tab-pane fade in" id="why">
-                   </div>
-                   <div className="tab-pane fade active in" id="signin">
-                     <div>
-                       {
-                         <LoginForm onSignIn={this.signIn.bind(this)}/>
-                       }
-                     </div>
-
-                   </div>
-                   <div className="tab-pane fade" id="signup">
-                     <Form onSubmit={this.onSubmit}>
-                       <FormGroup row>
-                         <Label for="email" sm={4}>Email</Label>
-                         <Col sm={8}>
-                           <Input type="email" name="email" id="email" value={email} onChange={this.onChange} placeholder="Your email" />
-                         </Col>
-                       </FormGroup>
-                       <FormGroup row>
-                         <Label for="username" sm={4}>Username</Label>
-                         <Col sm={8}>
-                           <Input type="username" name="username" id="username" value={username} onChange={this.onChange} placeholder="Ex: 'BootyWarrior'" />
-                         </Col>
-                       </FormGroup>
-                       <FormGroup row>
-                         <Label for="Password" sm={4}>Password</Label>
-                         <Col sm={8}>
-                           <Input type="password" name="password" value={password} onChange={this.onChange} id="Password" placeholder="*******" />
-                         </Col>
-                       </FormGroup>
-                       {/* <FormGroup row>
-                         <Label for="examplePassword" sm={4}>Re-Enter Password</Label>
-                         <Col sm={8}>
-                           <Input type="password" name="password" id="examplePassword" placeholder="*******" />
-                         </Col>
-                       </FormGroup> */}
-                       <FormGroup row>
-                         <Label for="checkbox2" sm={4}></Label>
-                         <Col sm={{ size: 8 }}>
-                           <FormGroup check>
-                             <Label check>
-                               <Input type="checkbox" name="team" onChange={this.onChange} value={team} id="team" />{'Team Red'}
-                               <br />
-                               <Input type="checkbox" name="team" value={team} onChange={this.onChange} id="team" />{'Team Blue'}
-                             </Label>
-                           </FormGroup>
-                         </Col>
-                       </FormGroup>
-                       <FormGroup check row>
-                         <Col sm={{ size: 10, offset: 1 }}>
-                           <Button type="submit" color="primary">Submit</Button>
-                         </Col>
-                       </FormGroup>
-                     </Form>
-                   </div>
-                 </div>
-               </div>
-               <div className="modal-footer">
-                 <center>
-                   <Button color="danger" data-dismiss="modal">Close</Button>
-                 </center>
-               </div>
-             </div>
-           </div>
-         </div>
-       </section>
-     </Modal>
-   )
- }
+  renderLoginExit = () => {
+    let {user} = this.state
+    if (user != null) return <Welcome user={user.username} goToGame={this.setLoggedIn} signOut={this.signOut}/>
+    else return <Button style={styles.button} onClick={this.togglemod} color="success">Sign In / Sign Up</Button>
+  }
 }
 
 let styles = {
-  test: {
-    height: '100%',
-    width: '100%'
+  wrapper: {
+    textAlign: 'center'
+  },
+  logo: {
+    width: '100px',
+    height: '160px'
+  },
+  section: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  buttoncontainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '200px'
+  },
+  button: {
+    margin: '10px',
+    width: '200px'
   }
 }

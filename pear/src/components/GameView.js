@@ -1,46 +1,61 @@
-// @flow
+
 import React, { Component } from 'react'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
-import FightView from './FightView'
-import { Button, Modal } from 'reactstrap'
 import Home from './Home'
-import Welcome from './Welcome'
-import Database from '../Database'
 import LoginForm from './LoginForm'
 import Images from '../libs/Imgs'
+import fakeServerData from '../fakeServerData'
 let {Pear} = Images
+
+
+// get user som props
 
 export default class GameView extends Component<Props, State> {
   // onödig constructor
   constructor (props) {
     super(props)
     this.state = {
-      user: undefined,
       loggedIn: false,
-      modal: false
     }
   }
 
   render () {
-    let {signOut} = this.props
-    let notLoggedIn = <Home {...this.state} setLoggedIn={() => this.setState({loggedIn: true})} />
-    let {togglemod} = this.props
-    let {loggedIn, modal, user} = this.state
-    if (loggedIn === false) return notLoggedIn
+    let {loggedIn, user} = this.state
+    let notLoggedIn = <Home {...this.state} getUser={this.getUser} setLoggedIn={this.setLoggedIn}/>
+    if (!loggedIn) return notLoggedIn
     return <div>
-      <CharacterView />
-      <MapView />
+      <CharacterView
+        getUser={this.getUser}
+        signOut={this.signOut}
+      />
+      <MapView resetFight={this.resetFight}
+
+      />
     </div>
   }
 
-  togglemod = () => this.setState({modal: !this.state.modal})
+  resetFight = (monstersKilled, coins) => {
+    this.setState({monstersKilled, coins: coins + 2})
+  }
 
-  signIn = (username, password) => {
-    this.setState({loggedIn: true, user: {username, password}})
+  setLoggedIn = (loggedIn) => {
+    this.setState({loggedIn: true})
   }
 
   signOut = () => {
     this.setState({loggedIn: false, user: null})
   }
+
+  getUser = (user) => {
+    this.setState({user})
+  }
+
 }
+//
+// myCallback = (dataFromChild) => {
+//   let {response} = this.state
+//   let clear = null
+//   if (response === null || response !== dataFromChild) return this.setState({response: dataFromChild})
+//   if (response === dataFromChild) return this.setState({response: clear})
+// }
