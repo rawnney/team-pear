@@ -84,33 +84,32 @@ let fakeServerData = {
   monster: [
     {
       monsterId: 1,
-      name: 'Crazy Eyes',
-      avatar: Monster,
+      monsterName: 'Crazy Eyes',
+      monsterAvatar: Monster,
       coins: 1
     },
     {
       monsterId: 2,
-      name: 'TIM',
-      avatar: Monster,
+      monsterName: 'TIM',
+      monsterAvatar: Monster,
       coins: 2
     },
     {
       monsterId: 3,
-      name: 'Godzilla',
-      active: false,
-      avatar: Monster,
+      monsterName: 'Godzilla',
+      monsterAvatar: Monster,
       coins: 3
     },
     {
       monsterId: 4,
-      name: 'Jörgen',
-      avatar: Monster,
+      monsterName: 'Jörgen',
+      monsterAvatar: Monster,
       coins: 4
     },
     {
       monsterId: 5,
-      name: 'BOSS',
-      avatar: Monster,
+      monsterName: 'BOSS',
+      monsterAvatar: Monster,
       coins: 5
     }
   ]

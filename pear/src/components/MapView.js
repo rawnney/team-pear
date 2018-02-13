@@ -97,14 +97,12 @@ class MapView extends Component<Props, State> {
       updateUser(monstersKilled, coins)
     return this.setState({fightViewOpened: !fightViewOpened, enemyHP: 10, winnerIsSet: false, }) // Set to 100!
     } else {
-    this.setActiveMonsterName(id)
-    this.setActiveMonsterAvatar(id)
     return this.setState({fightViewOpened: !fightViewOpened, activeMonsterName: this.setActiveMonsterName(id), activeMonsterAvatar: this.setActiveMonsterAvatar(id)})
     }
   }
 
-  setActiveMonsterName = (id) => {return fakeServerData.monster[id].name}
-  setActiveMonsterAvatar = (id) => {return fakeServerData.monster[id].avatar}
+  setActiveMonsterName = (id) => {return fakeServerData.monster[id].monsterName}
+  setActiveMonsterAvatar = (id) => {return fakeServerData.monster[id].monsterAvatar}
   // TODO: randomize coindrop  // setActiveMonsterCoins = (id) => {return fakeServerData.monster[id].coins}
 
   renderWinner = () => {
