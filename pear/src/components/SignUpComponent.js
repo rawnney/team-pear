@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {Form, FormGroup, Label, Input, Col, Button} from 'reactstrap'
 import axios from 'axios'
 
-
 export default class SignUpComponent extends Component {
   constructor (props) {
     super(props)
@@ -16,25 +15,21 @@ export default class SignUpComponent extends Component {
   }
 
   onChange = (e) => {
-
     const state = this.state
     state[e.target.name] = e.target.value
     this.setState(state)
   }
 
   onSubmit = (e) => {
-   e.preventDefault()
-   // get our form data out of state
-   const { username, password, email, team } = this.state
+    e.preventDefault()
+    // get our form data out of state
+    const { username, password, email, team } = this.state
 
-
-   axios.post('http://localhost:3000/api/users', { username, password, email, team })
-     .then((result) => {
-       // access the results here....
-     })
+    axios.post('http://localhost:5000/api/users', { username, password, email, team })
+      .then((result) => {
+        // access the results here....
+      })
   }
-
-
 
   render () {
     const { username, password, email, team } = this.state
