@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
+import 'whatwg-fetch'
 
 let { Sword, Dagger, Shield, Armor, Wand } = Images
 
@@ -36,8 +37,43 @@ export default class CharacterView extends Component {
     }
   }
 
+  // componentDidMount () {
+  //   fetch('http://localhost:5000/api/users/8')
+  //     .then(Users => {
+  //       return Users.json()
+  //     }).then(data => {
+  //       let usernamee = data.Users.map((las) => {
+  //         return (
+  //           <div key={las.Users}>
+  //             <p>{las.username}</p>
+  //           </div>
+  //
+  //         )
+  //       })
+  //       let teamm = data.Users.map((las) => {
+  //         return (
+  //           <div key={las.Users}>
+  //             <p>{las.team}</p>
+  //           </div>
+  //
+  //         )
+  //       })
+  //       let emaill = data.Users.map((las) => {
+  //         return (
+  //           <div key={las.Users}>
+  //             <p>{las.email}</p>
+  //           </div>
+  //
+  //         )
+  //       })
+  //       this.setState({teamm: teamm})
+  //       this.setState({emaill: emaill})
+  //       this.setState({usernamee: usernamee})
+  //     })
+  // }
+
   render () {
-    let {activeTab, monstersKilled, coins, user} = this.state
+    let {activeTab, user} = this.state
     return (
       <div>
         <nav style={styles.buttonWrapper}>
@@ -75,6 +111,11 @@ export default class CharacterView extends Component {
             <TabPane tabId="1">
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>My Account</ModalHeader>
               <br />
+              // <ul style={{listStyle: 'none'}}>
+              //   <li><p>USERNAME: {this.state.usernamee}</p> </li>
+              //   <li>TEAM: {this.state.teamm}</li>
+              //   <li><p>EMAIL: {this.state.emaill}</p></li>
+              // </ul>
               {user ? this.renderUserInfo() : <div/>}
             </TabPane>
             <TabPane tabId="2">

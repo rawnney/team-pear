@@ -24,7 +24,8 @@ export default class FightView extends Component<Props, State> {
     this.state = {
       enemyHP: 100,
       playerHP: 100,
-      winnerIsSet: false
+      winnerIsSet: false,
+      modal: false
     }
   }
 

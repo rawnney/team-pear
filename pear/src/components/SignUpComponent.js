@@ -1,32 +1,62 @@
 import React, { Component } from 'react'
 import {Form, FormGroup, Label, Input, Col, Button} from 'reactstrap'
+import axios from 'axios'
 
 export default class SignUpComponent extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: '',
+      email: '',
+      team: ''
+
+    }
+  }
+
+  onChange = (e) => {
+    const state = this.state
+    state[e.target.name] = e.target.value
+    this.setState(state)
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+    // get our form data out of state
+    const { username, password, email, team } = this.state
+
+    axios.post('http://localhost:5000/api/users', { username, password, email, team })
+      .then((result) => {
+        // access the results here....
+      })
+  }
+
   render () {
+    const { username, password, email, team } = this.state
     return (
-      <Form>
+      <Form onSubmit={this.onSubmit}>
         <FormGroup row>
-          <Label for="exampleEmail" sm={4}>Email</Label>
+          <Label for="Email" sm={4}>Email</Label>
           <Col sm={8}>
-            <Input type="email" name="email" id="exampleEmail" placeholder="Your email" />
+            <Input type="email" name="email" value={email} onChange={this.onChange} id="email" placeholder="Your email" />
           </Col>
         </FormGroup>
         <FormGroup row>
           <Label for="username" sm={4}>Username</Label>
           <Col sm={8}>
-            <Input type="username" name="username" id="username" placeholder="Ex: 'BootyWarrior'" />
+            <Input type="username" name="username" value={username} onChange={this.onChange} id="username" placeholder="Ex: 'BootyWarrior'" />
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="examplePassword" sm={4}>Password</Label>
+          <Label for="Password" sm={4}>Password</Label>
           <Col sm={8}>
-            <Input type="password" name="password" id="examplePassword" placeholder="*******" />
+            <Input type="password" name="password" value={password} onChange={this.onChange} id="password" placeholder="*******" />
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="examplePassword" sm={4}>Re-Enter Password</Label>
+          <Label for="RePassword" sm={4}>Re-Enter Password</Label>
           <Col sm={8}>
-            <Input type="password" name="password" id="examplePassword" placeholder="*******" />
+            <Input type="password" name="password" id="password" placeholder="*******" />
           </Col>
         </FormGroup>
         <FormGroup row>

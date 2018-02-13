@@ -8,6 +8,7 @@ import Welcome from './Welcome'
 import Database from '../Database'
 import fakeServerData from '../fakeServerData'
 import Images from '../libs/Imgs'
+import axios from 'axios'
 import classnames from 'classnames'
 
 let {Pear} = Images
