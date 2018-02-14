@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap'
+import React, {Component} from 'react'
+// eslint-disable-next-line
+import {TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHeader, ModalFooter} from 'reactstrap'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
+import LeaderboardComponent from './LeaderboardComponent'
 import 'whatwg-fetch'
 
-let { Sword, Dagger, Shield, Armor, Wand } = Images
+let {Sword, Dagger, Shield, Armor, Wand} = Images
 
 export default class CharacterView extends Component {
   constructor (props) {
@@ -111,11 +113,11 @@ export default class CharacterView extends Component {
             <TabPane tabId="1">
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>My Account</ModalHeader>
               <br />
-              // <ul style={{listStyle: 'none'}}>
+              {/* // <ul style={{listStyle: 'none'}}>
               //   <li><p>USERNAME: {this.state.usernamee}</p> </li>
               //   <li>TEAM: {this.state.teamm}</li>
               //   <li><p>EMAIL: {this.state.emaill}</p></li>
-              // </ul>
+              // </ul> */}
               {user ? this.renderUserInfo() : <div/>}
             </TabPane>
             <TabPane tabId="2">
@@ -142,36 +144,7 @@ export default class CharacterView extends Component {
             </TabPane>
             <TabPane tabId="4">
               <ModalHeader toggle={this.toggle}>Leaderboard</ModalHeader>
-              <Table dark>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </Table>
+              <LeaderboardComponent />
             </TabPane>
             <TabPane tabId="5">
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>Stats</ModalHeader>
@@ -180,7 +153,7 @@ export default class CharacterView extends Component {
             </TabPane>
           </TabContent>
           <ModalFooter>
-            <Button color="info" onClick={this.togglemod} data-dismiss="modal">Close</Button>
+            <Button color="info" onClick={this.togglemod}>Close</Button>
             <Button color="danger" onClick={this.signOut}>Sign out</Button>
           </ModalFooter>
         </Modal>

@@ -1,40 +1,19 @@
-import React, { Component } from 'react'
-import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
-import fakeServerData from '../fakeServerData'
+import React, {Component} from 'react'
+// eslint-disable-next-line
+import {Col, Button, Form, FormGroup, Label, Input} from 'reactstrap'
+
+// const USERS = 'http://localhost:5000/api/users'
 
 export default class LoginForm extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      user: fakeServerData.users[0]
-    }
+    this.state = {user: {}}
   }
-
-  // check = (item, index) => {
-  //   for (var key in item) {
-  //     console.log(item[key])
-  //   }
-  // }
-
-  // check = (item, index) => {
-  //   let {user, username, password} = this.state
-  //   user.forEach((username, password) => {
-  //     if (user[index].username === user[index].password) return console.log(username, password)
-  //   })
-  // }
-
-  // this.check()
-  //  if (username === null || password === null) return
-
-  // validateLoginIn = () => {
-  //   if () return
-  // }
 
   handleSignIn = (e) => {
     e.preventDefault()
     let {user} = this.state
     let {onSignIn} = this.props
-    // this.validateLoginIn(password, username)
     this.setState({user})
     if (user) onSignIn(user)
   }

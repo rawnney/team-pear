@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
-import {Modal, ModalHeader, Button, Form, FormGroup, Label, Input, FormText, Col, Nav, NavItem, NavLink, TabContent, TabPane, Table, ModalFooter, ModalBody} from 'reactstrap'
+import React, {Component} from 'react'
+// eslint-disable-next-line
+import {Modal, ModalHeader, Button, Nav, NavItem, NavLink, TabContent, TabPane, ModalFooter, ModalBody} from 'reactstrap'
 import LoginForm from './LoginForm'
-import { Link } from 'react-router-dom'
 import NoRegComponent from './NoRegComponent'
 import SignUpComponent from './SignUpComponent'
 import Welcome from './Welcome'
-import Database from '../Database'
-import fakeServerData from '../fakeServerData'
+import LeaderboardComponent from './LeaderboardComponent'
+import InfoComponent from './InfoComponent'
 import Images from '../libs/Imgs'
-import axios from 'axios'
 import classnames from 'classnames'
 
 let {Pear} = Images
@@ -18,14 +17,16 @@ export default class Home extends Component {
     super(props)
     this.state = {
       loggedIn: false,
-      modal: false,
+      modalLogin: false,
+      modalLeaderboard: false,
+      modalInfo: false,
       activeTab: '1'
     }
   }
 
   signIn = (user) => {
     let {setUser} = this.props
-    this.setState({user, modal: false})
+    this.setState({user, modalLogin: false})
     if (setUser) setUser(user)
   }
 
@@ -46,9 +47,21 @@ export default class Home extends Component {
     this.setState({user: {...user, monstersKilled, coins}})
   }
 
-  togglemod = () => {
+  toggleLogin = () => {
     this.setState({
-      modal: !this.state.modal
+      modalLogin: !this.state.modalLogin
+    })
+  }
+
+  toggleLeaderboard = () => {
+    this.setState({
+      modalLeaderboard: !this.state.modalLeaderboard
+    })
+  }
+
+  toggleInfo = () => {
+    this.setState({
+      modalInfo: !this.state.modalInfo
     })
   }
 
@@ -66,7 +79,7 @@ export default class Home extends Component {
   // }
 
   render () {
-    let {modal, activeTab} = this.state
+    let {modalLogin, modalLeaderboard, modalInfo, activeTab} = this.state
     return <main style={styles.wrapper}>
       <header>
         <img style={styles.logo} src={Pear} />
@@ -75,11 +88,11 @@ export default class Home extends Component {
       <section style={styles.section}>
         <div style={styles.buttoncontainer}>
           {this.renderLoginExit()}
-          <Button style={styles.button} onClick={this.togglemod} color="primary">Leaderboard</Button>
-          <Button style={styles.button} onClick={this.togglemod} color="info">Info</Button>
+          <Button style={styles.button} onClick={this.toggleLeaderboard} color="primary">Leaderboard</Button>
+          <Button style={styles.button} onClick={this.toggleInfo} color="info">Info</Button>
         </div>
       </section>
-      <Modal style={{display: 'flex', justifyContent: 'center'}} isOpen={modal} togglemod={this.togglemod} className={this.props.className}>
+      <Modal style={styles.modalStyle} isOpen={modalLogin} toggleLogin={this.toggleLogin} className={this.props.className}>
         <ModalHeader>
           <Nav tabs>
             <NavItem>
@@ -106,7 +119,7 @@ export default class Home extends Component {
             </TabPane>
             <TabPane tabId="2">
               <ModalBody>
-                <SignUpComponent/>
+                <SignUpComponent />
               </ModalBody>
             </TabPane>
             <TabPane tabId="3">
@@ -116,9 +129,27 @@ export default class Home extends Component {
             </TabPane>
           </TabContent>
           <ModalFooter style={styles.section}>
-            <Button color="danger" onClick={this.togglemod} data-dismiss="modal">Cancel</Button>
+            <Button color="danger" onClick={this.toggleLogin}>Cancel</Button>
           </ModalFooter>
         </ModalHeader>
+      </Modal>
+      <Modal style={styles.modalStyle} isOpen={modalLeaderboard} toggleLogin={this.modalLeaderboard}>
+        <ModalHeader>
+          Leaderboard
+        </ModalHeader>
+        <LeaderboardComponent />
+        <ModalFooter style={styles.section}>
+          <Button color="danger" onClick={this.toggleLeaderboard}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
+      <Modal style={styles.modalStyle} isOpen={modalInfo} toggleLogin={this.modalLeaderboard}>
+        <ModalHeader>
+          Info
+        </ModalHeader>
+        <InfoComponent />
+        <ModalFooter style={styles.section}>
+          <Button color="danger" onClick={this.toggleInfo}>Cancel</Button>
+        </ModalFooter>
       </Modal>
     </main>
   }
@@ -126,11 +157,15 @@ export default class Home extends Component {
   renderLoginExit = () => {
     let {user} = this.state
     if (user != null) return <Welcome user={user.username} goToGame={this.setLoggedIn} signOut={this.signOut}/>
-    else return <Button style={styles.button} onClick={this.togglemod} color="success">Sign In / Sign Up</Button>
+    else return <Button style={styles.button} onClick={this.toggleLogin} color="success">Sign In / Sign Up</Button>
   }
 }
 
 let styles = {
+  modalStyle: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
   wrapper: {
     textAlign: 'center'
   },
