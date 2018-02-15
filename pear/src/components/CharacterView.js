@@ -28,7 +28,6 @@ export default class CharacterView extends Component {
   togglemod = () => {
     let {setUser} = this.props
     this.setState({modal: !this.state.modal, user: setUser})
-    // if (setUser) setUser(setUser)
   }
 
   toggle = (tab) => {
@@ -38,41 +37,6 @@ export default class CharacterView extends Component {
       })
     }
   }
-
-  // componentDidMount () {
-  //   fetch('http://localhost:5000/api/users/8')
-  //     .then(Users => {
-  //       return Users.json()
-  //     }).then(data => {
-  //       let usernamee = data.Users.map((las) => {
-  //         return (
-  //           <div key={las.Users}>
-  //             <p>{las.username}</p>
-  //           </div>
-  //
-  //         )
-  //       })
-  //       let teamm = data.Users.map((las) => {
-  //         return (
-  //           <div key={las.Users}>
-  //             <p>{las.team}</p>
-  //           </div>
-  //
-  //         )
-  //       })
-  //       let emaill = data.Users.map((las) => {
-  //         return (
-  //           <div key={las.Users}>
-  //             <p>{las.email}</p>
-  //           </div>
-  //
-  //         )
-  //       })
-  //       this.setState({teamm: teamm})
-  //       this.setState({emaill: emaill})
-  //       this.setState({usernamee: usernamee})
-  //     })
-  // }
 
   render () {
     let {activeTab, user} = this.state
@@ -113,11 +77,6 @@ export default class CharacterView extends Component {
             <TabPane tabId="1">
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>My Account</ModalHeader>
               <br />
-              {/* // <ul style={{listStyle: 'none'}}>
-              //   <li><p>USERNAME: {this.state.usernamee}</p> </li>
-              //   <li>TEAM: {this.state.teamm}</li>
-              //   <li><p>EMAIL: {this.state.emaill}</p></li>
-              // </ul> */}
               {user ? this.renderUserInfo() : <div/>}
             </TabPane>
             <TabPane tabId="2">

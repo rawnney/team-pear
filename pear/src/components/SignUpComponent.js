@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {Form, FormGroup, Label, Input, Col, Button} from 'reactstrap'
 import axios from 'axios'
 
-const API_USERS = 'http://localhost:5000/api/users'
+const API_USERS = 'http://peargameapi.herokuapp.com/api/users'
 
 export default class SignUpComponent extends Component {
   constructor (props) {
@@ -11,46 +11,29 @@ export default class SignUpComponent extends Component {
     this.state = {user: {}}
   }
 
-  handleUsername = (name) => {
+  handleUsername = (username) => {
     let {user} = this.state
-    this.setState({user: {...user, username: name.target.value}})
+    this.setState({user: {...user, username: username.target.value}})
   }
 
   handleEmail = (email) => {
     let {user} = this.state
-    this.setState({user: {...user, username: email.target.value}})
+    this.setState({user: {...user, email: email.target.value}})
   }
 
-  handlePassword = (pass) => {
+  handlePassword = (password) => {
     let {user} = this.state
-    this.setState({user: {...user, password: pass.target.value}})
+    this.setState({user: {...user, password: password.target.value}})
   }
-
-  // onChange = (e) => {
-  //   const state = this.state
-  //   state[e.target.name] = e.target.value
-  //   this.setState(state)
-  // }
 
   onSubmit = (e) => {
     e.preventDefault()
     let {onSignIn} = this.props
-    alert(JSON.stringify(this.state))
     const { username, password, email, team } = this.state.user
     axios.post(API_USERS, { username, password, email, team })
       .then((result) => {
-        const user = result.data.user
-        alert(JSON.stringify(user))
-        this.setState({user: user})
+        const user = null
         if (onSignIn) onSignIn(user)
-      })
-  }
-
-  createUser = () => {
-    const { username, password, email, team } = this.state
-    axios.post(API_USERS, { username, password, email, team })
-      .then((result) => {
-        // access the results here....
       })
   }
 
