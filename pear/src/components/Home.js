@@ -119,7 +119,7 @@ export default class Home extends Component {
             </TabPane>
             <TabPane tabId="2">
               <ModalBody>
-                <SignUpComponent />
+                <SignUpComponent onSignIn={this.signIn}/>
               </ModalBody>
             </TabPane>
             <TabPane tabId="3">

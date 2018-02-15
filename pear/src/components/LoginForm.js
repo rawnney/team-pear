@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 // eslint-disable-next-line
 import {Col, Button, Form, FormGroup, Label, Input} from 'reactstrap'
+import axios from 'axios'
+import fakeServerData from '../fakeServerData'
 
-// const USERS = 'http://localhost:5000/api/users'
+const API_SIGNIN = 'http://localhost:5000/api/signin'
 
 export default class LoginForm extends Component {
   constructor (props) {
@@ -12,18 +14,24 @@ export default class LoginForm extends Component {
 
   handleSignIn = (e) => {
     e.preventDefault()
-    let {user} = this.state
     let {onSignIn} = this.props
-    this.setState({user})
-    if (user) onSignIn(user)
+    const {username, password} = this.state.user
+    axios.post(API_SIGNIN, {username, password})
+      .then((result) => {
+        const user = result.data.user
+        this.setState({user: user})
+        if (onSignIn) onSignIn(user)
+      })
   }
 
   handleUsername = (name) => {
-    this.setState({user: {username: name.target.value}})
+    let {user} = this.state
+    this.setState({user: {...user, username: name.target.value}})
   }
 
   handlePassword = (pass) => {
-    this.setState({user: {password: pass.target.value}})
+    let {user} = this.state
+    this.setState({user: {...user, password: pass.target.value}})
   }
 
   render () {
