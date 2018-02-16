@@ -180,7 +180,8 @@ let styles = {
   buttoncontainer: {
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: '200px'
+    maxWidth: '200px',
+    alignItems: 'center'
   },
   button: {
     margin: '10px',
