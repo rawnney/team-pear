@@ -167,10 +167,10 @@ let styles = {
     justifyContent: 'center'
   },
   wrapper: {
+    marginTop: '50px',
     textAlign: 'center'
   },
   logo: {
-    width: '100px',
     height: '160px'
   },
   section: {
