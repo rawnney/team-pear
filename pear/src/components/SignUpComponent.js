@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 // eslint-disable-next-line
 import {Form, FormGroup, Label, Input, Col, Button} from 'reactstrap'
 import axios from 'axios'
+import {capitalizeFirstLetter} from '../libs/Common'
 
 const API_USERS = 'http://peargameapi.herokuapp.com/api/users'
 
@@ -13,7 +14,7 @@ export default class SignUpComponent extends Component {
 
   handleUsername = (username) => {
     let {user} = this.state
-    this.setState({user: {...user, username: username.target.value}})
+    this.setState({user: {...user, username: capitalizeFirstLetter(username.target.value)}})
   }
 
   handleEmail = (email) => {

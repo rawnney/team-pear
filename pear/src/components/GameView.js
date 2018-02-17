@@ -5,8 +5,11 @@ import CharacterView from './CharacterView'
 import Home from './Home'
 import LoginForm from './LoginForm'
 import Images from '../libs/Imgs'
-import fakeServerData from '../fakeServerData'
+import axios from 'axios'
 let {Pear} = Images
+
+const API_UPDATE_KILLS = 'http://peargameapi.herokuapp.com/api/update_kills'
+const API_UPDATE_COINS = 'http://peargameapi.herokuapp.com/api/update_coins'
 
 export default class GameView extends Component<Props, State> {
   constructor (props) {
@@ -39,8 +42,10 @@ export default class GameView extends Component<Props, State> {
   }
 
   signOut = () => {
-    // TODO: save user
-    this.setState({loggedIn: false, user: null})
+    let {user: {monstersKilled, coins, iduser}} = this.state
+    axios.put(API_UPDATE_KILLS, {monstersKilled, iduser})
+    axios.put(API_UPDATE_COINS, {coins, iduser})
+    .then((result) => this.setState({loggedIn: false, user: null}))
   }
 
   setUser = (user) => {
