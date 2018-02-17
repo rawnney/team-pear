@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Img } from 'reactstrap'
-import coin from '../assets/img/coin.png'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import Images from '../libs/Imgs'
+
+let {coin} = Images
 
 export default class WinnerPopUp extends Component {
   constructor (props) {
@@ -18,7 +20,7 @@ export default class WinnerPopUp extends Component {
   render () {
     return (
       <div style={styles.WinnerPopUp}>
-        {/*<Button color="danger" onClick={this.toggle}>Button</Button>*/}
+        {/* <Button color="danger" onClick={this.toggle}>Button</Button> */}
         <Modal isOpen={this.state.modal} modalTransition={{ timeout: 20 }} backdropTransition={{ timeout: 10 }}
           toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Modal Title</ModalHeader>

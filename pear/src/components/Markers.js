@@ -1,6 +1,5 @@
 import React from 'react'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
-import FightView from './FightView'
 import mapOptions from '../assets/json/skin'
 
 const MARKERS = withScriptjs(withGoogleMap(props => {

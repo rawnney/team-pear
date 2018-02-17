@@ -7,9 +7,8 @@ import EnemyComponent from './EnemyComponent'
 import Pinjump from './Pinjump';
 import Markers from './Markers'
 import Images from '../libs/Imgs'
-import FightView from './FightView'
 import PlayerComponent from './PlayerComponent'
-let {Monster, Robin, QMark} = Images
+let {QMark} = Images // Monster, Robin
 
 type Props = {
   coords: Object,
@@ -86,7 +85,7 @@ class MapView extends Component<Props, State> {
 
 
   toggleFightView = (id) => {
-    let {fightViewOpened, user, monstersKilled, coins} = this.state
+    let {fightViewOpened, monstersKilled, coins} = this.state
     let {updateUser} = this.props
     console.log(id);
     if (this.state.enemyHP === 0) {
@@ -154,7 +153,7 @@ class MapView extends Component<Props, State> {
   setMonsters = (nextProps, nextState) => {
     let {monsterCount} = this.state
     let {latitude, longitude} = nextProps.coords
-    let {monsterMarkers, didSetMonsters} = nextState
+    let {didSetMonsters} = nextState //monsterMarkers
     if (!latitude || !longitude) return
     if (didSetMonsters) return
     let monsters = new Array(monsterCount).fill(0)
@@ -162,7 +161,7 @@ class MapView extends Component<Props, State> {
     monsters.map((item, index) => {
       let coord = this.getMonsterCoord(latitude, longitude, index)
       let images = QMark //this.randomIcon()
-      monstersToRender.push({id: index, latitude: coord.latitude, longitude: coord.longitude, icon: images})
+      return monstersToRender.push({id: index, latitude: coord.latitude, longitude: coord.longitude, icon: images})
     })
     this.setState({monsterMarkers: monstersToRender, didSetMonsters: true})
   }

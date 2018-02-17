@@ -89,14 +89,14 @@ export default class CharacterView extends Component {
               <br/>
               <ul style={styles.listStyle}>
                 <li>
-                  <img style={styles.items} src={Sword} />
-                  <img style={styles.items} src={Dagger} />
-                  <img style={styles.items} src={Wand} />
+                  <img style={styles.items} src={Sword} alt='item' />
+                  <img style={styles.items} src={Dagger} alt='item' />
+                  <img style={styles.items} src={Wand} alt='item' />
                 </li>
                 <br />
                 <li>
-                  <img style={styles.items} src={Armor} />
-                  <img style={styles.items} src={Shield} />
+                  <img style={styles.items} src={Armor} alt='item' />
+                  <img style={styles.items} src={Shield} alt='item' />
                 </li>
 
               </ul>

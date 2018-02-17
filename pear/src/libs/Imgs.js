@@ -7,5 +7,6 @@ export default {
   Shield: require('../assets/img/shield.png'),
   Dagger: require('../assets/img/dagger.png'),
   Armor: require('../assets/img/armor.png'),
-  QMark: require('../assets/img/icons/q-icon.png')
+  QMark: require('../assets/img/icons/q-icon.png'),
+  Coin: require('../assets/img/coin.png')
 }

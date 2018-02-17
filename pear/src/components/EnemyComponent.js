@@ -1,7 +1,4 @@
-// @flow
 import React, { Component } from 'react'
-import Avatar from './Avatar'
-import Monster from '../assets/img/icons/monster-icon.png'
 
 type Props = {
   name: String,

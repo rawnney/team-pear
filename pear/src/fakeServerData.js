@@ -1,4 +1,3 @@
-import React from 'react'
 import Images from './libs/Imgs'
 
 let {Monster, Robin} = Images

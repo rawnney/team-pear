@@ -1,12 +1,9 @@
-
 import React, { Component } from 'react'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
 import Home from './Home'
-import LoginForm from './LoginForm'
-import Images from '../libs/Imgs'
+// import Images from '../libs/Imgs'
 import axios from 'axios'
-let {Pear} = Images
 
 const API_UPDATE_KILLS = 'http://peargameapi.herokuapp.com/api/update_kills'
 const API_UPDATE_COINS = 'http://peargameapi.herokuapp.com/api/update_coins'

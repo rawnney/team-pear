@@ -82,7 +82,7 @@ export default class Home extends Component {
     let {modalLogin, modalLeaderboard, modalInfo, activeTab} = this.state
     return <main style={styles.wrapper}>
       <header>
-        <img style={styles.logo} src={Pear} />
+        <img style={styles.logo} src={Pear} alt='Pear'/>
         <h1>Pear Game</h1>
       </header>
       <section style={styles.section}>
