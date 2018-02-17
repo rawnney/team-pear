@@ -156,7 +156,6 @@ class MapView extends Component<Props, State> {
     let {latitude, longitude} = nextProps.coords
     let {monsterMarkers, didSetMonsters} = nextState
     if (!latitude || !longitude) return
-    if (latitude === null || longitude === null) return
     if (didSetMonsters) return
     let monsters = new Array(monsterCount).fill(0)
     let monstersToRender = []
