@@ -157,10 +157,8 @@ class MapView extends Component<Props, State> {
 
   logDmgTaken = () => {
     let {displayDmg, displayReduction} = this.state
-    return <div style={styles.logDmgTaken}>
-    You took {displayDmg} dmg!
-    ({displayReduction} dmg mitigated)
-    </div>
+    if (displayReduction <= 0) return <div style={styles.logDmgTaken}>You took {displayDmg} dmg!</div>
+    if (displayReduction) return <div style={styles.logDmgTaken}> You took {displayDmg} dmg! ({displayReduction} dmg mitigated)</div>
   }
 
   calcPlayerAttack = () => {
