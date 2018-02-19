@@ -42,8 +42,6 @@ export default class Home extends Component {
 
   saveProgress = (user) => {
     let {monstersKilled, coins} = this.state
-    let {updateUser} = this.props
-    updateUser(monstersKilled, coins)
     this.setState({user: {...user, monstersKilled, coins}})
   }
 

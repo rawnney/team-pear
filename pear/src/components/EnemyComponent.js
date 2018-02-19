@@ -8,11 +8,12 @@ type Props = {
 
 export default class EnemyComponent extends Component<Props> {
   render () {
+    let {name, enemyHP} = this.props
     return (
       <div style={styles.wrapper}>
         <img src={this.props.avatar} style={styles.avatar} alt='Avatar'/>
-        <h3> {this.props.name} </h3>
-        <h3> {this.props.enemyHP} / 10 </h3>
+        <h3> {name} </h3>
+        <h3> {enemyHP} / 100 </h3>
       </div>
     )
   }
