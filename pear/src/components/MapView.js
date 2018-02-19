@@ -194,11 +194,11 @@ class MapView extends Component<Props, State> {
     let dmgReduction = this.clacPlayerDmgReduction()
     let dmgWithReduction = rawDmgTaken - dmgReduction
     if (enemyHP > 0 || enemyHP !== 0) {
-      this.setState({playerTurn: false, monsterTurn: true, enemyHP: enemyHP - rawDmgGiven, displayDmg: rawDmgGiven, waitForMonster: true})}
+      this.setState({playerTurn: true, monsterTurn: false, enemyHP: enemyHP - rawDmgGiven, displayDmg: rawDmgGiven, waitForMonster: true})}
     if (enemyHP === 0 || rawDmgGiven > enemyHP) return this.setState({winnerIsSet: true})
         setTimeout(() => {
         if (playerHP < 0 || rawDmgTaken > playerHP) this.setState({winnerIsSet: true})
-        if (playerHP > 0 ) this.setState({playerTurn: true, monsterTurn: false,
+        if (playerHP > 0 ) this.setState({playerTurn: false, monsterTurn: true,
           playerHP: playerHP - dmgWithReduction, displayDmg: dmgWithReduction, displayReduction: dmgReduction, waitForMonster: false})
       }, 1500)
   }
