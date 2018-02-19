@@ -111,4 +111,39 @@ button {
 }
 
 
+/*fix for homeComp*/
+
+body > div:nth-child(6) > div > div.modal.fade.show > div > div > div > h4 {
+  width: 100%;
+}
+
+/* hide Map elements */
+
+#root > div > div:nth-child(2) > div > div:nth-child(1) > div > div > button > img {
+  visibility: hidden;
+}
+
+#root > div > div:nth-child(2) > div > div:nth-child(1) > div > div > div:nth-child(2) > a > div > img {
+  visibility: hidden;
+}
+
+#root > div > div:nth-child(2) > div > div:nth-child(1) > div > div > div:nth-child(10) {
+  visibility: hidden;
+}
+
+#root > div > div:nth-child(2) > div > div:nth-child(1) > div > div > div:nth-child(4) {
+  visibility: hidden;
+}
+
+#root > div > div:nth-child(2) > div > div:nth-child(1) > div > div > div.gmnoprint.gm-style-cc {
+  visibility: hidden;
+}
+
+#root > div > div:nth-child(2) > div > div:nth-child(1) > div > div > div:nth-child(8) {
+  visibility: hidden;
+}
+
+#root > div > div:nth-child(2) > div > div:nth-child(1) > div > div > div.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
+  visibility: hidden;
+}
 /*css classes for nav ends*/

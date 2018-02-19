@@ -1,32 +1,76 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
+// eslint-disable-next-line
+import {Col, Button, Form, FormGroup, Label, Input} from 'reactstrap'
+import axios from 'axios'
+
+const API_SIGNIN = 'http://peargameapi.herokuapp.com/api/signin'
 
 export default class LoginForm extends Component {
-  // Using a class based component here because we're accessing DOM refs
+  constructor (props) {
+    super(props)
+    this.state = {
+      user: {},
+      loginError: false
+    }
+  }
+
+  render () {
+    let {username, password, loginError} = this.state
+    return (
+      <Form onSubmit={this.handleSignIn}>
+        <FormGroup row>
+          <Label for="username" sm={4}>Username</Label>
+          <Col sm={8}>
+            <Input type="text" onChange={this.handleUsername} value={username} placeholder="Your Username" />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="Password" sm={4}>Password</Label>
+          <Col sm={8}>
+            <Input type="password" onChange={this.handlePassword} value={password} placeholder="*******" />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          {loginError ? this.renderLoginError() : <div />}
+          <Button color="success" type="submit">Sign in</Button>
+        </FormGroup>
+      </Form>
+    )
+  }
 
   handleSignIn = (e) => {
     e.preventDefault()
-    let username = this.refs.username.value
-    let password = this.refs.password.value
-    this.props.onSignIn(username, password)
-    this.closeModal()
+    let {onSignIn} = this.props
+    const {username, password} = this.state.user
+    axios.post(API_SIGNIN, {username, password})
+      .then((result) => {
+        const user = result.data.user
+        const error = result.data.Error
+        if (error === true) return this.setState({loginError: true})
+        if (error === false) this.setState({user: user})
+        if (onSignIn) onSignIn(user)
+      })
   }
 
-  closeModal = () => document.getElementById('close-btn').click()
+  handleUsername = (name) => {
+    let {user} = this.state
+    this.setState({user: {...user, username: name.target.value}})
+  }
 
-  render () {
-    return (
-      <form onSubmit={this.handleSignIn}>
-        <h3>Sign in</h3>
-        <p>
-          <input type="text" ref="username" placeholder="enter you username" />
-        </p>
-        <p>
-          <input type="password" ref="password" placeholder="enter password" />
-        </p>
-        <p>
-          <input type="submit" value="Login" />
-        </p>
-      </form>
-    )
+  handlePassword = (pass) => {
+    let {user} = this.state
+    this.setState({user: {...user, password: pass.target.value}})
+  }
+
+  renderLoginError = () => {
+    let {loginError} = this.state
+    if (loginError) return <p style={styles.loginError}>Wrong username or password. Please try again. </p>
+  }
+}
+
+let styles = {
+  loginError: {
+    fontSize: '20px',
+    color: 'red'
   }
 }
