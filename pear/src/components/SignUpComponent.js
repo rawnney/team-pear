@@ -114,7 +114,7 @@ export default class SignUpComponent extends Component {
         </FormGroup>
         <FormGroup row>
           <Label for="avatar" sm={4}>Choose Avatar</Label>
-          <Col sm={{ size: 8 }}>
+          <Col sm={{ size: 8 }} style={styles.avatarWrapper}>
             <FormGroup check>
               <Label check>
                 <Input type="radio" name="avatar" value="Avatar1" onClick={this.handelAvatar}/>{' '}
@@ -163,6 +163,12 @@ export default class SignUpComponent extends Component {
 }
 
 let styles = {
+  avatarWrapper: {
+    justifyContent: 'space-around',
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center'
+  },
   avatar: {
     height: '150px'
   }
