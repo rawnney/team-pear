@@ -8,24 +8,36 @@ export default class Leaderboard extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      persons: []
+      leaderboardData: []
     }
   }
   componentDidMount () {
     axios.get(API_GETUSERS)
       .then(res => {
-        const persons = res.data.Users
-        this.setState({ persons })
+        const leaderboardData = res.data.Users
+        this.setState({ leaderboardData })
+        console.log(JSON.stringify(leaderboardData))
       })
   }
 
-  const myData = [].concat(this.state.monstersKilled)
-    .sort((a, b) => a.itemM > b.itemM)
-    .map((item, i) =>
-        <div key={i}> {item.matchID} {item.timeM}{item.description}</div>
-    );
-
   render () {
+    function sortData (first, second) {
+      let firstTime = first.monstersKilled
+      let secondTime = second.monstersKilled
+      if (firstTime === secondTime) { return 0 }
+      if (firstTime > secondTime) { return -1 } else { return 1 }
+    }
+    let list = this.state.leaderboardData.sort(sortData).map((leaderboardData, index) => {
+      return (
+        <table key={index}>
+
+          <td>{leaderboardData.username}</td>
+          <td>{leaderboardData.team}</td>
+          <td>{leaderboardData.monstersKilled}</td>
+
+        </table>
+      )
+    })
     return <div>
       <Table>
         <thead>
@@ -39,9 +51,7 @@ export default class Leaderboard extends Component {
         <tbody>
           <tr>
             <th scope="row">Winner is:</th>
-            <td>{ this.state.persons.map(persons => <p>{persons.username}</p>)}</td>
-            <td>{ this.state.persons.map(persons => <p>{persons.team}</p>)}</td>
-            <td>{ this.state.persons.map(persons => <p>{persons.monstersKilled}</p>)}</td>
+            <td>{list}</td>
           </tr>
         </tbody>
       </Table>

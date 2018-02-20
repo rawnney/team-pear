@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 // eslint-disable-next-line
-import {TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHeader, ModalFooter} from 'reactstrap'
+import {TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHeader, ModalFooter, ModalBody} from 'reactstrap'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
 import LeaderboardComponent from './LeaderboardComponent'
