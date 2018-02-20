@@ -4,7 +4,6 @@ import {TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHeader, 
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
 import LeaderboardComponent from './LeaderboardComponent'
-import 'whatwg-fetch'
 
 let {Sword, Dagger, Shield, Armor, Wand} = Images
 
@@ -132,11 +131,9 @@ export default class CharacterView extends Component {
 
   renderUserInfo = () => {
     let {user} = this.state
-    let {username, name, lastname, email} = user
+    let {username, email} = user
     return <ul style={styles.none}>
       <li><p>Username: {username}</p> </li>
-      <li><p>First name: {name}</p></li>
-      <li><p>Last name: {lastname}</p></li>
       <li><p>Email: {email}</p></li>
     </ul>
   }
