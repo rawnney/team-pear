@@ -15,7 +15,11 @@ const API_USERS = 'http://peargameapi.herokuapp.com/api/users/'
 export default class SignUpComponent extends Component {
   constructor (props) {
     super(props)
-    this.state = {user: {}}
+    this.state = {
+      user: {
+        reg: 'true'
+      }
+    }
   }
 
   handleUsername = (username) => {
@@ -33,9 +37,9 @@ export default class SignUpComponent extends Component {
     this.setState({user: {...user, password: password.target.value}})
   }
 
-  handelSelectTeam=(selectTeam) => {
+  handelSelectTeam = (selectTeam) => {
     let {user} = this.state
-    this.setState({user: {...user, team_id: selectTeam.target.value}})
+    this.setState({user: {...user, team: selectTeam.target.value}})
   }
   handelAvatar = (avatar) => {
     console.log(avatar.target.value)
@@ -46,9 +50,9 @@ export default class SignUpComponent extends Component {
   onSubmit = (e) => {
     e.preventDefault()
     let {onSignIn} = this.props
-    const { username, password, email, avatar, team_id } = this.state.user
+    const {username, password, email, avatar, team, reg} = this.state.user
 
-    axios.post(API_USERS, { username, email, password, avatar, team_id })
+    axios.post(API_USERS, {username, email, password, avatar, team, reg})
       .then((result) => {
         console.log(result)
         const user = null
@@ -80,7 +84,7 @@ export default class SignUpComponent extends Component {
   }
 
   render () {
-    const { username, password, email, avatar, team_id } = this.state
+    const {username, password, email, avatar, team} = this.state
     return (
       <Form onSubmit={this.onSubmit}>
         <FormGroup row>
@@ -142,9 +146,9 @@ export default class SignUpComponent extends Component {
           <Col sm={{ size: 8 }}>
             <FormGroup>
               <Input type="select" name="selectTeam" id="selectTeam" onChange={this.handelSelectTeam}>
-                <option value='1'>Red</option>
-                <option value='2'>Green</option>
-                <option value='3'>Blue</option>
+                <option value='RED'>Red</option>
+                <option value='GREEN'>Green</option>
+                <option value='BLUE'>Blue</option>
               </Input>
             </FormGroup>
           </Col>
