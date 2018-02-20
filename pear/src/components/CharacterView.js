@@ -119,6 +119,8 @@ export default class CharacterView extends Component {
       </div>
     )
   }
+  componentDidMount () {
+  }
 
   renderUserSkills = () => {
     let {user} = this.state

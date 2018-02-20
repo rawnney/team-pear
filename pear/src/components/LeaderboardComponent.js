@@ -1,16 +1,29 @@
 import React, {Component} from 'react'
 // eslint-disable-next-line
 import {Table} from 'reactstrap'
+import axios from 'axios'
+const API_GETUSERS = `https://peargameapi.herokuapp.com/api/users`
 
 export default class Leaderboard extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      persons: []
+    }
+  }
+  componentDidMount () {
+    axios.get(API_GETUSERS)
+      .then(res => {
+        const persons = res.data.Users
+        this.setState({ persons })
+      })
   }
 
-  componentDidMount () {
-    // getAllUsers = () => {}
-  }
+  const myData = [].concat(this.state.monstersKilled)
+    .sort((a, b) => a.itemM > b.itemM)
+    .map((item, i) =>
+        <div key={i}> {item.matchID} {item.timeM}{item.description}</div>
+    );
 
   render () {
     return <div>
@@ -18,38 +31,20 @@ export default class Leaderboard extends Component {
         <thead>
           <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
             <th>Username</th>
+            <th>Team</th>
+            <th>Monsters Killed</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
+            <th scope="row">Winner is:</th>
+            <td>{ this.state.persons.map(persons => <p>{persons.username}</p>)}</td>
+            <td>{ this.state.persons.map(persons => <p>{persons.team}</p>)}</td>
+            <td>{ this.state.persons.map(persons => <p>{persons.monstersKilled}</p>)}</td>
           </tr>
         </tbody>
       </Table>
     </div>
   }
-
-  getAllUsers = () => {}
-
-  sortUsers = () => {}
-
-  returnSortedUsers = () => {}
 }
