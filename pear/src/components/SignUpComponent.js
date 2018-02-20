@@ -1,159 +1,99 @@
-import React, {Component} from 'react'
-// eslint-disable-next-line
-import {Form, FormGroup,FormText, Label, Input, Col, Button} from 'reactstrap'
-import axios from 'axios'
-import {capitalizeFirstLetter} from '../libs/Common'
+import React from 'react'
+import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation'
+import { Button, Label, FormGroup } from 'reactstrap'
 import Images from '../libs/Imgs'
+import {capitalizeFirstLetter} from '../libs/Common'
+import axios from 'axios'
 
-let {Avatar1} = Images
-let {Avatar2} = Images
-let {Avatar3} = Images
-let {Avatar4} = Images
-
+let {Avatar1, Avatar2, Avatar3, Avatar4 } = Images
 const API_USERS = 'http://peargameapi.herokuapp.com/api/users/'
 
-export default class SignUpComponent extends Component {
+export default class Example extends React.Component {
   constructor (props) {
     super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {user: {}}
   }
 
-  handleUsername = (username) => {
-    let {user} = this.state
-    this.setState({user: {...user, username: capitalizeFirstLetter(username.target.value)}})
-  }
+  handleSubmit (event, errors, values) {
+    if (values.originalEmail === '' || values.originalEmail === '') {
+      errors.push('originalEmail', 'confirmationEmail')
+    }
+    this.setState({errors, values})
 
-  handleEmail = (email) => {
-    let {user} = this.state
-    this.setState({user: {...user, email: email.target.value}})
-  }
-
-  handlePassword = (password) => {
-    let {user} = this.state
-    this.setState({user: {...user, password: password.target.value}})
-  }
-
-  handelSelectTeam=(selectTeam) => {
-    let {user} = this.state
-    this.setState({user: {...user, team_id: selectTeam.target.value}})
-  }
-  handelAvatar = (avatar) => {
-    console.log(avatar.target.value)
-    let {user} = this.state
-    this.setState({user: {...user, avatar: avatar.target.value}})
-  }
-
-  onSubmit = (e) => {
-    e.preventDefault()
-    let {onSignIn} = this.props
-    const { username, password, email, avatar, team_id } = this.state.user
-
-    axios.post(API_USERS, { username, email, password, avatar, team_id })
-      .then((result) => {
-        console.log(result)
-        const user = null
-        if (onSignIn) onSignIn(user)
-      }).catch((error) => {
-        console.log(error)
-      })
-
-    // axios.post(API_USERS, { username, email, password, avatar, team_id})
+    // const { username, originalEmail, password, avatar, selectTeam } = this.state.values
+    this.setState({user: this.state.values})
+    // axios.post(API_USERS, { username, password, originalEmail, avatar, selectTeam })
     //   .then((result) => {
-    //     console.log(result)
     //     const user = null
     //     if (onSignIn) onSignIn(user)
     //   })
-    // console.log(this.state.user)
-    // axios.post(API_USERS, {
-    //   user_name: username,
-    //   email: email,
-    //   password: password,
-    //   avatar: avatar,
-    //   team_id: team_id
-    // }).then(function (response) {
-    //   console.log(response)
-    //   const user = null
-    //   if (onSignIn) onSignIn(user)
-    // }).catch(function (error) {
-    //   console.log(error)
-    // })
   }
 
   render () {
-    const { username, password, email, avatar, team_id } = this.state
     return (
-      <Form onSubmit={this.onSubmit}>
-        <FormGroup row>
-          <Label for="username" sm={4}>Username</Label>
-          <Col sm={8}>
-            <Input type="username" name="username" value={username} onChange={this.handleUsername} id="username" placeholder="Ex: 'BootyWarrior'" />
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="Email" sm={4}>Email</Label>
-          <Col sm={8}>
-            <Input type="email" name="email" value={email} onChange={this.handleEmail} id="email" placeholder="Your email" />
-          </Col>
-        </FormGroup>
+      <div>
+        <AvForm onSubmit={this.handleSubmit}>
+          {this.state.values && <div style={styles.error}>
+            <div>Invalid Submission: {this.state.errors.join(', ')}<br /></div>
 
-        <FormGroup row>
-          <Label for="Password" sm={4}>Password</Label>
-          <Col sm={8}>
-            <Input type="password" name="password" value={password} onChange={this.handlePassword} id="password" placeholder="*******" />
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="RePassword" sm={4}>Re-Enter Password</Label>
-          <Col sm={8}>
-            <Input type="password" name="password" id="passwordConfirmation" placeholder="*******" />
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="avatar" sm={4}>Choose Avatar</Label>
-          <Col sm={{ size: 8 }}>
-            <FormGroup check>
-              <Label check>
-                <Input type="radio" name="avatar" value="Avatar1" onClick={this.handelAvatar}/>{' '}
-                <img style={styles.avatar} src={Avatar1} alt='Avatar1'/>
-              </Label>
-            </FormGroup>
-            <FormGroup check>
-              <Label check>
-                <Input type="radio" name="avatar" value="Avatar2" onClick={this.handelAvatar} />{' '}
-                <img style={styles.avatar} src={Avatar2} alt='Avatar2'/>
-              </Label>
-            </FormGroup>
-            <FormGroup check>
-              <Label check>
-                <Input type="radio" name="avatar" value="Avatar3" onClick={this.handelAvatar} />{' '}
-                <img style={styles.avatar} src={Avatar3} alt='Avatar3'/>
-              </Label>
-            </FormGroup>
-            <FormGroup check>
-              <Label check>
-                <Input type="radio" name="avatar" value="Avatar4" onClick={this.handelAvatar} />{' '}
-                <img style={styles.avatar} src={Avatar4} alt='Avatar4'/>
-              </Label>
-            </FormGroup>
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="selectTeam" sm={4}>Choose Team</Label>
-          <Col sm={{ size: 8 }}>
-            <FormGroup>
-              <Input type="select" name="selectTeam" id="selectTeam" onChange={this.handelSelectTeam}>
-                <option value='1'>Red</option>
-                <option value='2'>Green</option>
-                <option value='3'>Blue</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </FormGroup>
+          </div>}
+          <AvGroup>
+            <Label for="username" sm={4}>Username</Label>
+            <AvInput type="username" name="username" id="username" placeholder="Ex: 'BootyWarrior'" required />
+            {/* this only shows when there is an error, use reactstrap's FormFeedback if you want is to always be displayed */}
+            <AvFeedback>This is an error!</AvFeedback>
+          </AvGroup>
 
-        <FormGroup>
-          <Button color="primary">Sign up</Button>
-        </FormGroup>
-      </Form>
+          <AvGroup>
+            <Label for="originalEmail" sm={4}>Email</Label>
+            <AvField name="originalEmail" placeholder="example.email@example.com" id="email" type="email" />
+          </AvGroup>
+
+          <AvGroup>
+            <Label for="confirmationEmail" sm={4}>Confirm Email</Label>
+            <AvInput name="confirmationEmail" id="confirmationEmail" type="email" placeholder="example.email@example.com" validate={{match: {value: 'originalEmail'}}}/>
+          </AvGroup>
+
+          <AvGroup>
+            <Label for="password" sm={4}>Password</Label>
+            <AvInput name="password" id="password" type="password" required/>
+          </AvGroup>
+
+          {/* Radios */}
+          <AvRadioGroup name="avatar" label="Choose Your Avatar" required>
+            <Label check>
+              <AvRadio value="Avatar1" id="Avatar1" />
+              <img style={styles.avatar} src={Avatar1} alt='Avatar1'/>
+            </Label>
+            <Label check>
+              <AvRadio value="Avatar2" id="Avatar2" />
+              <img style={styles.avatar} src={Avatar2} alt='Avatar2'/>
+            </Label>
+            <Label check>
+              <AvRadio value="Avatar3" id="Avatar3" />
+              <img style={styles.avatar} src={Avatar3} alt='Avatar3'/>
+            </Label>
+            <Label check style={styles.avatarBlock}>
+              <AvRadio value="Avatar4" id="Avatar4" />
+              <img style={styles.avatar} src={Avatar4} alt='Avatar4'/>
+            </Label>
+
+          </AvRadioGroup>
+          {/* With select and AvField */}
+
+          <AvField type="select" name="selectTeam" label="Select a Team" helpMessage="Select a team" required>
+            <option value='' >Select a team</option>
+            <option value='1' >Red</option>
+            <option value='2'>Green</option>
+            <option value='3'>Blue</option>
+          </AvField>
+          <FormGroup>
+            <Button>Submit</Button>
+          </FormGroup>
+        </AvForm>
+
+      </div>
     )
   }
 }
@@ -161,5 +101,8 @@ export default class SignUpComponent extends Component {
 let styles = {
   avatar: {
     height: '150px'
+  },
+  error: {
+    color: '#c52e43'
   }
 }
