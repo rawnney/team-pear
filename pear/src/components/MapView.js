@@ -9,6 +9,8 @@ import Markers from './Markers'
 import Images from '../libs/Imgs'
 import FightView from './FightView'
 import PlayerComponent from './PlayerComponent'
+import WinnerPopUp from './WinnerPopUp'
+import Coordinates from '../assets/json/coordinates'
 let {Monster, Robin, QMark} = Images
 
 type Props = {
@@ -25,6 +27,7 @@ type State = {
 }
 
 class MapView extends Component<Props, State> {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -104,9 +107,9 @@ class MapView extends Component<Props, State> {
   // setActiveMonsterCoins = (id) => {return fakeServerData.monster[id].coins}
 
   renderWinner = () => {
-    return <div style={styles.winnerText}>
-    YOU ARE WINNER!
-    </div>
+    return (
+      <WinnerPopUp />
+    )
   }
 
   renderExit = () => {
@@ -150,19 +153,43 @@ class MapView extends Component<Props, State> {
 
   setMonsters = (nextProps, nextState) => {
     let {monsterCount} = this.state
-    let {latitude, longitude} = nextProps.coords
+    let {lat, lon} = nextProps.coords
     let {monsterMarkers, didSetMonsters} = nextState
-    if (!latitude || !longitude) return
-    if (latitude === null || longitude === null) return
-    if (didSetMonsters) return
-    let monsters = new Array(monsterCount).fill(0)
-    let monstersToRender = []
-    monsters.map((item, index) => {
-      let coord = this.getMonsterCoord(latitude, longitude, index)
+
+    //if ((!lat || !lon) || (lat === null || lon === null) || (didSetMonsters)) return
+
+     //if (!lat || !lon) return
+     //if (lat=== null || lon === null) return
+     if (didSetMonsters) return
+
+    //let monsters = coordinates(monsterCount).fill(0) //new Array(monsterCount).fill(0)
+
+//   { 'type': 'Feature', 'properties': { 'Name': 'Skolan KYH Stockholm', 'description': null, 'timestamp': null, 'begin': null, 'end':
+// null, 'altitudeMode': null, 'tessellate': -1, 'extrude': 0, 'visibility': -1, 'drawOrder': null, 'icon': null },
+// 'geometry': { 'type': 'Point', 'coordinates': [ 18.1102484, 59.3132238, 0.0 ] } },
+
+    var mapCoordinates = {Coordinates}
+    //console.log(mapCoordinates.Coordinates.features);
+    var x = [], monstersToRender = [];
+    for (var {properties: {Name: n}, geometry: {coordinates: [c, d]}} of mapCoordinates.Coordinates.features) {
+      console.log('Name: ' + n + ', Father: ' + c + " " + d);
       let images = QMark //this.randomIcon()
-      monstersToRender.push({id: index, latitude: coord.latitude, longitude: coord.longitude, icon: images})
-    })
-    this.setState({monsterMarkers: monstersToRender, didSetMonsters: true})
+      x.push({name: n, latitude: c, longitude: d, icon: images})
+
+    }
+    //console.log(x);
+    for (var i=0; i<x.length; i++) {
+      monstersToRender.push({id: i, latitude: x[i].latitude, longitude: x[i].longitude, icon: x[i].icon})
+      //console.log(x[i]);
+    }
+
+    // monsters.map((item, index) => {
+    //   let coord = this.getMonsterCoord(latitude, longitude, index)
+    //   let images = QMark //this.randomIcon()
+    //   monstersToRender.push({id: index, latitude: coord.latitude, longitude: coord.longitude, icon: images})
+    // })
+
+    this.setState({monsterMarkers: x, didSetMonsters: true})
   }
 
   // randomIcon = () => {
@@ -171,16 +198,16 @@ class MapView extends Component<Props, State> {
   // }
 
   getMonsterCoord (latitude, longitude, index) {
-    let pos = index * 0.001,
+    let pos = index * 0.002,
         neg = index * 0.001,
         result
-
     result = Math.floor(Math.random() * (pos + neg)) - neg
     result = result < 0 ? result : result
     latitude = latitude + result
     longitude = longitude + result
     return {latitude, longitude}
   }
+
 }
 
 export default geolocated({
