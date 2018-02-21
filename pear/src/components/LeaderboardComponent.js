@@ -29,13 +29,13 @@ export default class Leaderboard extends Component {
     }
     let list = this.state.leaderboardData.sort(sortData).map((leaderboardData, index) => {
       return (
-        <table key={index}>
-
+        <tr key={index}>
+          <td scope="row"><li></li></td>
           <td>{leaderboardData.username}</td>
           <td>{leaderboardData.team}</td>
           <td>{leaderboardData.monstersKilled}</td>
 
-        </table>
+        </tr>
       )
     })
     return <div>
@@ -49,10 +49,9 @@ export default class Leaderboard extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Winner is:</th>
-            <td>{list}</td>
-          </tr>
+          <ol>
+            {list}
+          </ol>
         </tbody>
       </Table>
     </div>
