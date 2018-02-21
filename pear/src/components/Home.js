@@ -90,7 +90,9 @@ export default class Home extends Component {
           {this.renderLoginExit()}
           <Button style={styles.button} onClick={this.toggleLeaderboard} color="primary">Leaderboard</Button>
           <Button style={styles.button} onClick={this.toggleInfo} color="info">Info</Button>
+          <NavLink style={styles.buttonlook} href="https://peargame.000webhostapp.com/" target="_blank">Disabled Link</NavLink>
         </div>
+
       </section>
       <Modal style={styles.modalStyle} isOpen={modalLogin} toggleLogin={this.toggleLogin} className={this.props.className}>
         <ModalHeader>
@@ -186,5 +188,19 @@ let styles = {
   button: {
     margin: '10px',
     width: '200px'
+  },
+  buttonlook: {
+    color: '#fff',
+    backgroundColor: '#007bff',
+    borderColor: '#007bff',
+    fontWeight: '400',
+    width: '200px',
+    margin: '10px',
+    border: '1px solid transparent',
+    padding: '.375rem .75rem',
+    fontSize: '1rem',
+    lineHeight: '1.5',
+    borderRadius: '.25rem',
+    transition: 'color .15s'
   }
 }
