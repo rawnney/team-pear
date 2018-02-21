@@ -4,7 +4,7 @@ import { geolocated } from 'react-geolocated'
 import {Modal, Button} from 'reactstrap'
 import fakeServerData from '../fakeServerData'
 import EnemyComponent from './EnemyComponent'
-import Pinjump from './Pinjump';
+import Pinjump from './Pinjump'
 import Markers from './Markers'
 import Images from '../libs/Imgs'
 import PlayerComponent from './PlayerComponent'
@@ -15,6 +15,7 @@ type Props = {
   isGeolocationAvailable: boolean,
   isGeolocationEnabled: boolean
 }
+
 type State = {
   monsterMarkers: Array<*>,
   didSetMonsters: boolean,
@@ -35,12 +36,17 @@ class MapView extends Component<Props, State> {
       didSetMonsters: false,
       fightViewOpened: false,
       winnerIsSet: false,
-      enemyHP: 10, // Set to 100!
+      enemyHP: 100,
       playerHP: 100,
       monsterCount: fakeServerData.monster.length,
       monstersKilled: this.props.setUser.monstersKilled,
       user: this.props.setUser,
-      coins: this.props.setUser.coins
+      coins: this.props.setUser.coins,
+      playerTurn: false,
+      monsterTurn: false,
+      displayDmg: undefined,
+      displayReduction: undefined,
+      waitForMonster: false
     }
   }
 
@@ -51,7 +57,8 @@ class MapView extends Component<Props, State> {
   }
 
   render () {
-    let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP, activeMonsterName, activeMonsterAvatar, user} = this.state
+    let {monsterMarkers, fightViewOpened, winnerIsSet, enemyHP, playerHP, activeMonsterName,
+       activeMonsterAvatar, user, playerTurn, monsterTurn, waitForMonster} = this.state
     let {coords, isGeolocationAvailable, isGeolocationEnabled} = this.props
     if (!user) return <div/>
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
@@ -73,31 +80,60 @@ class MapView extends Component<Props, State> {
         <div style={styles.wrapper}>
           {winnerIsSet ? this.renderExit() : <div />}
           <EnemyComponent enemyHP={enemyHP} name={activeMonsterName} avatar={activeMonsterAvatar}/>
+            <div style={styles.console}>
           {winnerIsSet ? this.renderWinner() : <div />}
+          {!winnerIsSet && playerTurn ? this.logDmgGiven() : <div />}
+          {!winnerIsSet && monsterTurn ? this.logDmgTaken() : <div />}
+            </div>
           <PlayerComponent playerHP={playerHP} username={user.username} avatar={user.avatar}/>
-          <div style={styles.fightButton}>
-            <Button onClick={this.handleClickEvent} color='danger'>Attack</Button>
+          <div style={styles.buttonWrapper}>
+            <Button onClick={this.playerAttack} disabled={waitForMonster} color='danger' style={styles.buttonStyle}>Attack</Button>
+            {/*<Button onClick={this.playerAttack} color='danger' style={styles.buttonStyle}>Attack</Button>*/}
           </div>
         </div>
       </Modal>
     </div>
   }
 
-
+// TODO: randomize coindrop (depending on monster)  // this.setActiveMonsterCoins(id)
   toggleFightView = (id) => {
-    let {fightViewOpened, monstersKilled, coins} = this.state
+    let {fightViewOpened, enemyHP, playerHP} = this.state
+    if (!fightViewOpened) return this.initFight(id)
+    if (enemyHP === 0 || enemyHP < 0) return this.playerWin(id)
+    if ( playerHP === 0 || playerHP < 0) return this.playerLoose(id)
+  }
+
+  playerWin = (id) => {
+    let {monstersKilled, coins, fightViewOpened} = this.state
     let {updateUser} = this.props
-    console.log(id);
-    if (this.state.enemyHP === 0) {
-    // TODO: randomize coindrop (depending on monster)  // this.setActiveMonsterCoins(id)
-      this.killCounter()
-      this.incCoins(id)
-      this.removeMonster(id)
-      updateUser(monstersKilled, coins)
-    return this.setState({fightViewOpened: !fightViewOpened, enemyHP: 10, winnerIsSet: false, }) // Set to 100!
-    } else {
-    return this.setState({fightViewOpened: !fightViewOpened, activeMonsterName: this.setActiveMonsterName(id), activeMonsterAvatar: this.setActiveMonsterAvatar(id)})
-    }
+    this.killCounter()
+    this.incCoins(id)
+    this.removeMonster(id)
+    updateUser(monstersKilled, coins)
+    this.setState({
+      fightViewOpened: !fightViewOpened,
+      enemyHP: 100,
+      playerHP: 100,
+      winnerIsSet: false,
+      playerTurn: false,
+      monsterTurn: false
+    })
+  }
+
+  initFight = (id) => {
+    let {fightViewOpened} = this.state
+    this.setState({
+      fightViewOpened: !fightViewOpened,
+      activeMonsterName: this.setActiveMonsterName(id),
+      activeMonsterAvatar: this.setActiveMonsterAvatar(id),
+      waitForMonster: false
+    })
+  }
+
+  playerLoose = () => {
+    return <div style={styles.winnerText}>
+    YOU ARE LOOSER, YOU SUCK SO HARD! ACCOUNT DELETED! LOL NOOB.
+    </div>
   }
 
   setActiveMonsterName = (id) => {return fakeServerData.monster[id].monsterName}
@@ -114,15 +150,55 @@ class MapView extends Component<Props, State> {
     return <Button onClick={this.toggleFightView} style={styles.closeButton}>X</Button>
   }
 
-  handleClickEvent = () => {
+  logDmgGiven = () => {
+    let {displayDmg} = this.state
+    return <div style={styles.logDmgGiven}>You hit for {displayDmg} dmg!</div>
+  }
+
+  logDmgTaken = () => {
+    let {displayDmg, displayReduction} = this.state
+    if (displayReduction <= 0) return <div style={styles.logDmgTaken}>You took {displayDmg} dmg!</div>
+    if (displayReduction) return <div style={styles.logDmgTaken}> You took {displayDmg} dmg! ({displayReduction} dmg mitigated)</div>
+  }
+
+  calcPlayerAttack = () => {
+    let baseDmg = 10
+    let attackDmg = 1.25
+    let totalDmg = baseDmg * attackDmg
+    let rawDmgGiven = Math.ceil(Math.floor(Math.random() * (totalDmg - baseDmg)) + baseDmg)
+    return rawDmgGiven
+  }
+
+  calcMonsterAttack = () => {
+    let baseDmg = 10
+    let attackDmg = 1.25
+    let totalDmg = baseDmg * attackDmg
+    let rawDmgTaken = Math.ceil(Math.floor(Math.random() * (totalDmg - baseDmg)) + baseDmg)
+    return rawDmgTaken
+  }
+
+  clacPlayerDmgReduction = () => {
+    let baseReduction = 5
+    let itemReduction = 15
+    let maxReduction = baseReduction + itemReduction
+    let dmgReduction = Math.ceil((Math.floor(Math.random() * (maxReduction - baseReduction)) + baseReduction) / 5)
+    return dmgReduction
+  }
+
+  playerAttack = () => {
     let {enemyHP, playerHP} = this.state
-    if (enemyHP > 0) {
-      this.setState({enemyHP: enemyHP - 10}, () => {
-        if (enemyHP === 10 || playerHP === 10) {
-          this.setState({winnerIsSet: true})
-        }
-      })
-    }
+    let rawDmgGiven = this.calcPlayerAttack()
+    let rawDmgTaken = this.calcMonsterAttack()
+    let dmgReduction = this.clacPlayerDmgReduction()
+    let dmgWithReduction = rawDmgTaken - dmgReduction
+    if (enemyHP > 0 || enemyHP !== 0) {
+      this.setState({playerTurn: true, monsterTurn: false, enemyHP: enemyHP - rawDmgGiven, displayDmg: rawDmgGiven, waitForMonster: true})}
+    if (enemyHP === 0 || rawDmgGiven > enemyHP) return this.setState({winnerIsSet: true})
+        setTimeout(() => {
+        if (playerHP < 0 || rawDmgTaken > playerHP) this.setState({winnerIsSet: true})
+        if (playerHP > 0 ) this.setState({playerTurn: false, monsterTurn: true,
+          playerHP: playerHP - dmgWithReduction, displayDmg: dmgWithReduction, displayReduction: dmgReduction, waitForMonster: false})
+      }, 1500)
   }
 
   killCounter = () => {
@@ -130,7 +206,7 @@ class MapView extends Component<Props, State> {
     this.setState({monstersKilled: monstersKilled + 1})
   }
 
-  incCoins = (id) => {
+  incCoins = () => {
     let {coins} = this.state
     this.setState({coins: coins + 2 })
   }
@@ -209,6 +285,21 @@ let styles = {
     alignSelf: 'center',
     textAlign: 'center'
   },
+  console: {
+    height: '30px'
+  },
+  logDmgGiven: {
+    display: 'flex',
+    textAlign: 'center',
+    justifyContent: 'center',
+    color: 'blue'
+  },
+  logDmgTaken: {
+    display: 'flex',
+    textAlign: 'center',
+    justifyContent: 'center',
+    color: 'red'
+  },
   closeButton: {
     width: '35px',
     height: '35px',
@@ -222,9 +313,15 @@ let styles = {
     justifyContent: 'center',
     alignItems: 'center'
   },
-  fightButton: {
-    width: '20%',
-    margin: 'auto'
+  buttonWrapper: {
+    display: 'flex',
+    flex: '1',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    margin: '0 5px'
+  },
+  buttonStyle: {
+    width: '30%'
   },
   winnerText: {
     textAlign: 'center'
