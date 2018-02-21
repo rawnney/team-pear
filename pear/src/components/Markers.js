@@ -7,9 +7,6 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
   let {lng, lat, markers} = props
   console.log(markers)
 
-  var q = markers.map((marker, index) =>  <Marker key={index} position={{lat: marker.latitude, lng: marker.longitude}} icon={marker.icon} clickable onClick={() => onClick(marker.id, props)} />)
-
-
   return <GoogleMap defaultZoom={18} defaultOptions={{scrollwheel: false}} options={mapOptions} /*styles={{skin}}*/ defaultCenter={{lat, lng}}>
     {<Marker position={{lat, lng}} />}
   {/*{markers.map((markers, id) => (
@@ -21,7 +18,9 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
     )
     )*/}
     {<Marker position={{lat: 59.312963, lng: 18.109775}} />}
-    {q}
+    {markers.map((marker, index) => (
+      <Marker key={index} position={{lat: markers.latitude, lng: markers.longitude}} icon={marker.icon} clickable onClick={() => onClick(marker.id, props)} />
+    ))}
   </GoogleMap>
   }
   ))
