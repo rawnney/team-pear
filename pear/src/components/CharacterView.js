@@ -36,7 +36,7 @@ export default class CharacterView extends Component {
 
   togglemod = () => {
     let {modal} = this.state
-    this.setState({modal: !modal})
+    this.setState({modal: !modal, userIsUpdated: false, error: false})
   }
 
   toggle = (tab) => {
@@ -149,13 +149,12 @@ export default class CharacterView extends Component {
   renderNoRegUserInfo = () => {}
 
   renderUserInfo = () => {
-    let {user, password} = this.state
+    let {user} = this.state
     let {username, email} = user
     return <div>
       <ul style={styles.none}>
         <li><p>Username: {username}</p></li>
         <li><p>Email: {email}</p></li>
-        <li><p>Password: {password}</p></li>
       </ul>
       <Button onClick={this.enableUserEdit}>Edit details</Button>
     </div>
@@ -185,19 +184,14 @@ export default class CharacterView extends Component {
           </Col>
         </FormGroup>
         <FormGroup row>
-          {/* <Label for="Current password" sm={4}>Current password</Label> */}
           <Label for="New password" sm={4}>Password</Label>
           <Col sm={8}>
             <Input type="password" onChange={this.editPassword} value={newPassword} placeholder="New Password" />
           </Col>
-          {/* <Label for="New password" sm={4}>Enter new password</Label> */}
-          {/*  <Col sm={8}>
-            <Input type="password" onChange={this.checkPassword} value={newPassword} placeholder="*******" />
-          </Col> */}
         </FormGroup>
         <FormGroup>
           <Button color="success" type="submit">Update account details</Button>
-          {error ? this.renderError() : <div />}
+          {error && !userIsUpdated ? this.renderError() : <div />}
           {userIsUpdated && !error ? this.renderMsg() : <div />}
         </FormGroup>
       </Form>
@@ -224,20 +218,21 @@ export default class CharacterView extends Component {
   }
 
   updateChanges = (e) => {
+    let {userIsUpdated} = this.state
     e.preventDefault()
-    // let {updatedUser} = this.state
     this.updateUsername()
     this.updateEmail()
     this.updatePassword()
+    if (!userIsUpdated) this.setState({error: true})
   }
 
   updateUsername = () => {
     let {user, updatedUser} = this.state
     let {username, iduser} = user
     let {newUsername} = updatedUser
-    if (newUsername !== username && newUsername === '' && newUsername !== null) return (this.setState({error: true}))
+    if (newUsername === username || newUsername === '' || newUsername === {} || newUsername === null || newUsername === undefined) return
     axios.put(UPDATE_USERNAME, {username: newUsername, iduser}).then(() => {
-      this.setState({userIsUpdated: true, error: false, user: {...user, username: newUsername}})
+      this.setState({userIsUpdated: true, error: false})
     })
   }
 
@@ -245,9 +240,9 @@ export default class CharacterView extends Component {
     let {user, updatedUser} = this.state
     let {email, iduser} = user
     let {newEmail} = updatedUser
-    if (email !== newEmail && newEmail === '' && newEmail !== null) return (this.setState({error: true}))
+    if (email === newEmail || newEmail === '' || newEmail === {} || newEmail === null || newEmail === undefined) return
     axios.put(UPDATE_EMAIL, {email: newEmail, iduser}).then(() => {
-      this.setState({userIsUpdated: true, error: false, user: {...user, email: newEmail}})
+      this.setState({userIsUpdated: true, error: false})
     })
   }
 
@@ -255,9 +250,9 @@ export default class CharacterView extends Component {
     let {user, updatedUser} = this.state
     let {password, iduser} = user
     let {newPassword} = updatedUser
-    if (password !== newPassword && newPassword === '' && newPassword !== null) return (this.setState({error: true}))
+    if (password === newPassword || newPassword === '' || newPassword === {} || newPassword === null || newPassword === undefined) return
     axios.put(UPDATE_PASSWORD, {password: newPassword, iduser}).then(() => {
-      this.setState({userIsUpdated: true, error: false, user: {...user, password: newPassword}})
+      this.setState({userIsUpdated: true, error: false})
     })
   }
 
@@ -313,10 +308,6 @@ let styles = {
   items: {
     width: '40px',
     height: '40px'
-  },
-  listWrapper: {
-    // display: 'flex',
-    // justifyContent: 'space-around'
   },
   none: {
     listStyle: 'none'

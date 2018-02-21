@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { geolocated } from 'react-geolocated'
 import {Modal, Button} from 'reactstrap'
