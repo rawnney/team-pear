@@ -27,10 +27,10 @@ export default class Leaderboard extends Component {
       if (firstTime === secondTime) { return 0 }
       if (firstTime > secondTime) { return -1 } else { return 1 }
     }
-    let list = this.state.leaderboardData.sort(sortData).map((leaderboardData, index) => {
+    let list = this.state.leaderboardData.sort(sortData).map((leaderboardData) => {
       return (
-        <tr key={index}>
-          <td scope="row"><li></li></td>
+        <tr>
+          <th><li></li></th>
           <td>{leaderboardData.username}</td>
           <td>{leaderboardData.team}</td>
           <td>{leaderboardData.monstersKilled}</td>
@@ -39,21 +39,21 @@ export default class Leaderboard extends Component {
       )
     })
     return <div>
-      <Table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Username</th>
-            <th>Team</th>
-            <th>Monsters Killed</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ol>
+      <ol>
+        <Table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Team</th>
+              <th>Monsters Killed</th>
+            </tr>
+          </thead>
+          <tbody>
             {list}
-          </ol>
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+      </ol>
     </div>
   }
 }
