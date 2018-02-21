@@ -4,7 +4,7 @@ import { geolocated } from 'react-geolocated'
 import {Modal, Button} from 'reactstrap'
 import fakeServerData from '../fakeServerData'
 import EnemyComponent from './EnemyComponent'
-import Pinjump from './Pinjump';
+import Pinjump from './Pinjump'
 import Markers from './Markers'
 import Images from '../libs/Imgs'
 import PlayerComponent from './PlayerComponent'

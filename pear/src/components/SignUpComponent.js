@@ -5,10 +5,7 @@ import axios from 'axios'
 import {capitalizeFirstLetter} from '../libs/Common'
 import Images from '../libs/Imgs'
 
-let {Avatar1} = Images
-let {Avatar2} = Images
-let {Avatar3} = Images
-let {Avatar4} = Images
+let {Avatar1, Avatar2, Avatar3, Avatar4} = Images
 
 const API_USERS = 'http://peargameapi.herokuapp.com/api/users/'
 
@@ -51,40 +48,16 @@ export default class SignUpComponent extends Component {
     e.preventDefault()
     let {onSignIn} = this.props
     const {username, password, email, avatar, team, reg} = this.state.user
-
-    axios.post(API_USERS, {username, email, password, avatar, team, reg})
-      .then((result) => {
-        console.log(result)
-        const user = null
-        if (onSignIn) onSignIn(user)
-      }).catch((error) => {
-        console.log(error)
-      })
-
-    // axios.post(API_USERS, { username, email, password, avatar, team_id})
-    //   .then((result) => {
-    //     console.log(result)
-    //     const user = null
-    //     if (onSignIn) onSignIn(user)
-    //   })
-    // console.log(this.state.user)
-    // axios.post(API_USERS, {
-    //   user_name: username,
-    //   email: email,
-    //   password: password,
-    //   avatar: avatar,
-    //   team_id: team_id
-    // }).then(function (response) {
-    //   console.log(response)
-    //   const user = null
-    //   if (onSignIn) onSignIn(user)
-    // }).catch(function (error) {
-    //   console.log(error)
-    // })
+    axios.post(API_USERS, {username, email, password, avatar, team, reg}).then((result) => {
+      const user = null
+      if (onSignIn) onSignIn(user)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 
   render () {
-    const {username, password, email, avatar, team} = this.state
+    const {username, password, email} = this.state
     return (
       <Form onSubmit={this.onSubmit}>
         <FormGroup row>

@@ -20,7 +20,7 @@ export default class LoginForm extends Component {
     return (
       <Form onSubmit={this.handleSignIn}>
         <FormGroup row>
-          <Label for="username" sm={4}>Username</Label>
+          <Label for="Username" sm={4}>Username</Label>
           <Col sm={8}>
             <Input type="text" onChange={this.handleUsername} value={username} placeholder="Your Username" />
           </Col>
