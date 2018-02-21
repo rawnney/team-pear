@@ -90,7 +90,7 @@ export default class Home extends Component {
           {this.renderLoginExit()}
           <Button style={styles.button} onClick={this.toggleLeaderboard} color="primary">Leaderboard</Button>
           <Button style={styles.button} onClick={this.toggleInfo} color="info">Info</Button>
-          <NavLink style={styles.buttonlook} href="https://peargame.000webhostapp.com/" target="_blank">Disabled Link</NavLink>
+          <NavLink style={styles.buttonlook} href="https://peargame.000webhostapp.com/" target="_blank">Players Info</NavLink>
         </div>
 
       </section>
