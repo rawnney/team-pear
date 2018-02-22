@@ -5,7 +5,8 @@ import mapOptions from '../assets/json/skin'
 
 const MARKERS = withScriptjs(withGoogleMap(props => {
   let {lng, lat, markers} = props
-  console.log(markers)
+  //console.log(markers)
+
 
   return <GoogleMap defaultZoom={18} defaultOptions={{scrollwheel: false}} options={mapOptions} /*styles={{skin}}*/ defaultCenter={{lat, lng}}>
     {<Marker position={{lat, lng}} />}
@@ -17,10 +18,13 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
       <Marker key{marker.id} position={{lat: x[i].latitude, lng: x[i].longitude}} icon={x[i].icon} clickable onClick={() => onClick(marker. id, props)}/>
     )
     )*/}
-    {<Marker position={{lat: 59.312963, lng: 18.109775}} />}
+    {/*<Marker position={{lat: 59.312963, lng: 18.109775}} />*/}
+
+
     {markers.map((marker, index) => (
-      <Marker key={index} position={{lat: markers.latitude, lng: markers.longitude}} icon={marker.icon} clickable onClick={() => onClick(marker.id, props)} />
+      <Marker key={index} position={{lat: markers[index].latitude, lng: markers[index].longitude}} icon={markers[index].icon} clickable onClick={() => onClick(marker.id, props)} />
     ))}
+
   </GoogleMap>
   }
   ))
@@ -32,4 +36,4 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
 
   export default MARKERS
 
-// 59.312963, 18.109775
+// 59.312963, 18.109775 icon={markers[index].icon}

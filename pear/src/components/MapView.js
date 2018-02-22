@@ -172,9 +172,9 @@ class MapView extends Component<Props, State> {
     //console.log(mapCoordinates.Coordinates.features);
     var x = [], monstersToRender = [];
     for (var {properties: {Name: n}, geometry: {coordinates: [c, d]}} of mapCoordinates.Coordinates.features) {
-      console.log('Name: ' + n + ', Father: ' + c + " " + d);
+      //console.log('Name: ' + n + ', Father: ' + c + " " + d);
       let images = QMark //this.randomIcon()
-      x.push({name: n, latitude: c, longitude: d, icon: images})
+      x.push({name: n, latitude: d, longitude: c, icon: images})
 
     }
     //console.log(x);
