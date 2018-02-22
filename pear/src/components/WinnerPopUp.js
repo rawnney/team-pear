@@ -23,7 +23,7 @@ export default class WinnerPopUp extends Component {
         {/* <Button color="danger" onClick={this.toggle}>Button</Button> */}
         <Modal isOpen={this.state.modal} modalTransition={{ timeout: 20 }} backdropTransition={{ timeout: 10 }}
           toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Modal Title</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Congratulation you just won a coin</ModalHeader>
           <ModalBody>
             <img src={coin} style={styles.Coin} alt='coin' className="mx-auto d-block" />
           </ModalBody>
