@@ -1,10 +1,17 @@
-import React, { Component } from 'react'
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap'
+import React, {Component} from 'react'
+// eslint-disable-next-line
+import {Form, TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHeader, ModalFooter, FormGroup, Label, Col, Input, ModalBody} from 'reactstrap'
+import {capitalizeFirstLetter} from '../libs/Common'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
-import 'whatwg-fetch'
+import LeaderboardComponent from './LeaderboardComponent'
+import axios from 'axios'
 
-let { Sword, Dagger, Shield, Armor, Wand } = Images
+let {Sword, Dagger, Shield, Armor, Wand} = Images
+
+const UPDATE_USERNAME = 'http://peargameapi.herokuapp.com/api/update_username'
+const UPDATE_EMAIL = 'http://peargameapi.herokuapp.com/api/update_email'
+const UPDATE_PASSWORD = 'http://peargameapi.herokuapp.com/api/update_password'
 
 export default class CharacterView extends Component {
   constructor (props) {
@@ -12,21 +19,12 @@ export default class CharacterView extends Component {
     this.state = {
       modal: false,
       activeTab: '1',
-      Usersr: [],
-
-      lastname: 'Kroner', // user.lastname
-      emaill: undefined, // user.email
-
-      sword: '+25',
-      blockChance: '5%',
-      magic: '+10',
-      pictures: [],
-      names: [],
-      last: [],
-      usernamee: undefined,
-      teamm: undefined,
-
-      activeTab: '1'
+      user: this.props.setUser,
+      monstersKilled: this.props.monstersKilled,
+      editUser: false,
+      updatedUser: {},
+      userIsUpdated: false,
+      error: false
     }
   }
 
@@ -37,9 +35,8 @@ export default class CharacterView extends Component {
   }
 
   togglemod = () => {
-    this.setState({
-      modal: !this.state.modal
-    })
+    let {modal} = this.state
+    this.setState({modal: !modal, userIsUpdated: false, error: false})
   }
 
   toggle = (tab) => {
@@ -50,50 +47,12 @@ export default class CharacterView extends Component {
     }
   }
 
-  componentDidMount () {
-    fetch('http://localhost:5000/api/users/8')
-      .then(Users => {
-        return Users.json()
-      }).then(data => {
-        let usernamee = data.Users.map((las) => {
-          return (
-            <div key={las.Users}>
-              <p>{las.username}</p>
-            </div>
-
-          )
-        })
-        let teamm = data.Users.map((las) => {
-          return (
-            <div key={las.Users}>
-              <p>{las.team}</p>
-            </div>
-
-          )
-        })
-        let emaill = data.Users.map((las) => {
-          return (
-            <div key={las.Users}>
-              <p>{las.email}</p>
-            </div>
-
-          )
-        })
-        this.setState({teamm: teamm})
-        this.setState({emaill: emaill})
-        this.setState({usernamee: usernamee})
-      })
-  }
-
-
-
   render () {
-    let {activeTab} = this.state
-    let {sword, blockChance, magic, monstersKilled, coins, user} = this.state
+    let {activeTab, user, editUser} = this.state
     return (
       <div>
         <nav style={styles.buttonWrapper}>
-          <Button style={styles.menuButton} color="success" onClick={this.togglemod}>{this.props.buttonLabel}Menu</Button>
+          <Button style={styles.menuButton} color='success' onClick={this.togglemod}>{this.props.buttonLabel}Menu</Button>
         </nav>
         <Modal isOpen={this.state.modal} togglemod={this.togglemod} className={this.props.className}>
           <Nav tabs>
@@ -124,111 +83,200 @@ export default class CharacterView extends Component {
             </NavItem>
           </Nav>
           <TabContent activeTab={activeTab}>
-            <TabPane tabId="1">
+            <TabPane tabId='1'>
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>My Account</ModalHeader>
-              <br />
-              <ul style={{listStyle: 'none'}}>
-                <li><p>USERNAME: {this.state.usernamee}</p> </li>
-                <li>TEAM: {this.state.teamm}</li>
-                <li><p>EMAIL: {this.state.emaill}</p></li>
-              </ul>
-              {user ? this.renderUserInfo() : <div/>}
+              <ModalBody>
+                {user.reg === 'true' && editUser === false ? this.renderUserInfo() : this.renderNoRegUserInfo()}
+                {user.reg === 'true' && editUser === true ? this.renderUserEditor() : <div />}
+                {/* //TODO render no-reg-options */}
+              </ModalBody>
             </TabPane>
-            <TabPane tabId="2">
+            <TabPane tabId='2'>
               <ModalHeader toggle={this.toggle}>Skills</ModalHeader>
-              <br/>
-              <ul style={{listStyle: 'none'}}>
-                <li><p>Melee damage: {sword}</p> </li>
-                <li><p>Block chance: {blockChance}</p></li>
-                <li><p>Spell damage: {magic}</p></li>
-              </ul>
+              <ModalBody>
+                {user ? this.renderUserSkills() : <div />}
+              </ModalBody>
             </TabPane>
-            <TabPane tabId="3">
+            <TabPane tabId='3'>
               <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
-              <br/>
-              <ul style={styles.listStyle}>
-                <li>
-                  <img style={styles.items} src={Sword} />
-                  <img style={styles.items} src={Dagger} />
-                  <img style={styles.items} src={Wand} />
-                </li>
-                <br />
-                <li>
-                  <img style={styles.items} src={Armor} />
-                  <img style={styles.items} src={Shield} />
-                </li>
-
-              </ul>
+              <ModalBody>
+                <ul style={styles.listStyle}>
+                  <li>
+                    <img style={styles.items} src={Sword} alt='item' />
+                    <img style={styles.items} src={Dagger} alt='item' />
+                    <img style={styles.items} src={Wand} alt='item' />
+                  </li>
+                  <br />
+                  <li>
+                    <img style={styles.items} src={Armor} alt='item' />
+                    <img style={styles.items} src={Shield} alt='item' />
+                  </li>
+                </ul>
+              </ModalBody>
             </TabPane>
-            <TabPane tabId="4">
+            <TabPane tabId='4'>
               <ModalHeader toggle={this.toggle}>Leaderboard</ModalHeader>
-              <Table dark>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </Table>
+              <ModalBody>
+                <LeaderboardComponent />
+              </ModalBody>
             </TabPane>
-            <TabPane tabId="5">
+            <TabPane tabId='5'>
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>Stats</ModalHeader>
-              <br />
-              <ul style={styles.listStyle}>
-                <li><p>Monsters killed: {monstersKilled}</p> </li>
-                <li><p>Coins: {coins}</p></li>
-              </ul>
+              <ModalBody>
+                {user ? this.renderUserStats() : <div/>}
+              </ModalBody>
             </TabPane>
           </TabContent>
           <ModalFooter>
-            <Button color="info" onClick={this.togglemod} data-dismiss="modal">Close</Button>
-            <Button color="danger" onClick={this.signOut}>Sign out</Button>
+            <Button color='info' onClick={this.togglemod}>Close</Button>
+            <Button color='danger' onClick={this.signOut}>Sign out</Button>
           </ModalFooter>
         </Modal>
       </div>
     )
   }
 
+  renderUserSkills = () => {
+    let {user} = this.state
+    let {sword, blockChance, magic} = user
+    return <ul style={styles.none}>
+      <li><p>Melee damage: {sword}</p> </li>
+      <li><p>Block chance: {blockChance}</p></li>
+      <li><p>Spell damage: {magic}</p></li>
+    </ul>
+  }
+
+  renderNoRegUserInfo = () => {}
+
   renderUserInfo = () => {
     let {user} = this.state
-    let {username, name, lastname, email} = user
-    return (
-      <ul style={{listStyle: 'none'}}>
-        <li><p>Username: {username}</p> </li>
-        <li><p>First name: {name}</p></li>
-        <li><p>Last name: {lastname}</p></li>
+    let {username, email} = user
+    return <div>
+      <ul style={styles.none}>
+        <li><p>Username: {username}</p></li>
         <li><p>Email: {email}</p></li>
       </ul>
+      <Button onClick={this.enableUserEdit}>Edit details</Button>
+    </div>
+  }
+
+  enableUserEdit = () => {
+    let {editUser} = this.state
+    this.setState({editUser: !editUser})
+  }
+
+  renderUserEditor = () => {
+    let {user, updatedUser, userIsUpdated, error} = this.state
+    let {username, email} = user
+    let {newUsername, newEmail, newPassword} = updatedUser
+    return (
+      <Form onSubmit={this.updateChanges}>
+        <FormGroup row>
+          <Label for="Current username" sm={4}>Username: {username}</Label>
+          <Col sm={8}>
+            <Input type="text" onChange={this.editUsername} value={newUsername} placeholder="New Username" />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="Current Email" sm={4}>Email: {email}</Label>
+          <Col sm={8}>
+            <Input type="email" onChange={this.editEmail} value={newEmail} placeholder="New Email" />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="New password" sm={4}>Password</Label>
+          <Col sm={8}>
+            <Input type="password" onChange={this.editPassword} value={newPassword} placeholder="New Password" />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Button color="success" type="submit">Update account details</Button>
+          {error && !userIsUpdated ? this.renderError() : <div />}
+          {userIsUpdated && !error ? this.renderMsg() : <div />}
+        </FormGroup>
+      </Form>
     )
+  }
+
+  renderMsg = () => {
+    return <p>Account updated! You have to sign out for the changes to take place.</p>
+  }
+
+  editUsername = (newUsername) => {
+    let {updatedUser} = this.state
+    this.setState({updatedUser: {...updatedUser, newUsername: capitalizeFirstLetter(newUsername.target.value)}})
+  }
+
+  editEmail = (newEmail) => {
+    let {updatedUser} = this.state
+    this.setState({updatedUser: {...updatedUser, newEmail: newEmail.target.value}})
+  }
+
+  editPassword = (newPassword) => {
+    let {updatedUser} = this.state
+    this.setState({updatedUser: {...updatedUser, newPassword: newPassword.target.value}})
+  }
+
+  updateChanges = (e) => {
+    let {userIsUpdated} = this.state
+    e.preventDefault()
+    this.updateUsername()
+    this.updateEmail()
+    this.updatePassword()
+    if (!userIsUpdated) this.setState({error: true})
+  }
+
+  updateUsername = () => {
+    let {user, updatedUser} = this.state
+    let {username, iduser} = user
+    let {newUsername} = updatedUser
+    if (newUsername === username || newUsername === '' || newUsername === {} || newUsername === null || newUsername === undefined) return
+    axios.put(UPDATE_USERNAME, {username: newUsername, iduser}).then(() => {
+      this.setState({userIsUpdated: true, error: false})
+    })
+  }
+
+  updateEmail = () => {
+    let {user, updatedUser} = this.state
+    let {email, iduser} = user
+    let {newEmail} = updatedUser
+    if (email === newEmail || newEmail === '' || newEmail === {} || newEmail === null || newEmail === undefined) return
+    axios.put(UPDATE_EMAIL, {email: newEmail, iduser}).then(() => {
+      this.setState({userIsUpdated: true, error: false})
+    })
+  }
+
+  updatePassword = () => {
+    let {user, updatedUser} = this.state
+    let {password, iduser} = user
+    let {newPassword} = updatedUser
+    if (password === newPassword || newPassword === '' || newPassword === {} || newPassword === null || newPassword === undefined) return
+    axios.put(UPDATE_PASSWORD, {password: newPassword, iduser}).then(() => {
+      this.setState({userIsUpdated: true, error: false})
+    })
+  }
+
+  // TODO // else { this.setState({error: true}) }
+
+  renderError = () => {
+    return 'Something went wrong! Please check your changes or try again later!'
+  }
+
+  renderUserStats = () => {
+    let {user} = this.state
+    let {monstersKilled, coins} = user
+    return <ul style={styles.listStyle}>
+      <li><p>Monsters killed: {monstersKilled}</p></li>
+      <li><p>Coins: {coins}</p></li>
+    </ul>
   }
   // <div>
   //     <br/>
   //     <p>Register to save your progress!</p>
-  //     <Button onClick={this.props.saveProgress} color="success">Save progress</Button>
+  //     <Button onClick={this.props.saveProgress} color='success'>Save progress</Button>
   //   </div>
   // }
+  // <div><Button onClick={this.saveProgress}>Register</Button></div>
 }
 
 let styles = {
@@ -260,6 +308,16 @@ let styles = {
   items: {
     width: '40px',
     height: '40px'
+  },
+  none: {
+    listStyle: 'none'
+  },
+  inputStyle: {
+    float: 'right',
+    marginRight: '20px',
+    width: '120px',
+    borderColor: 'black',
+    borderWidth: '1px'
   }
 
 }

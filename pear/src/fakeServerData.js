@@ -1,4 +1,3 @@
-import React from 'react'
 import Images from './libs/Imgs'
 
 let {Monster, Robin} = Images
@@ -6,7 +5,7 @@ let {Monster, Robin} = Images
 let fakeServerData = {
   users: [
     {
-      userid: '0',
+      userid: 0,
       username: undefined,
       password: undefined,
       name: 'Love',
@@ -16,12 +15,12 @@ let fakeServerData = {
       sword: '25%',
       blockChance: '25%',
       magic: '25%',
-      monstersKilled: '0',
-      coins: '0',
+      monstersKilled: 0,
+      coins: 0,
       type: 'temp'
     },
     {
-      userid: '1',
+      userid: 1,
       username: 'Rawnney',
       password: 'password',
       name: 'Hugo',
@@ -31,12 +30,12 @@ let fakeServerData = {
       sword: '100%',
       blockChance: '100%',
       magic: '100%',
-      monstersKilled: '25',
-      coins: '0',
+      monstersKilled: 25,
+      coins: 0,
       type: 'full'
     },
     {
-      userid: '2',
+      userid: 2,
       username: 'lol',
       password: 'password',
       name: 'Kalle',
@@ -46,12 +45,12 @@ let fakeServerData = {
       sword: '100%',
       blockChance: '100%',
       magic: '100%',
-      monstersKilled: '25',
-      coins: '0',
+      monstersKilled: 25,
+      coins: 0,
       type: 'full'
     },
     {
-      userid: '3',
+      userid: 3,
       username: 'lol',
       password: 'password',
       name: 'Orvar',
@@ -61,12 +60,12 @@ let fakeServerData = {
       sword: '100%',
       blockChance: '100%',
       magic: '100%',
-      monstersKilled: '25',
-      coins: '0',
+      monstersKilled: 25,
+      coins: 0,
       type: 'full'
     },
     {
-      userid: '4',
+      userid: 4,
       username: 'lol',
       password: 'password',
       name: 'Stina',
@@ -76,41 +75,40 @@ let fakeServerData = {
       sword: '100%',
       blockChance: '100%',
       magic: '100%',
-      monstersKilled: '25',
-      coins: '0',
+      monstersKilled: 25,
+      coins: 0,
       type: 'full'
     }],
 
   monster: [
     {
-      monsterId: '1',
-      name: 'Crazy Eyes',
-      avatar: Monster,
+      monsterId: 1,
+      monsterName: 'Crazy Eyes',
+      monsterAvatar: Monster,
       coins: 1
     },
     {
-      monsterId: '2',
-      name: 'TIM',
-      avatar: Monster,
+      monsterId: 2,
+      monsterName: 'TIM',
+      monsterAvatar: Monster,
       coins: 2
     },
     {
-      monsterId: '3',
-      name: 'Godzilla',
-      active: false,
-      avatar: Monster,
+      monsterId: 3,
+      monsterName: 'Godzilla',
+      monsterAvatar: Monster,
       coins: 3
     },
     {
-      monsterId: '4',
-      name: 'Jörgen',
-      avatar: Monster,
+      monsterId: 4,
+      monsterName: 'Jörgen',
+      monsterAvatar: Monster,
       coins: 4
     },
     {
-      monsterId: '5',
-      name: 'BOSS',
-      avatar: Monster,
+      monsterId: 5,
+      monsterName: 'BOSS',
+      monsterAvatar: Monster,
       coins: 5
     }
   ]
