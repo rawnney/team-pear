@@ -138,12 +138,24 @@ export default class CharacterView extends Component {
 
   renderUserSkills = () => {
     let {user} = this.state
-    let {sword, blockChance, magic} = user
-    return <ul style={styles.none}>
-      <li><p>Melee damage: {sword}</p> </li>
-      <li><p>Block chance: {blockChance}</p></li>
-      <li><p>Spell damage: {magic}</p></li>
-    </ul>
+    let {attack, block} = user
+    return <div>
+      <div>
+        <img src={Sword} style={styles.attack} alt='Attack'/>
+        <ul style={styles.none}>
+          <li><p>Base attack damage: 10</p></li>
+          <li><p>Weapon damage: {attack}</p></li>
+        </ul>
+      </div>
+      <hr />
+      <div>
+        <img src={Shield} style={styles.block} alt='Armor'/>
+        <ul style={styles.none}>
+          <li><p>Base defence value: 5</p></li>
+          <li><p>Armor value: {block}</p></li>
+        </ul>
+      </div>
+    </div>
   }
 
   renderNoRegUserInfo = () => {}
@@ -301,6 +313,12 @@ let styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'
+  },
+  attack: {
+    width: '30px'
+  },
+  block: {
+    width: '30px'
   },
   listStyle: {
     listStyle: 'none'

@@ -165,7 +165,7 @@ class MapView extends Component<Props, State> {
 
   calcPlayerAttack = () => {
     let baseDmg = 10
-    let attackDmg = 1.25
+    let attackDmg = 1.25 // axios.get(user.attack)
     let totalDmg = baseDmg * attackDmg
     let rawDmgGiven = Math.ceil(Math.floor(Math.random() * (totalDmg - baseDmg)) + baseDmg)
     return rawDmgGiven
@@ -181,7 +181,7 @@ class MapView extends Component<Props, State> {
 
   clacPlayerDmgReduction = () => {
     let baseReduction = 5
-    let itemReduction = 15
+    let itemReduction = 15  // axios.get(user.block)
     let maxReduction = baseReduction + itemReduction
     let dmgReduction = Math.ceil((Math.floor(Math.random() * (maxReduction - baseReduction)) + baseReduction) / 5)
     return dmgReduction
