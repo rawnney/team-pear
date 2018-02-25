@@ -38,6 +38,8 @@ class MapView extends Component<Props, State> {
       didSetMonsters: false,
       fightViewOpened: false,
       winnerIsSet: false,
+      playerWin: false,
+      monsterWin: false,
       enemyHP: 100,
       playerHP: 100,
       monsterCount: fakeServerData.monster.length,
@@ -105,6 +107,18 @@ class MapView extends Component<Props, State> {
     if ( playerHP === 0 || playerHP < 0) return this.playerLoose(id)
   }
 
+  initFight = (id) => {
+    let {fightViewOpened} = this.state
+    this.setState({
+      fightViewOpened: !fightViewOpened,
+      activeMonsterName: this.setActiveMonsterName(id),
+      activeMonsterAvatar: this.setActiveMonsterAvatar(id),
+      waitForMonster: false,
+      playerWin: false,
+      monsterWin: false
+    })
+  }
+
   playerWin = (id) => {
     let {monstersKilled, coins, fightViewOpened} = this.state
     let {updateUser} = this.props
@@ -118,24 +132,22 @@ class MapView extends Component<Props, State> {
       playerHP: 100,
       winnerIsSet: false,
       playerTurn: false,
-      monsterTurn: false
-    })
-  }
-
-  initFight = (id) => {
-    let {fightViewOpened} = this.state
-    this.setState({
-      fightViewOpened: !fightViewOpened,
-      activeMonsterName: this.setActiveMonsterName(id),
-      activeMonsterAvatar: this.setActiveMonsterAvatar(id),
-      waitForMonster: false
+      monsterTurn: false,
+      playerWin: true
     })
   }
 
   playerLoose = () => {
-    return <div style={styles.winnerText}>
-    YOU ARE LOOSER, YOU SUCK SO HARD! ACCOUNT DELETED! LOL NOOB.
-    </div>
+    let {fightViewOpened} = this.state
+    this.setState({
+      fightViewOpened: !fightViewOpened,
+      enemyHP: 100,
+      playerHP: 100,
+      winnerIsSet: false,
+      playerTurn: false,
+      monsterTurn: false,
+      monsterWin: true
+    })
   }
 
   setActiveMonsterName = (id) => {return fakeServerData.monster[id].monsterName}
@@ -143,9 +155,9 @@ class MapView extends Component<Props, State> {
   // TODO: randomize coindrop  // setActiveMonsterCoins = (id) => {return fakeServerData.monster[id].coins}
 
   renderWinner = () => {
-    return (
-      <WinnerPopUp />
-    )
+    let {playerWin, monsterWin} = this.state
+    if (playerWin === true) return <WinnerPopUp />
+    if (monsterWin === true) return <div style={styles.winnerText}>YOU ARE LOOSER, YOU SUCK SO HARD! ACCOUNT DELETED! LOL NOOB.</div>
   }
 
   renderExit = () => {
@@ -166,7 +178,7 @@ class MapView extends Component<Props, State> {
   calcPlayerAttack = () => {
     let {user} = this.state // TODO fix this
     let baseDmg = 10
-    let attackDmg = 1.25 // axios.get(user.attack)
+    let attackDmg = 1 + (user.attack / 100)
     let totalDmg = baseDmg * attackDmg
     let rawDmgGiven = Math.ceil(Math.floor(Math.random() * (totalDmg - baseDmg)) + baseDmg)
     return rawDmgGiven
@@ -181,8 +193,9 @@ class MapView extends Component<Props, State> {
   }
 
   clacPlayerDmgReduction = () => {
+    let {user} = this.state
     let baseReduction = 5
-    let itemReduction = 15  // axios.get(user.block)
+    let itemReduction = user.block
     let maxReduction = baseReduction + itemReduction
     let dmgReduction = Math.ceil((Math.floor(Math.random() * (maxReduction - baseReduction)) + baseReduction) / 5)
     return dmgReduction

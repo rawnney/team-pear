@@ -156,7 +156,7 @@ export default class CharacterView extends Component {
         <img src={Sword} style={styles.attack} alt='Attack'/>
         <ul style={styles.none}>
           <li><p>Base attack damage: 10</p></li>
-          <li><p>Weapon damage: {attack}</p></li>
+          <li><p>Weapon damage: {attack} %</p></li>
         </ul>
       </div>
       <hr />
