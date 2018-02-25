@@ -46,7 +46,7 @@ export default class ShopComponent extends Component {
         <TabContent activeTab={activeTab}>
           <TabPane tabId='1'>
             <ModalHeader style={styles.modalHeader} toggle={this.toggle}>Weapons</ModalHeader>
-            <Table>
+            <Table style={styles.table}>
               <thead>
                 <tr>
                   <th></th>
@@ -58,7 +58,7 @@ export default class ShopComponent extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td><img src={Sword} style={styles.listItemPic}/></td>
+                  <td style={styles.firstData}><img src={Sword} style={styles.listItemPic}/></td>
                   <td>Longsword</td>
                   <td>+25 % dmg</td>
                   <td>10 c</td>
@@ -69,26 +69,6 @@ export default class ShopComponent extends Component {
           </TabPane>
           <TabPane tabId='2'>
             <ModalHeader toggle={this.toggle}>Shields</ModalHeader>
-            <Table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Item</th>
-                  <th>Bonus</th>
-                  <th>Cost</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><img src={Shield} style={styles.listItemPic}/></td>
-                  <td>Longsword</td>
-                  <td>+ 15 Armor</td>
-                  <td>10 c</td>
-                  <td><Button onClick={this.buyItem} disable={this.checkCoin} style={styles.buyButton}>Buy</Button></td>
-                </tr>
-              </tbody>
-            </Table>
           </TabPane>
           <TabPane tabId='3'>
             <ModalHeader toggle={this.toggle}>Head</ModalHeader>
@@ -126,13 +106,19 @@ export default class ShopComponent extends Component {
 }
 
 let styles = {
-  none: {
-    listStyle: 'none',
-    paddingLeft: '0'
+  table: {
+    padding: 0,
+    margin: 0
+  },
+  firstData: {
+    padding: 0,
+    margin: 0,
+    verticalAlign: 'middle'
   },
   buyButton: {
     margin: 0,
-    padding: '5px 10px'
+    padding: '5px 10px',
+    verticalAlign: 'middle'
   },
   listItemPic: {
     width: '30px'

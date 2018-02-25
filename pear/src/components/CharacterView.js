@@ -134,7 +134,7 @@ export default class CharacterView extends Component {
             </TabPane>
             <TabPane tabId='6'>
               <ModalHeader toggle={this.toggle}>Shop</ModalHeader>
-              <ModalBody>
+              <ModalBody style={styles.shopModal}>
                 <ShopComponent />
               </ModalBody>
             </TabPane>
@@ -348,6 +348,8 @@ let styles = {
     width: '120px',
     borderColor: 'black',
     borderWidth: '1px'
+  },
+  shopModal: {
+    padding: 0
   }
-
 }
