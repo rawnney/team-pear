@@ -4,6 +4,7 @@ import {Form, FormGroup,FormText, Label, Input, Col, Button} from 'reactstrap'
 import axios from 'axios'
 import {capitalizeFirstLetter} from '../libs/Common'
 import Images from '../libs/Imgs'
+import Loader from './Loader'
 
 let {Avatar1, Avatar2, Avatar3, Avatar4} = Images
 
@@ -19,45 +20,8 @@ export default class SignUpComponent extends Component {
     }
   }
 
-  handleUsername = (username) => {
-    let {user} = this.state
-    this.setState({user: {...user, username: capitalizeFirstLetter(username.target.value)}})
-  }
-
-  handleEmail = (email) => {
-    let {user} = this.state
-    this.setState({user: {...user, email: email.target.value}})
-  }
-
-  handlePassword = (password) => {
-    let {user} = this.state
-    this.setState({user: {...user, password: password.target.value}})
-  }
-
-  handelSelectTeam = (selectTeam) => {
-    let {user} = this.state
-    this.setState({user: {...user, team: selectTeam.target.value}})
-  }
-  handelAvatar = (avatar) => {
-    console.log(avatar.target.value)
-    let {user} = this.state
-    this.setState({user: {...user, avatar: avatar.target.value}})
-  }
-
-  onSubmit = (e) => {
-    e.preventDefault()
-    let {onSignIn} = this.props
-    const {username, password, email, avatar, team, reg} = this.state.user
-    axios.post(API_USERS, {username, email, password, avatar, team, reg}).then((result) => {
-      const user = null
-      if (onSignIn) onSignIn(user)
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
-
   render () {
-    const {username, password, email} = this.state
+    let {username, password, email, loading, signUpError} = this.state
     return (
       <Form onSubmit={this.onSubmit}>
         <FormGroup row>
@@ -128,10 +92,59 @@ export default class SignUpComponent extends Component {
         </FormGroup>
 
         <FormGroup>
+          {signUpError ? this.renderSignUpError() : <div />}
+          {loading ? this.renderLoading() : <div />}
           <Button color="primary">Sign up</Button>
         </FormGroup>
       </Form>
     )
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+    let {onSignIn} = this.props
+    const {username, password, email, avatar, team, reg} = this.state.user
+    axios.post(API_USERS, {username, email, password, avatar, team, reg}).then((result) => {
+      this.setState({loading: true})
+      const user = null
+      if (onSignIn) onSignIn(user)
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+
+  handleUsername = (username) => {
+    let {user} = this.state
+    this.setState({user: {...user, username: capitalizeFirstLetter(username.target.value)}})
+  }
+
+  handleEmail = (email) => {
+    let {user} = this.state
+    this.setState({user: {...user, email: email.target.value}})
+  }
+
+  handlePassword = (password) => {
+    let {user} = this.state
+    this.setState({user: {...user, password: password.target.value}})
+  }
+
+  handelSelectTeam = (selectTeam) => {
+    let {user} = this.state
+    this.setState({user: {...user, team: selectTeam.target.value}})
+  }
+  handelAvatar = (avatar) => {
+    console.log(avatar.target.value)
+    let {user} = this.state
+    this.setState({user: {...user, avatar: avatar.target.value}})
+  }
+
+  renderLoading = () => {
+    return <Loader />
+  }
+
+  renderSignUpError = () => {
+    let {signUpError} = this.state
+    if (signUpError) return <p style={styles.signUpError}>Invalid input. Please try again. </p>
   }
 }
 
@@ -144,5 +157,9 @@ let styles = {
   },
   avatar: {
     height: '150px'
+  },
+  signUpError: {
+    fontSize: '20px',
+    color: 'red'
   }
 }

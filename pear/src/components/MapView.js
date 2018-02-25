@@ -164,6 +164,7 @@ class MapView extends Component<Props, State> {
   }
 
   calcPlayerAttack = () => {
+    let {user} = this.state // TODO fix this
     let baseDmg = 10
     let attackDmg = 1.25 // axios.get(user.attack)
     let totalDmg = baseDmg * attackDmg

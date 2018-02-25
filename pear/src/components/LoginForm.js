@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import {Col, Button, Form, FormGroup, Label, Input} from 'reactstrap'
 import axios from 'axios'
 import {capitalizeFirstLetter} from '../libs/Common'
+import Loader from './Loader'
 
 const API_SIGNIN = 'http://peargameapi.herokuapp.com/api/signin'
 
@@ -16,7 +17,7 @@ export default class LoginForm extends Component {
   }
 
   render () {
-    let {username, password, loginError} = this.state
+    let {username, password, loginError, loading} = this.state
     return (
       <Form onSubmit={this.handleSignIn}>
         <FormGroup row>
@@ -33,6 +34,7 @@ export default class LoginForm extends Component {
         </FormGroup>
         <FormGroup>
           {loginError ? this.renderLoginError() : <div />}
+          {loading ? this.renderLoading() : <div />}
           <Button color="success" type="submit">Sign in</Button>
         </FormGroup>
       </Form>
@@ -45,10 +47,11 @@ export default class LoginForm extends Component {
     const {username, password} = this.state.user
     axios.post(API_SIGNIN, {username, password})
       .then((result) => {
+        this.setState({loading: true})
         const user = result.data.user
         const error = result.data.Error
-        if (error === true) return this.setState({loginError: true})
-        if (error === false) this.setState({user: user})
+        if (error === true) return this.setState({loginError: true, loading: false})
+        if (error === false) this.setState({user: user, loading: false})
         if (onSignIn) onSignIn(user)
       })
   }
@@ -61,6 +64,10 @@ export default class LoginForm extends Component {
   handlePassword = (pass) => {
     let {user} = this.state
     this.setState({user: {...user, password: pass.target.value}})
+  }
+
+  renderLoading = () => {
+    return <Loader />
   }
 
   renderLoginError = () => {

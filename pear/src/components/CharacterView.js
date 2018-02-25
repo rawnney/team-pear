@@ -312,7 +312,7 @@ let styles = {
     width: '100%'
   },
   menuButton: {
-    width: 'auto',
+    width: '100px',
     position: 'absolute',
     bottom: '0'
   },
