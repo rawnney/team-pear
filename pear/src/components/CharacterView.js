@@ -5,6 +5,7 @@ import {capitalizeFirstLetter} from '../libs/Common'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
 import LeaderboardComponent from './LeaderboardComponent'
+import ShopComponent from './ShopComponent'
 import axios from 'axios'
 
 let {Sword, Dagger, Shield, Armor, Wand} = Images
@@ -58,7 +59,7 @@ export default class CharacterView extends Component {
           <Nav tabs>
             <NavItem>
               <NavLink className={classnames({ active: activeTab === '1' })} onClick={() => { this.toggle('1') }}>
-                My Account
+                Account
               </NavLink>
             </NavItem>
             <NavItem>
@@ -81,10 +82,15 @@ export default class CharacterView extends Component {
                 Stats
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink className={classnames({ active: activeTab === '6' })} onClick={() => { this.toggle('6') }}>
+                Shop
+              </NavLink>
+            </NavItem>
           </Nav>
           <TabContent activeTab={activeTab}>
             <TabPane tabId='1'>
-              <ModalHeader style={styles.modalHeader} toggle={this.toggle}>My Account</ModalHeader>
+              <ModalHeader style={styles.modalHeader} toggle={this.toggle}>Account</ModalHeader>
               <ModalBody>
                 {user.reg === 'true' && editUser === false ? this.renderUserInfo() : this.renderNoRegUserInfo()}
                 {user.reg === 'true' && editUser === true ? this.renderUserEditor() : <div />}
@@ -124,6 +130,12 @@ export default class CharacterView extends Component {
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>Stats</ModalHeader>
               <ModalBody>
                 {user ? this.renderUserStats() : <div/>}
+              </ModalBody>
+            </TabPane>
+            <TabPane tabId='6'>
+              <ModalHeader toggle={this.toggle}>Shop</ModalHeader>
+              <ModalBody>
+                <ShopComponent />
               </ModalBody>
             </TabPane>
           </TabContent>
