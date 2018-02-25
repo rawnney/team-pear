@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 // eslint-disable-next-line
 import {Form, FormGroup,FormText, Label, Input, Col, Button} from 'reactstrap'
 import axios from 'axios'
-import {capitalizeFirstLetter} from '../libs/Common'
+import {capitalizeFirstLetter, validateEmail} from '../libs/Common'
 import Images from '../libs/Imgs'
 import Loader from './Loader'
 
@@ -14,14 +14,20 @@ export default class SignUpComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      signUpError: false,
       user: {
-        reg: 'true'
+        reg: 'true',
+        monstersKilled: 0,
+        coins: 0,
+        attack: 0,
+        block: 0,
+        team: 'none'
       }
     }
   }
 
   render () {
-    let {username, password, email, loading, signUpError} = this.state
+    let {username, password, email, loading, signUpError, rePassword} = this.state
     return (
       <Form onSubmit={this.onSubmit}>
         <FormGroup row>
@@ -46,7 +52,7 @@ export default class SignUpComponent extends Component {
         <FormGroup row>
           <Label for="RePassword" sm={4}>Re-Enter Password</Label>
           <Col sm={8}>
-            <Input type="password" name="password" id="passwordConfirmation" placeholder="*******" />
+            <Input type="password" name="rePassword" value={rePassword} onChange={this.handleRePassword} id="passwordConfirmation" placeholder="*******" />
           </Col>
         </FormGroup>
         <FormGroup row>
@@ -83,6 +89,7 @@ export default class SignUpComponent extends Component {
           <Col sm={{ size: 8 }}>
             <FormGroup>
               <Input type="select" name="selectTeam" id="selectTeam" onChange={this.handelSelectTeam}>
+                <option value='none'> -- Select team -- </option>
                 <option value='RED'>Red</option>
                 <option value='GREEN'>Green</option>
                 <option value='BLUE'>Blue</option>
@@ -103,9 +110,17 @@ export default class SignUpComponent extends Component {
   onSubmit = (e) => {
     e.preventDefault()
     let {onSignIn} = this.props
-    const {username, password, email, avatar, team, reg} = this.state.user
-    axios.post(API_USERS, {username, email, password, avatar, team, reg}).then((result) => {
-      this.setState({loading: true})
+    let {user} = this.state
+    let {username, password, rePassword, email, avatar, team, reg, monstersKilled, coins, attack, block} = user
+    if (!username || !password || !email || !avatar || !team) return this.setState({signUpError: true})
+    if (!username || username.length < 3) return this.setState({signUpError: true, errorMsg: 'Invalid username input, make sure its 3 characters or longer'})
+    if (!password || password.length < 5) return this.setState({signUpError: true, errorMsg: 'Invalid password input, make sure its 5 characters or longer'})
+    if (password !== rePassword) return this.setState({signUpError: true, errorMsg: 'The passwords did not match'})
+    if (!email || validateEmail(email) === false) return this.setState({signUpError: true, errorMsg: 'That is one wierd email-adress.'})
+    if (!avatar) return this.setState({signUpError: true, errorMsg: 'You forgot to select a avatar!'})
+    if (!team || team === 'none') return this.setState({signUpError: true, errorMsg: 'Without a team you will never make it in the wild! Please select a team.'})
+    this.setState({loading: true})
+    axios.post(API_USERS, {username, email, password, avatar, team, reg, monstersKilled, coins, attack, block}).then((result) => {
       const user = null
       if (onSignIn) onSignIn(user)
     }).catch((error) => {
@@ -128,12 +143,17 @@ export default class SignUpComponent extends Component {
     this.setState({user: {...user, password: password.target.value}})
   }
 
+  handleRePassword = (rePassword) => {
+    let {user} = this.state
+    this.setState({user: {...user, rePassword: rePassword.target.value}})
+  }
+
   handelSelectTeam = (selectTeam) => {
     let {user} = this.state
     this.setState({user: {...user, team: selectTeam.target.value}})
   }
+
   handelAvatar = (avatar) => {
-    console.log(avatar.target.value)
     let {user} = this.state
     this.setState({user: {...user, avatar: avatar.target.value}})
   }
@@ -143,8 +163,8 @@ export default class SignUpComponent extends Component {
   }
 
   renderSignUpError = () => {
-    let {signUpError} = this.state
-    if (signUpError) return <p style={styles.signUpError}>Invalid input. Please try again. </p>
+    let {signUpError, errorMsg} = this.state
+    if (signUpError) return <p style={styles.signUpError}>{errorMsg}</p>
   }
 }
 
