@@ -17,6 +17,12 @@ export default class GameView extends Component<Props, State> {
     }
   }
 
+  componentDidMount () {
+   setInterval(() => {
+    this.getLocation()
+    }, 5000)
+  }
+
   render () {
     let {loggedIn, user} = this.state
     let notLoggedIn = <Home setUser={this.setUser} setLoggedIn={this.setLoggedIn}/>
@@ -28,10 +34,20 @@ export default class GameView extends Component<Props, State> {
         signOut={this.signOut}
       />
       <MapView
+      ref={this.setRef}
       setUser={user}
       updateUser={this.updateUser}
       />
     </div>
+  }
+
+  getLocation = () => {
+    if (!this.innerRef || !this.innerRef.getLocation) return
+    this.innerRef.getLocation()
+  }
+
+  setRef = (ref: *) => {
+    this.innerRef = ref
   }
 
   setLoggedIn = (loggedIn) => {
