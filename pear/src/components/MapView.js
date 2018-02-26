@@ -11,26 +11,11 @@ import WinnerPopUp from './WinnerPopUp'
 import Coordinates from '../assets/json/coordinates'
 let {Monster, Robin, QMark} = Images
 
-type Props = {
-  coords: Object,
-  isGeolocationAvailable: boolean,
-  isGeolocationEnabled: boolean
-}
-
-type State = {
-  monsterMarkers: Array<*>,
-  didSetMonsters: boolean,
-  fightViewOpened: boolean,
-  monsterCount: Number,
-  winnerIsSet: false
-}
-
 class MapView extends Component<Props, State> {
 
   constructor (props) {
     super(props)
     this.state = {
-      monster: fakeServerData.monster,
       activeMonsterName: undefined,
       activeMonsterAvatar: undefined,
       activeMonsterCoins: undefined,
@@ -42,7 +27,6 @@ class MapView extends Component<Props, State> {
       monsterWin: false,
       enemyHP: 100,
       playerHP: 100,
-      monsterCount: fakeServerData.monster.length,
       monstersKilled: this.props.setUser.monstersKilled,
       user: this.props.setUser,
       coins: this.props.setUser.coins,
@@ -102,9 +86,8 @@ class MapView extends Component<Props, State> {
 // TODO: randomize coindrop (depending on monster)  // this.setActiveMonsterCoins(id)
   toggleFightView = (id) => {
     let {fightViewOpened, enemyHP, playerHP} = this.state
-    if (!fightViewOpened) return this.initFight(id)
-    if (enemyHP === 0 || enemyHP < 0) return this.playerWin(id)
-    if ( playerHP === 0 || playerHP < 0) return this.playerLoose(id)
+    if (fightViewOpened === false) return this.initFight(id)
+    if (fightViewOpened === true) return this.resetFight(id)
   }
 
   initFight = (id) => {
@@ -119,45 +102,50 @@ class MapView extends Component<Props, State> {
     })
   }
 
+  resetFight = () => {
+    let {fightViewOpened} = this.state
+    this.setState({
+    fightViewOpened: !fightViewOpened,
+    enemyHP: 100,
+    playerHP: 100,
+    winnerIsSet: false,
+    playerTurn: false,
+    monsterTurn: false,
+    playerWin: false,
+    monsterWin: false
+    })
+  }
+
   playerWin = (id) => {
     let {monstersKilled, coins, fightViewOpened} = this.state
     let {updateUser} = this.props
     this.killCounter()
     this.incCoins(id)
     this.removeMonster(id)
+    this.setState({winnerIsSet: true, playerWin: true})
     updateUser(monstersKilled, coins)
-    this.setState({
-      fightViewOpened: !fightViewOpened,
-      enemyHP: 100,
-      playerHP: 100,
-      winnerIsSet: false,
-      playerTurn: false,
-      monsterTurn: false,
-      playerWin: true
-    })
   }
 
   playerLoose = () => {
     let {fightViewOpened} = this.state
-    this.setState({
-      fightViewOpened: !fightViewOpened,
-      enemyHP: 100,
-      playerHP: 100,
-      winnerIsSet: false,
-      playerTurn: false,
-      monsterTurn: false,
-      monsterWin: true
-    })
+    this.setState({winnerIsSet: true, monsterWin: true, waitForMonster: true})
   }
 
-  setActiveMonsterName = (id) => {return fakeServerData.monster[id].monsterName}
-  setActiveMonsterAvatar = (id) => {return fakeServerData.monster[id].monsterAvatar}
+  setActiveMonsterName = (id) => {
+    let {monsterMarkers} = this.state
+    console.log(monsterMarkers[id])
+    return monsterMarkers[id].name
+  }
+  setActiveMonsterAvatar = (id) => {
+    let {monsterMarkers} = this.state
+    return monsterMarkers[id].icon
+  }
   // TODO: randomize coindrop  // setActiveMonsterCoins = (id) => {return fakeServerData.monster[id].coins}
 
   renderWinner = () => {
     let {playerWin, monsterWin} = this.state
-    if (playerWin === true) return <WinnerPopUp />
-    if (monsterWin === true) return <div style={styles.winnerText}>YOU ARE LOOSER, YOU SUCK SO HARD! ACCOUNT DELETED! LOL NOOB.</div>
+    if (playerWin === true) return <div style={styles.winnerText}>YOU WIN! </div>
+    if (monsterWin === true) return <div style={styles.winnerText}>YOU ARE LOOSER</div>
   }
 
   renderExit = () => {
@@ -207,13 +195,15 @@ class MapView extends Component<Props, State> {
     let rawDmgTaken = this.calcMonsterAttack()
     let dmgReduction = this.clacPlayerDmgReduction()
     let dmgWithReduction = rawDmgTaken - dmgReduction
-    if (enemyHP > 0 || enemyHP !== 0) {
-      this.setState({playerTurn: true, monsterTurn: false, enemyHP: enemyHP - rawDmgGiven, displayDmg: rawDmgGiven, waitForMonster: true})}
-    if (enemyHP === 0 || rawDmgGiven > enemyHP) return this.setState({winnerIsSet: true})
-        setTimeout(() => {
-        if (playerHP < 0 || rawDmgTaken > playerHP) this.setState({winnerIsSet: true})
+    if (enemyHP > 0 || enemyHP !== 0) { this.setState({playerTurn: true, monsterTurn: false,
+      enemyHP: enemyHP - rawDmgGiven, displayDmg: rawDmgGiven, waitForMonster: true})
+    }
+    if (enemyHP === 0 || rawDmgGiven > enemyHP || rawDmgGiven === enemyHP) return this.playerWin()
+      setTimeout(() => {
+        if (playerHP < 0 || rawDmgTaken > playerHP) return this.playerLoose()
         if (playerHP > 0 ) this.setState({playerTurn: false, monsterTurn: true,
-          playerHP: playerHP - dmgWithReduction, displayDmg: dmgWithReduction, displayReduction: dmgReduction, waitForMonster: false})
+          playerHP: playerHP - dmgWithReduction, displayDmg: dmgWithReduction,
+          displayReduction: dmgReduction, waitForMonster: false})
       }, 1500)
   }
 
@@ -228,13 +218,19 @@ class MapView extends Component<Props, State> {
   }
 
   removeMonster = (id, latitude, longitude) => {
-    let {monsterMarkers, monsterCount} = this.state
+    let {monsterMarkers} = this.state
       monsterMarkers.splice(id, 1)
-    this.setState({monsterMarkers: monsterMarkers, monsterCount: monsterCount -1})
+    this.setState({monsterMarkers: monsterMarkers})
   }
 
-// TODO: Respawn monsters!
+  // removeMonster = (id, latitude, longitude) => {
+  //   let {monsterMarkers, monsterCount} = this.state
+  //   let index = monsterMarkers.indexOf(id)
+  //   if (index > -1) this.setState({
+  //     monsterMarkers: monsterMarkers.splice(index, 1)})
+  // }
 
+// TODO: Respawn monsters!
   // respawnMonster = () => {
   //   let {monsterCount, monsterMarkers} = this.state
   //   let addMonsters = newMonsterMarkers
@@ -243,63 +239,24 @@ class MapView extends Component<Props, State> {
   // }
 
   setMonsters = (nextProps, nextState) => {
-    let {monsterCount} = this.state
-    let {lat, lon} = nextProps.coords
+    let {lat, lng} = nextProps.coords
     let {monsterMarkers, didSetMonsters} = nextState
-
-    //if ((!lat || !lon) || (lat === null || lon === null) || (didSetMonsters)) return
-
-     //if (!lat || !lon) return
-     //if (lat=== null || lon === null) return
-     if (didSetMonsters) return
-
-    //let monsters = coordinates(monsterCount).fill(0) //new Array(monsterCount).fill(0)
-
-//   { 'type': 'Feature', 'properties': { 'Name': 'Skolan KYH Stockholm', 'description': null, 'timestamp': null, 'begin': null, 'end':
-// null, 'altitudeMode': null, 'tessellate': -1, 'extrude': 0, 'visibility': -1, 'drawOrder': null, 'icon': null },
-// 'geometry': { 'type': 'Point', 'coordinates': [ 18.1102484, 59.3132238, 0.0 ] } },
-
-    var mapCoordinates = {Coordinates}
+    // if ((!lat || !lng) || (lat === null || lng === null) || (didSetMonsters)) return
+    // if (!lat || !lng) return
+    if (didSetMonsters) return
+    let mapCoordinates = {Coordinates}
     //console.log(mapCoordinates.Coordinates.features);
-    var x = [], monstersToRender = [];
+    let x = [], monstersToRender = [];
     for (var {properties: {Name: n}, geometry: {coordinates: [c, d]}} of mapCoordinates.Coordinates.features) {
       //console.log('Name: ' + n + ', Father: ' + c + " " + d);
-      let images = QMark //this.randomIcon()
+      let images = Monster
       x.push({name: n, latitude: d, longitude: c, icon: images})
-
     }
-    //console.log(x);
     for (var i=0; i<x.length; i++) {
-      monstersToRender.push({id: i, latitude: x[i].latitude, longitude: x[i].longitude, icon: x[i].icon})
-      //console.log(x[i]);
+      monstersToRender.push({id: i, latitude: x[i].latitude, longitude: x[i].longitude, icon: x[i].icon, name: x[i].name})
     }
-
-    // monsters.map((item, index) => {
-    //   let coord = this.getMonsterCoord(latitude, longitude, index)
-    //   let images = QMark //this.randomIcon()
-    //   monstersToRender.push({id: index, latitude: coord.latitude, longitude: coord.longitude, icon: images})
-    // })
-
-    this.setState({monsterMarkers: x, didSetMonsters: true})
+    this.setState({monsterMarkers: monstersToRender, didSetMonsters: true})
   }
-
-  // TODO: If we don't want the ?-icon we can randomize icons
-  // randomIcon = () => {
-  // let images = [Monster, Robin]
-  //   return images[Math.floor(Math.random() * images.length)]
-  // }
-
-  getMonsterCoord (latitude, longitude, index) {
-    let pos = index * 0.002,
-        neg = index * 0.001,
-        result
-    result = Math.floor(Math.random() * (pos + neg)) - neg
-    result = result < 0 ? result : result
-    latitude = latitude + result
-    longitude = longitude + result
-    return {latitude, longitude}
-  }
-
 }
 
 export default geolocated({
