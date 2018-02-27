@@ -5,24 +5,21 @@ import mapOptions from '../assets/json/skin'
 
 const MARKERS = withScriptjs(withGoogleMap(props => {
   let {lng, lat, markers} = props
-  //console.log(markers)
+  // console.log(lat,lng, )
+
+  var distanceCheack;
+    if (d => 10){
+      distanceCheack: () => onClick(index, props);
+    }else{
+      distanceCheack: null;
+    }
 
 
-  return <GoogleMap defaultZoom={18} defaultOptions={{scrollwheel: false}} options={mapOptions} /*styles={{skin}}*/ defaultCenter={{lat, lng}}>
+  return <GoogleMap defaultZoom={18} defaultOptions={{scrollwheel: false}} options={mapOptions} defaultCenter={{lat, lng}}>
     {<Marker position={{lat, lng}} />}
-  {/*{markers.map((markers, id) => (
-      <Marker key={id} position={{lat: x[i].latitude, lng: x[i].longitude}} icon={x[i].icon} clickable onClick={() => onClick(marker. id, props)} />
-    )}
-  )}
-    {markers.map((marker, id) => (
-      <Marker key{marker.id} position={{lat: x[i].latitude, lng: x[i].longitude}} icon={x[i].icon} clickable onClick={() => onClick(marker. id, props)}/>
-    )
-    )*/}
-    {/*<Marker position={{lat: 59.312963, lng: 18.109775}} />*/}
-
 
     {markers.map((marker, index) => (
-      <Marker key={index} position={{lat: markers[index].latitude, lng: markers[index].longitude}} icon={markers[index].icon} clickable onClick={() => onClick(marker.id, props)} />
+      <Marker key={index} position={{lat: marker.latitude, lng: marker.longitude}} icon={marker.icon} clickable onClick={distanceCheack} />
     ))}
 
   </GoogleMap>
