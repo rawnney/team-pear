@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Nav, NavLink, NavItem, ModalHeader, TabContent, TabPane, Table, Button} from 'reactstrap'
 import classnames from 'classnames'
 import Images from '../libs/Imgs'
-let {Sword, Shield} = Images
+let {Sword} = Images
 
 export default class ShopComponent extends Component {
   constructor (props) {
@@ -58,7 +58,7 @@ export default class ShopComponent extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td style={styles.firstData}><img src={Sword} style={styles.listItemPic}/></td>
+                  <td style={styles.firstData}><img src={Sword} style={styles.listItemPic} alt='Longsword' /></td>
                   <td>Longsword</td>
                   <td>+25 % dmg</td>
                   <td>10 c</td>

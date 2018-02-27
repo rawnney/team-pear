@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 import mapOptions from '../assets/json/skin'

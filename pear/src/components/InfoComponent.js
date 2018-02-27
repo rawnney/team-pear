@@ -8,15 +8,15 @@ export default class Leaderboard extends Component {
       <h4 style={styles.centerText}> The best MMORPG there is.</h4>
       <hr />
       <div style={styles.topLeft}>
-        <img src={{}} />
+        <img src={{}} alt='Img'/>
         <h4>ipsum</h4>
       </div>
       <div style={styles.middleRight}>
-        <img src={{}} />
+        <img src={{}} alt='Img'/>
         <h4>ipsum</h4>
       </div>
       <div style={styles.lowerLeft}>
-        <img src={{}} />
+        <img src={{}} alt='Img'/>
         <h4>ipsum</h4>
       </div>
     </div>

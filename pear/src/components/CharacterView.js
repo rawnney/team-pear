@@ -21,7 +21,6 @@ export default class CharacterView extends Component {
       modal: false,
       activeTab: '1',
       user: this.props.setUser,
-      monstersKilled: this.props.monstersKilled,
       editUser: false,
       updatedUser: {},
       userIsUpdated: false,
@@ -35,9 +34,10 @@ export default class CharacterView extends Component {
     this.props.signOut(loggedIn)
   }
 
-  togglemod = () => {
+  togglemod = (user) => {
+    let {setUser} = this.props
     let {modal} = this.state
-    this.setState({modal: !modal, userIsUpdated: false, error: false})
+    this.setState({modal: !modal, userIsUpdated: false, error: false, user: setUser})
   }
 
   toggle = (tab) => {

@@ -6,7 +6,7 @@ import Pinjump from './Pinjump'
 import Markers from './Markers'
 import Images from '../libs/Imgs'
 import PlayerComponent from './PlayerComponent'
-import WinnerPopUp from './WinnerPopUp'
+// import WinnerPopUp from './WinnerPopUp'
 import Coordinates from '../assets/json/coordinates'
 let {Monster} = Images
 

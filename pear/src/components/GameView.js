@@ -9,6 +9,7 @@ const API_UPDATE_KILLS = 'http://peargameapi.herokuapp.com/api/update_kills'
 const API_UPDATE_COINS = 'http://peargameapi.herokuapp.com/api/update_coins'
 
 export default class GameView extends Component<Props, State> {
+  innerRef
   constructor (props) {
     super(props)
     this.state = {
@@ -29,7 +30,7 @@ export default class GameView extends Component<Props, State> {
     if (!loggedIn || !user) return notLoggedIn
     return <div>
       <CharacterView
-      // TODO: items  // updateUser={this.updateUser}
+      // TODO: send user back to parent for updating items and coins
         setUser={user}
         signOut={this.signOut}
       />
