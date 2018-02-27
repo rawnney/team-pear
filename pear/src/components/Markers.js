@@ -5,21 +5,21 @@ import mapOptions from '../assets/json/skin'
 
 const MARKERS = withScriptjs(withGoogleMap(props => {
   let {lng, lat, markers} = props
-  // console.log(lat,lng, )
+   console.log(d)
 
-  var distanceCheack;
+  /*var distanceCheack;
     if (d => 10){
       distanceCheack: () => onClick(index, props);
     }else{
       distanceCheack: null;
-    }
+    }*/
 
 
   return <GoogleMap defaultZoom={18} defaultOptions={{scrollwheel: false}} options={mapOptions} defaultCenter={{lat, lng}}>
     {<Marker position={{lat, lng}} />}
 
     {markers.map((marker, index) => (
-      <Marker key={index} position={{lat: marker.latitude, lng: marker.longitude}} icon={marker.icon} clickable onClick={distanceCheack} />
+      <Marker key={index} position={{lat: marker.latitude, lng: marker.longitude}} icon={marker.icon}  />
     ))}
 
   </GoogleMap>
@@ -33,4 +33,4 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
 
   export default MARKERS
 
-// 59.312963, 18.109775 icon={markers[index].icon}
+// 59.312963, 18.109775 icon={markers[index].icon}  clickable onClick={distanceCheack}
