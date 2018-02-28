@@ -298,23 +298,24 @@ var getDistance = function (p1, p2) {
 */
 
   checkMonsterDistance = (d) => {
-    let {playerCoords, checkMonsterDistance,} = this.state
+    let {monsterMarkers, playerCoords, checkMonsterDistance,} = this.state
 
     var rad = function(y) {
       return y * Math.PI / 180;
     };
 
-    //p1 = playerCoords, p2 = monstersToRender
-    var getDistance = function(playerCoords, monstersToRender) {
-    var R = 6378137; // Earth’s mean radius in meter
-    var dLat = rad(monstersToRender.latitude() - playerCoords.latitude());
-    var dLong = rad(monstersToRender.longitude() - playerCoords.longitude());
-    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(rad(playerCoords.latitude())) * Math.cos(rad(monstersToRender.latitude())) *
-      Math.sin(dLong / 2) * Math.sin(dLong / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c;
-      return d ; // returns the distance in meter
+    //p1 = playerCoords, p2 = monsterMarkers
+    var getDistance = function(playerCoords, monsterMarkers) {
+      var R = 6378137; // Earth’s mean radius in meter
+      var dLat = rad(monsterMarkers.latitude() - playerCoords.latitude());
+      var dLong = rad(monsterMarkers.longitude() - playerCoords.longitude());
+      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(rad(playerCoords.latitude())) * Math.cos(rad(monsterMarkers.latitude())) *
+        Math.sin(dLong / 2) * Math.sin(dLong / 2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = R * c;
+      console.log(d);
+        return d ; // returns the distance in meter
     }
   }
 
