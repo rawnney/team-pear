@@ -4,8 +4,7 @@ import {Col, Button, Form, FormGroup, Label, Input} from 'reactstrap'
 import axios from 'axios'
 import {capitalizeFirstLetter} from '../libs/Common'
 import Loader from './Loader'
-
-const API_SIGNIN = 'http://peargameapi.herokuapp.com/api/signin'
+import {API_SIGNIN} from '../libs/Const'
 
 export default class LoginForm extends Component {
   constructor (props) {

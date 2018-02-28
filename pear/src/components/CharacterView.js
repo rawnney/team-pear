@@ -8,12 +8,9 @@ import LeaderboardComponent from './LeaderboardComponent'
 import ShopComponent from './ShopComponent'
 import axios from 'axios'
 import SignUpNoRegComponent from './SignUpNoRegComponent'
+import {UPDATE_USERNAME, UPDATE_EMAIL, UPDATE_PASSWORD} from '../libs/Const'
 
 let {Sword, Dagger, Shield, Armor, Wand} = Images
-
-const UPDATE_USERNAME = 'http://peargameapi.herokuapp.com/api/update_username'
-const UPDATE_EMAIL = 'http://peargameapi.herokuapp.com/api/update_email'
-const UPDATE_PASSWORD = 'http://peargameapi.herokuapp.com/api/update_password'
 
 export default class CharacterView extends Component {
   constructor (props) {

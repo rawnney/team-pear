@@ -5,10 +5,9 @@ import axios from 'axios'
 import {capitalizeFirstLetter, validateEmail} from '../libs/Common'
 import Images from '../libs/Imgs'
 import Loader from './Loader'
+import {API_USERS} from '../libs/Const'
 
 let {Avatar1, Avatar2, Avatar3, Avatar4} = Images
-
-const API_USERS = 'http://peargameapi.herokuapp.com/api/users/'
 
 export default class SignUpNoRegComponent extends Component {
   constructor (props) {

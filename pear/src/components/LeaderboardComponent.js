@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {Table} from 'reactstrap'
 import axios from 'axios'
 import Loader from './Loader'
-const API_GETUSERS = `https://peargameapi.herokuapp.com/api/users`
+import {API_USERS} from '../libs/Const'
 
 export default class Leaderboard extends Component {
   constructor (props) {
@@ -15,7 +15,7 @@ export default class Leaderboard extends Component {
   }
   componentDidMount () {
     this.setState({loader: true})
-    axios.get(API_GETUSERS)
+    axios.get(API_USERS)
       .then(res => {
         const leaderboardData = res.data.Users
         if (leaderboardData !== undefined) this.setState({ leaderboardData, loader: false })

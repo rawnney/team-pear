@@ -4,9 +4,7 @@ import CharacterView from './CharacterView'
 import Home from './Home'
 // import Images from '../libs/Imgs'
 import axios from 'axios'
-
-const API_UPDATE_KILLS = 'http://peargameapi.herokuapp.com/api/update_kills'
-const API_UPDATE_COINS = 'http://peargameapi.herokuapp.com/api/update_coins'
+import {API_UPDATE_KILLS, API_UPDATE_COINS} from '../libs/Const'
 
 export default class GameView extends Component<Props, State> {
   innerRef
