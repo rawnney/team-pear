@@ -5,13 +5,12 @@ import {capitalizeFirstLetter} from '../libs/Common'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
 import LeaderboardComponent from './LeaderboardComponent'
+import ShopComponent from './ShopComponent'
 import axios from 'axios'
+import SignUpNoRegComponent from './SignUpNoRegComponent'
+import {UPDATE_USERNAME, UPDATE_EMAIL, UPDATE_PASSWORD} from '../libs/Const'
 
 let {Sword, Dagger, Shield, Armor, Wand} = Images
-
-const UPDATE_USERNAME = 'http://peargameapi.herokuapp.com/api/update_username'
-const UPDATE_EMAIL = 'http://peargameapi.herokuapp.com/api/update_email'
-const UPDATE_PASSWORD = 'http://peargameapi.herokuapp.com/api/update_password'
 
 export default class CharacterView extends Component {
   constructor (props) {
@@ -20,11 +19,11 @@ export default class CharacterView extends Component {
       modal: false,
       activeTab: '1',
       user: this.props.setUser,
-      monstersKilled: this.props.monstersKilled,
       editUser: false,
       updatedUser: {},
       userIsUpdated: false,
-      error: false
+      error: false,
+      signUp: false
     }
   }
 
@@ -34,9 +33,10 @@ export default class CharacterView extends Component {
     this.props.signOut(loggedIn)
   }
 
-  togglemod = () => {
+  togglemod = (user) => {
+    let {setUser} = this.props
     let {modal} = this.state
-    this.setState({modal: !modal, userIsUpdated: false, error: false})
+    this.setState({modal: !modal, userIsUpdated: false, error: false, user: setUser})
   }
 
   toggle = (tab) => {
@@ -48,17 +48,17 @@ export default class CharacterView extends Component {
   }
 
   render () {
-    let {activeTab, user, editUser} = this.state
+    let {activeTab, user, editUser, signUp} = this.state
     return (
       <div>
         <nav style={styles.buttonWrapper}>
           <Button style={styles.menuButton} color='success' onClick={this.togglemod}>{this.props.buttonLabel}Menu</Button>
         </nav>
-        <Modal isOpen={this.state.modal} togglemod={this.togglemod} className={this.props.className}>
+        <Modal style={styles.modalStyle} isOpen={this.state.modal} togglemod={this.togglemod} className={[this.props.className, 'modal']}>
           <Nav tabs>
             <NavItem>
               <NavLink className={classnames({ active: activeTab === '1' })} onClick={() => { this.toggle('1') }}>
-                My Account
+                Account
               </NavLink>
             </NavItem>
             <NavItem>
@@ -81,14 +81,20 @@ export default class CharacterView extends Component {
                 Stats
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink className={classnames({ active: activeTab === '6' })} onClick={() => { this.toggle('6') }}>
+                Shop
+              </NavLink>
+            </NavItem>
           </Nav>
           <TabContent activeTab={activeTab}>
             <TabPane tabId='1'>
-              <ModalHeader style={styles.modalHeader} toggle={this.toggle}>My Account</ModalHeader>
+              <ModalHeader style={styles.modalHeader} toggle={this.toggle}>Account</ModalHeader>
               <ModalBody>
-                {user.reg === 'true' && editUser === false ? this.renderUserInfo() : this.renderNoRegUserInfo()}
+                {user.reg === 'true' && editUser === false ? this.renderUserInfo() : <div />}
                 {user.reg === 'true' && editUser === true ? this.renderUserEditor() : <div />}
-                {/* //TODO render no-reg-options */}
+                {user.reg === 'false' ? this.renderNoRegUserInfo() : <div />}
+                {user.reg === 'false' && signUp === true ? this.renderSignUpNoReg() : <div />}
               </ModalBody>
             </TabPane>
             <TabPane tabId='2'>
@@ -126,6 +132,12 @@ export default class CharacterView extends Component {
                 {user ? this.renderUserStats() : <div/>}
               </ModalBody>
             </TabPane>
+            <TabPane tabId='6'>
+              <ModalHeader toggle={this.toggle}>Shop</ModalHeader>
+              <ModalBody style={styles.shopModal}>
+                <ShopComponent />
+              </ModalBody>
+            </TabPane>
           </TabContent>
           <ModalFooter>
             <Button color='info' onClick={this.togglemod}>Close</Button>
@@ -138,15 +150,44 @@ export default class CharacterView extends Component {
 
   renderUserSkills = () => {
     let {user} = this.state
-    let {sword, blockChance, magic} = user
-    return <ul style={styles.none}>
-      <li><p>Melee damage: {sword}</p> </li>
-      <li><p>Block chance: {blockChance}</p></li>
-      <li><p>Spell damage: {magic}</p></li>
-    </ul>
+    let {attack, block} = user
+    return <div>
+      <div>
+        <img src={Sword} style={styles.attack} alt='Attack'/>
+        <ul style={styles.none}>
+          <li><p>Base attack damage: 10</p></li>
+          <li><p>Weapon damage: {attack} %</p></li>
+        </ul>
+      </div>
+      <hr />
+      <div>
+        <img src={Shield} style={styles.block} alt='Armor'/>
+        <ul style={styles.none}>
+          <li><p>Base defence value: 5</p></li>
+          <li><p>Armor value: {block}</p></li>
+        </ul>
+      </div>
+    </div>
   }
 
-  renderNoRegUserInfo = () => {}
+  renderNoRegUserInfo = () => {
+    let {user} = this.state
+    return <div>
+      <h4 style={styles.userCall}>Hey {user.username}! </h4>
+    You didnt signup when you started your adventure. But its not to late -
+    you can still register to save your progress!
+      <Button onClick={this.openSignUpNoReg} colo='success'>Sign up now</Button>
+    </div>
+  }
+
+  openSignUpNoReg = () => {
+    this.setState({signUp: true})
+  }
+
+  renderSignUpNoReg = () => {
+    let {user} = this.state
+    return <SignUpNoRegComponent user={user}/>
+  }
 
   renderUserInfo = () => {
     let {user} = this.state
@@ -190,16 +231,15 @@ export default class CharacterView extends Component {
           </Col>
         </FormGroup>
         <FormGroup>
-          <Button color="success" type="submit">Update account details</Button>
+          {userIsUpdated ? this.renderMsg() : <Button color="success" type="submit">Update account details</Button>}
           {error && !userIsUpdated ? this.renderError() : <div />}
-          {userIsUpdated && !error ? this.renderMsg() : <div />}
         </FormGroup>
       </Form>
     )
   }
 
   renderMsg = () => {
-    return <p>Account updated! You have to sign out for the changes to take place.</p>
+    return <p style={styles.successMsg}>Account updated! You have to sign out for the changes to take place.</p>
   }
 
   editUsername = (newUsername) => {
@@ -256,10 +296,8 @@ export default class CharacterView extends Component {
     })
   }
 
-  // TODO // else { this.setState({error: true}) }
-
   renderError = () => {
-    return 'Something went wrong! Please check your changes or try again later!'
+    return <p style={styles.errorMsg}>'Something went wrong! Please check your changes or try again later!'</p>
   }
 
   renderUserStats = () => {
@@ -270,13 +308,6 @@ export default class CharacterView extends Component {
       <li><p>Coins: {coins}</p></li>
     </ul>
   }
-  // <div>
-  //     <br/>
-  //     <p>Register to save your progress!</p>
-  //     <Button onClick={this.props.saveProgress} color='success'>Save progress</Button>
-  //   </div>
-  // }
-  // <div><Button onClick={this.saveProgress}>Register</Button></div>
 }
 
 let styles = {
@@ -288,7 +319,7 @@ let styles = {
     width: '100%'
   },
   menuButton: {
-    width: 'auto',
+    width: '100px',
     position: 'absolute',
     bottom: '0'
   },
@@ -301,6 +332,16 @@ let styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'
+  },
+  modalStyle: {
+    display: 'flex',
+    overflow: 'scroll'
+  },
+  attack: {
+    width: '30px'
+  },
+  block: {
+    width: '30px'
   },
   listStyle: {
     listStyle: 'none'
@@ -318,6 +359,19 @@ let styles = {
     width: '120px',
     borderColor: 'black',
     borderWidth: '1px'
+  },
+  shopModal: {
+    padding: 0
+  },
+  userCall: {
+    textAlign: 'center'
+  },
+  successMsg: {
+    fontSize: '20px',
+    color: 'green'
+  },
+  errorMsg: {
+    fontSize: '20px',
+    color: 'red'
   }
-
 }

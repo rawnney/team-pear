@@ -135,7 +135,9 @@ export default class Home extends Component {
         <ModalHeader>
           Leaderboard
         </ModalHeader>
-        <LeaderboardComponent />
+        <ModalBody>
+          <LeaderboardComponent />
+        </ModalBody>
         <ModalFooter style={styles.section}>
           <Button color="danger" onClick={this.toggleLeaderboard}>Cancel</Button>
         </ModalFooter>

@@ -4,11 +4,10 @@ import CharacterView from './CharacterView'
 import Home from './Home'
 // import Images from '../libs/Imgs'
 import axios from 'axios'
-
-const API_UPDATE_KILLS = 'http://peargameapi.herokuapp.com/api/update_kills'
-const API_UPDATE_COINS = 'http://peargameapi.herokuapp.com/api/update_coins'
+import {API_UPDATE_KILLS, API_UPDATE_COINS} from '../libs/Const'
 
 export default class GameView extends Component<Props, State> {
+  innerRef
   constructor (props) {
     super(props)
     this.state = {
@@ -17,21 +16,37 @@ export default class GameView extends Component<Props, State> {
     }
   }
 
+  componentDidMount () {
+   setInterval(() => {
+    this.getLocation()
+    }, 5000)
+  }
+
   render () {
     let {loggedIn, user} = this.state
     let notLoggedIn = <Home setUser={this.setUser} setLoggedIn={this.setLoggedIn}/>
     if (!loggedIn || !user) return notLoggedIn
     return <div>
       <CharacterView
-      // TODO: items  // updateUser={this.updateUser}
+      // TODO: send user back to parent for updating items and coins
         setUser={user}
         signOut={this.signOut}
       />
       <MapView
+      ref={this.setRef}
       setUser={user}
       updateUser={this.updateUser}
       />
     </div>
+  }
+
+  getLocation = () => {
+    if (!this.innerRef || !this.innerRef.getLocation) return
+    this.innerRef.getLocation()
+  }
+
+  setRef = (ref: *) => {
+    this.innerRef = ref
   }
 
   setLoggedIn = (loggedIn) => {
