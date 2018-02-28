@@ -1,12 +1,24 @@
 import React, { Component } from 'react'
 import {Label, FormGroup, Input, Col, Button, Form} from 'reactstrap'
-import fakeServerData from '../fakeServerData'
+import {capitalizeFirstLetter} from '../libs/Common'
 
 export default class NoRegComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      user: fakeServerData.users[0]
+      user: {
+        iduser: null,
+        email: null,
+        password: null,
+        username: null,
+        team: '',
+        monstersKilled: 0,
+        coins: 0,
+        reg: 'false',
+        avatar: 'Avatar1',
+        attack: 0,
+        block: 0
+      }
     }
   }
 
@@ -20,7 +32,7 @@ export default class NoRegComponent extends Component {
 
   handleUsername = (name) => {
     let {user} = this.state
-    this.setState({user: {...user, username: name.target.value}})
+    this.setState({user: {...user, username: capitalizeFirstLetter(name.target.value)}})
   }
 
   render () {

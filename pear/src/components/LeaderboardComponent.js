@@ -16,7 +16,7 @@ export default class Leaderboard extends Component {
       .then(res => {
         const leaderboardData = res.data.Users
         this.setState({ leaderboardData })
-        console.log(JSON.stringify(leaderboardData))
+        // console.log(JSON.stringify(leaderboardData))
       })
   }
 
@@ -59,13 +59,14 @@ export default class Leaderboard extends Component {
 
   getTeamColor = (i) => {
     let {leaderboardData} = this.state
+    let {teamGreen, teamBlue, teamRed} = styles
     let teamColor = JSON.stringify(leaderboardData[i].team)
-    console.log(teamColor)
-    if (teamColor === 'GREEN') return styles.teamGreen
-    if (teamColor === 'BLUE') return styles.teamGreen
-    if (teamColor === 'RED') return styles.teamGreen
-    if (teamColor === null) return styles.teamGreen
-    if (teamColor === undefined) return styles.teamGreen
+    // console.log(teamColor)
+    if (teamColor === null) return // {teamGreen}
+    if (teamColor === undefined) return // {teamGreen}
+    if (teamColor === 'GREEN') return {teamGreen}
+    if (teamColor === 'BLUE') return {teamBlue}
+    if (teamColor === 'RED') return {teamRed}
   }
 }
 

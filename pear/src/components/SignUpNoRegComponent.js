@@ -10,24 +10,17 @@ let {Avatar1, Avatar2, Avatar3, Avatar4} = Images
 
 const API_USERS = 'http://peargameapi.herokuapp.com/api/users/'
 
-export default class SignUpComponent extends Component {
+export default class SignUpNoRegComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
       signUpError: false,
-      user: {
-        reg: 'true',
-        monstersKilled: 0,
-        coins: 0,
-        attack: 0,
-        block: 0,
-        team: 'none'
-      }
+      user: {...this.props.user, reg: 'true'}
     }
   }
 
   render () {
-    let {username, password, email, loading, signUpError, rePassword} = this.state
+    let {username, password, email, loading, signUpError, signUpSuccess, rePassword} = this.state
     return (
       <Form onSubmit={this.onSubmit}>
         <FormGroup row>
@@ -101,7 +94,7 @@ export default class SignUpComponent extends Component {
         <FormGroup>
           {signUpError ? this.renderSignUpError() : <div />}
           {loading ? this.renderLoading() : <div />}
-          <Button color="primary">Sign up</Button>
+          {signUpSuccess ? this.renderSignUpSuccess() : <Button color="primary">Sign up</Button>}
         </FormGroup>
       </Form>
     )
@@ -109,19 +102,19 @@ export default class SignUpComponent extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    let {onSignIn} = this.props
     let {user} = this.state
     let {username, password, rePassword, email, avatar, team, reg, monstersKilled, coins, attack, block} = user
-    if (!username || username.length < 3) return this.setState({signUpError: true, errorMsg: 'Invalid username input, make sure its 3 characters or longer'})
-    if (!password || password.length < 5) return this.setState({signUpError: true, errorMsg: 'Invalid password input, make sure its 5 characters or longer'})
+    if (!username || username.length < 3 || username.length > 12) return this.setState({signUpError: true, errorMsg: 'Invalid username input, make sure its 3 characters or longer'})
+    if (!password || password.length < 5 || password.length > 20) return this.setState({signUpError: true, errorMsg: 'Invalid password input, make sure its 5 characters or longer'})
     if (password !== rePassword) return this.setState({signUpError: true, errorMsg: 'The passwords did not match'})
     if (!email || validateEmail(email) === false) return this.setState({signUpError: true, errorMsg: 'That is one wierd email-adress.'})
     if (!avatar) return this.setState({signUpError: true, errorMsg: 'You forgot to select a avatar!'})
-    if (!team || team === 'none') return this.setState({signUpError: true, errorMsg: 'Without a team you will never make it in the wild! Please select a team.'})
+    if (!team || team === 'none' || team === '') return this.setState({signUpError: true, errorMsg: 'Without a team you will never make it in the wild! Please select a team.'})
     this.setState({loading: true})
     axios.post(API_USERS, {username, email, password, avatar, team, reg, monstersKilled, coins, attack, block}).then((result) => {
-      const user = null
-      if (onSignIn) onSignIn(user)
+      const error = result.data.Error
+      if (error) this.setState({signUpError: true, errorMsg: 'Something went wrong! Please try again later.'})
+      if (!error) this.setState({user: {...user}, loading: false, signUpSuccess: true, signUpError: false})
     }).catch((error) => {
       console.log(error)
     })
@@ -162,8 +155,12 @@ export default class SignUpComponent extends Component {
   }
 
   renderSignUpError = () => {
-    let {signUpError, errorMsg} = this.state
-    if (signUpError) return <p style={styles.signUpError}>{errorMsg}</p>
+    let {errorMsg} = this.state
+    return <p style={styles.errorMsg}>{errorMsg}</p>
+  }
+
+  renderSignUpSuccess = () => {
+    return <p style={styles.successMsg}>User created! You have to sign out for the changes to take place.</p>
   }
 }
 
@@ -177,8 +174,12 @@ let styles = {
   avatar: {
     height: '150px'
   },
-  signUpError: {
+  errorMsg: {
     fontSize: '20px',
     color: 'red'
+  },
+  successMsg: {
+    fontSize: '20px',
+    color: 'green'
   }
 }
