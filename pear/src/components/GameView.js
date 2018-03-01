@@ -73,7 +73,7 @@ export default class GameView extends Component<Props, State> {
     if (weapon === newWeapon.name) return
     this.setState({user: {...user, weapon: newWeapon.name, attack: newWeapon.dmg, coins: coins - newWeapon.cost}})
     axios.put(API_WEAPON, {weapon: newWeapon.name, attack: newWeapon.dmg, iduser}).then(() => {
-      axios.put(API_UPDATE_COINS, {coins, iduser})
+      axios.put(API_UPDATE_COINS, {coins: coins - newWeapon.cost, iduser})
       console.log('You bought ' + newWeapon.name + 'for ' + newWeapon.cost)
     })
   }
