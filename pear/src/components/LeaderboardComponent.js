@@ -42,11 +42,25 @@ export default class Leaderboard extends Component {
         </tr>
       )
     })
+    let temp = {GREEN: 0, BLUE: 0, RED: 0}
+
+    let sumUp = this.state.leaderboardData.map((leaderboardData) => {
+      temp[leaderboardData.team] += leaderboardData.monstersKilled
+    })
+    // console.log(temp)
+    // console.log(sumUp)
+
     return <div>
       {loader ? <Loader />
         : <ol style={styles.list}>
           <Table>
             <thead>
+              <tr>
+                <th></th>
+                <th>GREEN: {temp.GREEN}</th>
+                <th>BLUE: {temp.BLUE}</th>
+                <th>RED: {temp.RED}</th>
+              </tr>
               <tr>
                 <th>#</th>
                 <th>Username</th>
