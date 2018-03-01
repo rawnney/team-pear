@@ -90,7 +90,7 @@ export default class Home extends Component {
           <Button style={styles.button} onClick={this.toggleInfo} color="info">Info</Button>
         </div>
       </section>
-      <Modal style={styles.modalStyle} isOpen={modalLogin} toggleLogin={this.toggleLogin} className={this.props.className}>
+      <Modal style={styles.modalStyle} isOpen={modalLogin} toggle={this.toggleLogin} className={this.props.className}>
         <ModalHeader>
           <Nav tabs>
             <NavItem>
@@ -131,7 +131,7 @@ export default class Home extends Component {
           </ModalFooter>
         </ModalHeader>
       </Modal>
-      <Modal style={styles.modalStyle} isOpen={modalLeaderboard} toggleLogin={this.modalLeaderboard}>
+      <Modal style={styles.modalStyle} isOpen={modalLeaderboard} toggle={this.modalLeaderboard}>
         <ModalHeader>
           Leaderboard
         </ModalHeader>

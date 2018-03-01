@@ -35,7 +35,7 @@ export default class CharacterView extends Component {
         <nav style={styles.buttonWrapper}>
           <Button style={styles.menuButton} color='success' onClick={this.togglemod}>{this.props.buttonLabel}Menu</Button>
         </nav>
-        <Modal style={styles.modalStyle} isOpen={this.state.modal} togglemod={this.togglemod} className={[this.props.className, 'modal']}>
+        <Modal style={styles.modalStyle} isOpen={this.state.modal} toggle={this.togglemod} className={this.props.className}>
           <Nav tabs>
             <NavItem>
               <NavLink className={classnames({ active: activeTab === '1' })} onClick={() => { this.toggle('1') }}>

@@ -62,7 +62,7 @@ export default class ShopComponent extends Component {
                   <td>{itemWeapon[0].name}</td>
                   <td>+ {itemWeapon[0].dmg}% dmg</td>
                   <td>{itemWeapon[0].cost}c</td>
-                  <td><Button onClick={this.props.buyWeapon} disable={this.checkCoin} style={styles.buyButton}>Buy</Button></td>
+                  <td><Button onClick={this.props.buyWeapon} style={styles.buyButton}>Buy</Button></td>
                 </tr>
               </tbody>
             </Table>
@@ -85,13 +85,6 @@ export default class ShopComponent extends Component {
         </TabContent>
       </div>
     )
-  }
-
-  checkCoin = () => {
-    let {user} = this.state
-    let {coins} = user
-    if (coins < itemWeapon[0].cost) return true
-    return false
   }
 
   toggle = (tab) => {
