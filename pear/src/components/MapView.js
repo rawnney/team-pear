@@ -249,8 +249,8 @@ class MapView extends Component {
     let mapCoordinates = {Coordinates}
     let x = []
     let monstersToRender = []
-    for (var {properties: {Name: n}, geometry: {coordinates: [c, d]}} of mapCoordinates.Coordinates.features) { // console.log('Name: ' + n + ', Father: ' + c + " " + d);
-      x.push({name: n, latitude: d, longitude: c, icon: Monster})
+    for (var {properties: {Name: n, gx_media_links: img}, geometry: {coordinates: [c, d]}} of mapCoordinates.Coordinates.features) { // console.log('Name: ' + n + ', Father: ' + c + " " + d);
+      x.push({name: n, latitude: d, longitude: c, icon: img})
     }
     for (var i = 0; i < x.length; i++) {
       monstersToRender.push({id: i, latitude: x[i].latitude, longitude: x[i].longitude, icon: x[i].icon, name: x[i].name, alive: true})

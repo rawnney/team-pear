@@ -103,23 +103,40 @@ export default class CharacterView extends Component {
                 {user ? this.renderUserSkills() : <div />}
               </ModalBody>
             </TabPane>
+        {/* Inventory under working process*/}
             <TabPane tabId='3'>
               <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
               <ModalBody>
                 <ul style={styles.listStyle}>
                   <li>
+                    <p>Helmet</p>
+                    <br />
+                    <img style={styles.items} src={Armor} alt='item' />
+                  </li>
+                  <hr />
+                  <li>
+                    <p>Armor</p>
+                    <br />
+                    <img style={styles.items} src={Shield} alt='item' />
+                    <img style={styles.items} src={Armor} alt='item' />
+                  </li>
+                  <hr />
+                  <li>
+                    <p>Wepons</p>
+                    <br />
                     <img style={styles.items} src={Sword} alt='item' />
                     <img style={styles.items} src={Dagger} alt='item' />
-                    <img style={styles.items} src={Wand} alt='item' />
                   </li>
-                  <br />
+                  <hr />
                   <li>
-                    <img style={styles.items} src={Armor} alt='item' />
-                    <img style={styles.items} src={Shield} alt='item' />
+                    <p>Gear</p>
+                    <br />
+                    <img style={styles.items} src={Wand} alt='item' />
                   </li>
                 </ul>
               </ModalBody>
             </TabPane>
+
             <TabPane tabId='4'>
               <ModalHeader toggle={this.toggle}>Leaderboard</ModalHeader>
               <ModalBody>
