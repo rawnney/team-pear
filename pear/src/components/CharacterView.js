@@ -11,7 +11,7 @@ import axios from 'axios'
 import SignUpNoRegComponent from './SignUpNoRegComponent'
 import {API_UPDATE_USERNAME, API_UPDATE_EMAIL, API_UPDATE_PASSWORD} from '../libs/Const'
 
-let {Sword, Dagger, Shield, Armor, Wand} = Images
+let {KillIcon, CoinStack, Sword, Dagger, Shield, Armor, Wand} = Images
 
 export default class CharacterView extends Component {
   constructor (props) {
@@ -184,15 +184,15 @@ export default class CharacterView extends Component {
     return <div>
       <div>
         <img src={Sword} style={styles.attack} alt='Attack'/>
-        <ul style={styles.none}>
-          <li><p>Base attack: 10</p></li>
+        <ul style={styles.listStyle}>
+          <li><p>Base attack: 15</p></li>
           <li><p>Weapon damage: {attack} %</p></li>
         </ul>
       </div>
       <hr />
       <div>
         <img src={Shield} style={styles.block} alt='Armor'/>
-        <ul style={styles.none}>
+        <ul style={styles.listStyle}>
           <li><p>Base defence: 5</p></li>
           <li><p>Armor: {block}</p></li>
         </ul>
@@ -219,7 +219,7 @@ export default class CharacterView extends Component {
     let {user} = this.state
     let {username, email} = user
     return <div>
-      <ul style={styles.none}>
+      <ul style={styles.listStyle}>
         <li><p>Username: {username}</p></li>
         <li><p>Email: {email}</p></li>
       </ul>
@@ -231,8 +231,14 @@ export default class CharacterView extends Component {
     let {user} = this.state
     let {monstersKilled, coins} = user
     return <ul style={styles.listStyle}>
-      <li><p>Monsters killed: {monstersKilled}</p></li>
-      <li><p>Coins: {coins}</p></li>
+      <li style={styles.statsItem}>
+        <img src={KillIcon} style={styles.statsIcon} alt='Kills'/>
+        <p>Monsters killed: {monstersKilled}</p>
+      </li>
+      <li style={styles.statsItem}>
+        <img src={CoinStack} style={styles.statsIcon} alt='Coins'/>
+        <p>Coins: {coins}</p>
+      </li>
     </ul>
   }
 
@@ -442,9 +448,6 @@ let styles = {
     width: '40px',
     height: '40px'
   },
-  none: {
-    listStyle: 'none'
-  },
   inputStyle: {
     float: 'right',
     marginRight: '20px',
@@ -465,5 +468,13 @@ let styles = {
   errorMsg: {
     fontSize: '20px',
     color: 'red'
+  },
+  statsIcon: {
+    height: '25px',
+    width: '25px',
+    marginRight: '10px'
+  },
+  statsItem: {
+    display: 'flex'
   }
 }

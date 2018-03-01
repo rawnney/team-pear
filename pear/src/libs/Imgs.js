@@ -12,5 +12,7 @@ export default {
   Dagger: require('../assets/img/dagger.png'),
   Armor: require('../assets/img/armor.png'),
   QMark: require('../assets/img/icons/q-icon.png'),
-  Coin: require('../assets/img/coin.png')
+  Coin: require('../assets/img/coin.png'),
+  CoinStack: require('../assets/img/coinstack.png'),
+  KillIcon: require('../assets/img/kill_icon.png')
 }

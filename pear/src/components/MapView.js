@@ -7,6 +7,8 @@ import Markers from './Markers'
 import Images from '../libs/Imgs'
 import PlayerComponent from './PlayerComponent'
 import Coordinates from '../assets/json/coordinates'
+import WinnerPopUp from './WinnerPopUp'
+
 let {Monster} = Images
 
 class MapView extends Component {
@@ -142,7 +144,7 @@ class MapView extends Component {
 
   renderWinner = () => {
     let {playerWin, monsterWin} = this.state
-    if (playerWin === true) return <div style={styles.winnerText}>YOU WIN! </div>
+    if (playerWin === true) return <WinnerPopUp goldDropped={2} />
     if (monsterWin === true) return <div style={styles.winnerText}>YOU LOOSE!</div>
   }
 
@@ -172,10 +174,12 @@ class MapView extends Component {
   }
 
   calcMonsterAttack = () => {
+    let {activeMonsterName} = this.state
     let baseDmg = 12
     let attackDmg = 1.25
     let maxDmg = baseDmg * attackDmg
     let rawDmgTaken = Math.ceil(Math.floor(Math.random() * (maxDmg - baseDmg)) + baseDmg)
+    if (activeMonsterName === 'Boss') return rawDmgTaken + 5
     return rawDmgTaken
   }
 
@@ -289,7 +293,8 @@ let styles = {
     textAlign: 'center'
   },
   console: {
-    height: '30px'
+    height: 'auto',
+    minHeight: '40px'
   },
   logDmgGiven: {
     display: 'flex',
@@ -325,8 +330,5 @@ let styles = {
   },
   buttonStyle: {
     width: '30%'
-  },
-  winnerText: {
-    textAlign: 'center'
   }
 }
