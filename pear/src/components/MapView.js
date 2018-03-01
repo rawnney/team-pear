@@ -56,13 +56,13 @@ class MapView extends Component {
     if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
     if (!isGeolocationEnabled) return <div style={styles.infoMsg}>You must enable Geolocation to play this game!</div>
     if (!coords) return <Pinjump />
-    //console.log(coords.longitude,coords.latitude);
-    //setTimeout(this.setState({playerCoords: {lng: coords.longitude, lat: coords.latitude}}), 2000)
+    // console.log(coords.longitude,coords.latitude);
+    // setTimeout(this.setState({playerCoords: {lng: coords.longitude, lat: coords.latitude}}), 2000)
     setTimeout(() => {
       this.setState({playerCoords: {lng: coords.longitude, lat: coords.latitude}})
     }, 5000)
 
-    console.log(this.state.playerCoords);
+    console.log(this.state.playerCoords)
     return <div>
       <Markers
         lng={coords.longitude}
@@ -247,20 +247,17 @@ class MapView extends Component {
   // TODO: Respawn monsters! for loop setState({markers -> Alive})
 
   setMonsters = (nextProps, nextState) => {
-
     let {monsterCount} = this.state
     let {lat, lon} = nextProps.coords
     let {monsterMarkers, didSetMonsters} = nextState
-     if (didSetMonsters) return
+    if (didSetMonsters) return
 
     var mapCoordinates = {Coordinates}
-    //console.log(mapCoordinates.Coordinates.features);
-    var x = [], monstersToRender = [];
+    // console.log(mapCoordinates.Coordinates.features);
+    var x = [], monstersToRender = []
     for (var {properties: {Name: n, gx_media_links: img}, geometry: {coordinates: [c, d]}} of mapCoordinates.Coordinates.features) {
-      //console.log('Name: ' + n + ', Father: ' + c + " " + d);
-      let images = QMark //this.randomIcon()
+      // console.log('Name: ' + n + ', Father: ' + c + " " + d);
       x.push({name: n, latitude: d, longitude: c, icon: img})
-
     }
     for (var i = 0; i < x.length; i++) {
       monstersToRender.push({id: i, latitude: x[i].latitude, longitude: x[i].longitude, icon: x[i].icon, name: x[i].name, alive: true})
@@ -268,7 +265,7 @@ class MapView extends Component {
     this.setState({monsterMarkers: monstersToRender, didSetMonsters: true})
   }
 
-/*
+  /*
 exampel1:
 
 var rad = function (x) {
@@ -284,28 +281,28 @@ var getDistance = function (p1, p2) {
   var d = R * c;
   return d; // returns the distance in meter
 */
-
+/*
   checkMonsterDistance = (d) => {
-    let {monsterMarkers, playerCoords, checkMonsterDistance,} = this.state
+    let {monsterMarkers, playerCoords, checkMonsterDistance} = this.state
 
-    var rad = function(y) {
-      return y * Math.PI / 180;
-    };
+    var rad = function (y) {
+      return y * Math.PI / 180
+    }
 
-    //p1 = playerCoords, p2 = monsterMarkers
-    var getDistance = function(playerCoords, monsterMarkers) {
-      var R = 6378137; // Earth’s mean radius in meter
-      var dLat = rad(monsterMarkers.latitude() - playerCoords.latitude());
-      var dLong = rad(monsterMarkers.longitude() - playerCoords.longitude());
+    // p1 = playerCoords, p2 = monsterMarkers
+    var getDistance = function (playerCoords, monsterMarkers) {
+      var R = 6378137 // Earth’s mean radius in meter
+      var dLat = rad(monsterMarkers.latitude() - playerCoords.latitude())
+      var dLong = rad(monsterMarkers.longitude() - playerCoords.longitude())
       var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(rad(playerCoords.latitude())) * Math.cos(rad(monsterMarkers.latitude())) *
-        Math.sin(dLong / 2) * Math.sin(dLong / 2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c;
-      console.log(d);
-        return d ; // returns the distance in meter
+        Math.sin(dLong / 2) * Math.sin(dLong / 2)
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+      var d = R * c
+      console.log(d)
+      return d // returns the distance in meter
     }
-  }
+  }*/
 
 
   // TODO: If we don't want the ?-icon we can randomize icons
@@ -316,8 +313,8 @@ var getDistance = function (p1, p2) {
 
   getMonsterCoord (latitude, longitude, index) {
     let pos = index * 0.002,
-        neg = index * 0.001,
-        result
+      neg = index * 0.001,
+      result
     result = Math.floor(Math.random() * (pos + neg)) - neg
     result = result < 0 ? result : result
     latitude = latitude + result
@@ -325,7 +322,7 @@ var getDistance = function (p1, p2) {
     return {latitude, longitude}
   }
 
-  //Sudocode
+  // Sudocode
   /*
     adeventlistner.distance(
     if (distance > 15m){
@@ -340,7 +337,6 @@ var getDistance = function (p1, p2) {
     2. find out how to check what the distance is to all the markers
     3. make function that check if the player is closer than x to the marker.
     4.
-
 
     exampel1:
     var rad = function(x) {
@@ -367,10 +363,8 @@ var getDistance = function (p1, p2) {
 
     var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(latitude1, longitude1), new google.maps.LatLng(latitude2, longitude2));
 
-
     How it works.
   */
-
 }
 
 export default geolocated({

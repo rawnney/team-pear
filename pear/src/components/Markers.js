@@ -25,6 +25,8 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
 
   export let onClick = (id: number, props: Object) => {
     console.warn('MONSTER PRESS ID: ' + id)
+    console.log("player pos: " + lng + ", " + lat + "monster pos: " + markers[id])
+    //let dist = google.maps.geometry.spherical.computeDistanceBetween (latLngA, latLngB);
     props.toggleFightView(id)
   }
 
