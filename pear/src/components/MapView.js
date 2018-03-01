@@ -68,7 +68,6 @@ class MapView extends Component {
       />
       <Modal isOpen={fightViewOpened} togglemod={this.toggleFightView}>
         <div style={styles.wrapper}>
-          {winnerIsSet ? this.renderExit() : <div />}
           <EnemyComponent enemyHP={enemyHP} name={activeMonsterName} avatar={activeMonsterAvatar}/>
           <div style={styles.console}>
             {winnerIsSet ? this.renderWinner() : <div />}
@@ -77,7 +76,9 @@ class MapView extends Component {
           </div>
           <PlayerComponent playerHP={playerHP} username={user.username} avatar={user.avatar}/>
           <div style={styles.buttonWrapper}>
-            <Button onClick={this.playerAttack} disabled={waitForMonster} color='danger' style={styles.buttonStyle}>Attack</Button>
+            {winnerIsSet
+              ? <Button onClick={this.toggleFightView} color='success' style={styles.buttonStyle}>Continue</Button>
+              : <Button onClick={this.playerAttack} disabled={waitForMonster} color='danger' style={styles.buttonStyle}>Attack</Button>}
           </div>
         </div>
       </Modal>
@@ -146,10 +147,6 @@ class MapView extends Component {
     let {playerWin, monsterWin} = this.state
     if (playerWin === true) return <WinnerPopUp goldDropped={2} />
     if (monsterWin === true) return <div style={styles.winnerText}>YOU LOOSE!</div>
-  }
-
-  renderExit = () => {
-    return <Button onClick={this.toggleFightView} style={styles.closeButton}>X</Button>
   }
 
   logDmgGiven = () => {
