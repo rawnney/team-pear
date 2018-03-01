@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import {itemWeapon} from './Items'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
 import Home from './Home'
 // import Images from '../libs/Imgs'
 import axios from 'axios'
-import {API_UPDATE_KILLS, API_UPDATE_COINS} from '../libs/Const'
+import {API_UPDATE_KILLS, API_UPDATE_COINS, API_WEAPON} from '../libs/Const'
 
 export default class GameView extends Component<Props, State> {
   innerRef
@@ -31,11 +32,14 @@ export default class GameView extends Component<Props, State> {
       // TODO: send user back to parent for updating items and coins
         setUser={user}
         signOut={this.signOut}
+        buyWeapon={this.buyWeaponAPI}
       />
       <MapView
-      ref={this.setRef}
-      setUser={user}
-      updateUser={this.updateUser}
+        ref={this.setRef}
+        setUser={user}
+        updateUser={this.updateUser}
+        attack={user.attack}
+        block={user.block}
       />
     </div>
   }
@@ -67,5 +71,20 @@ export default class GameView extends Component<Props, State> {
   updateUser = (monstersKilled, coins) => {
     let {user} = this.state
     this.setState({user: {...user, monstersKilled: monstersKilled + 1, coins: coins + 2}})
+  }
+
+  //  SHOP ITEMS
+
+  buyWeaponAPI = () => {
+    let {user} = this.state
+    let {iduser, reg, coins, weapon} = user
+    let newWeapon = itemWeapon[0]
+    if (reg === 'false') return
+    if (coins < newWeapon.cost) return
+    if (weapon === newWeapon.name) return
+    this.setState({user: {...user, weapon: newWeapon.name, attack: newWeapon.dmg, coins: coins - newWeapon.cost}})
+    axios.put(API_WEAPON, {weapon: newWeapon.name, attack: newWeapon.dmg, iduser}).then(() => {
+      console.log('You bought ' + newWeapon.name + 'for ' + newWeapon.cost)
+    })
   }
 }

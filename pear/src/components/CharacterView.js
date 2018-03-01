@@ -4,11 +4,12 @@ import {Form, TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHe
 import {capitalizeFirstLetter} from '../libs/Common'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
+import {itemWeapon} from './Items'
 import LeaderboardComponent from './LeaderboardComponent'
 import ShopComponent from './ShopComponent'
 import axios from 'axios'
 import SignUpNoRegComponent from './SignUpNoRegComponent'
-import {UPDATE_USERNAME, UPDATE_EMAIL, UPDATE_PASSWORD} from '../libs/Const'
+import {API_UPDATE_USERNAME, API_UPDATE_EMAIL, API_UPDATE_PASSWORD} from '../libs/Const'
 
 let {Sword, Dagger, Shield, Armor, Wand} = Images
 
@@ -33,9 +34,9 @@ export default class CharacterView extends Component {
     this.props.signOut(loggedIn)
   }
 
-  togglemod = (user) => {
-    let {setUser} = this.props
+  togglemod = () => {
     let {modal} = this.state
+    let {setUser} = this.props
     this.setState({modal: !modal, userIsUpdated: false, error: false, user: setUser})
   }
 
@@ -106,18 +107,7 @@ export default class CharacterView extends Component {
             <TabPane tabId='3'>
               <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
               <ModalBody>
-                <ul style={styles.listStyle}>
-                  <li>
-                    <img style={styles.items} src={Sword} alt='item' />
-                    <img style={styles.items} src={Dagger} alt='item' />
-                    <img style={styles.items} src={Wand} alt='item' />
-                  </li>
-                  <br />
-                  <li>
-                    <img style={styles.items} src={Armor} alt='item' />
-                    <img style={styles.items} src={Shield} alt='item' />
-                  </li>
-                </ul>
+                {user.reg ? this.renderUserItems() : <div />}
               </ModalBody>
             </TabPane>
             <TabPane tabId='4'>
@@ -135,7 +125,7 @@ export default class CharacterView extends Component {
             <TabPane tabId='6'>
               <ModalHeader toggle={this.toggle}>Shop</ModalHeader>
               <ModalBody style={styles.shopModal}>
-                <ShopComponent />
+                <ShopComponent user={user} buyWeapon={this.buyWeapon} />
               </ModalBody>
             </TabPane>
           </TabContent>
@@ -146,6 +136,26 @@ export default class CharacterView extends Component {
         </Modal>
       </div>
     )
+  }
+
+  renderUserItems = () => {
+    let {user} = this.state
+    let {weapon, shield, head, chest, legs, feet} = user
+    if (!weapon && !shield && !head && !chest && !legs && !feet) return <p style={styles.errorMsg}>You have no items, head over to the shop if you have the funds!</p>
+    return <div>
+      <ul style={styles.listStyle}>
+        <li>
+          <img style={styles.items} src={weapon} alt='item' />
+          <img style={styles.items} src={Dagger} alt='item' />
+          <img style={styles.items} src={Wand} alt='item' />
+        </li>
+        <br />
+        <li>
+          <img style={styles.items} src={Armor} alt='item' />
+          <img style={styles.items} src={Shield} alt='item' />
+        </li>
+      </ul>
+    </div>
   }
 
   renderUserSkills = () => {
@@ -271,7 +281,7 @@ export default class CharacterView extends Component {
     let {username, iduser} = user
     let {newUsername} = updatedUser
     if (newUsername === username || newUsername === '' || newUsername === {} || newUsername === null || newUsername === undefined) return
-    axios.put(UPDATE_USERNAME, {username: newUsername, iduser}).then(() => {
+    axios.put(API_UPDATE_USERNAME, {username: newUsername, iduser}).then(() => {
       this.setState({userIsUpdated: true, error: false})
     })
   }
@@ -281,7 +291,7 @@ export default class CharacterView extends Component {
     let {email, iduser} = user
     let {newEmail} = updatedUser
     if (email === newEmail || newEmail === '' || newEmail === {} || newEmail === null || newEmail === undefined) return
-    axios.put(UPDATE_EMAIL, {email: newEmail, iduser}).then(() => {
+    axios.put(API_UPDATE_EMAIL, {email: newEmail, iduser}).then(() => {
       this.setState({userIsUpdated: true, error: false})
     })
   }
@@ -291,13 +301,13 @@ export default class CharacterView extends Component {
     let {password, iduser} = user
     let {newPassword} = updatedUser
     if (password === newPassword || newPassword === '' || newPassword === {} || newPassword === null || newPassword === undefined) return
-    axios.put(UPDATE_PASSWORD, {password: newPassword, iduser}).then(() => {
+    axios.put(API_UPDATE_PASSWORD, {password: newPassword, iduser}).then(() => {
       this.setState({userIsUpdated: true, error: false})
     })
   }
 
   renderError = () => {
-    return <p style={styles.errorMsg}>'Something went wrong! Please check your changes or try again later!'</p>
+    return <p style={styles.errorMsg}>Something went wrong! Please check your changes or try again later!</p>
   }
 
   renderUserStats = () => {
@@ -307,6 +317,20 @@ export default class CharacterView extends Component {
       <li><p>Monsters killed: {monstersKilled}</p></li>
       <li><p>Coins: {coins}</p></li>
     </ul>
+  }
+
+  //  SHOP ITEMS
+
+  buyWeapon = () => {
+    let {user} = this.state
+    let {reg, coins, weapon} = user
+    let newWeapon = itemWeapon[0]
+    let {buyWeapon} = this.props
+    if (reg === 'false') return
+    if (coins < newWeapon.cost) return
+    if (weapon === newWeapon.name) return
+    this.setState({user: {...user, weapon: newWeapon.name, attack: newWeapon.dmg, coins: coins - newWeapon.cost}})
+    if (buyWeapon) buyWeapon(user)
   }
 }
 

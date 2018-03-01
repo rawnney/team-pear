@@ -6,7 +6,6 @@ import Pinjump from './Pinjump'
 import Markers from './Markers'
 import Images from '../libs/Imgs'
 import PlayerComponent from './PlayerComponent'
-// import WinnerPopUp from './WinnerPopUp'
 import Coordinates from '../assets/json/coordinates'
 let {Monster} = Images
 
@@ -39,10 +38,6 @@ class MapView extends Component {
   componentDidMount () {
     this.setMonsters()
   }
-
-  // componentWillUpdate (nextProps, nextState) {
-  //  this.setMonsters(nextProps, nextState)
-  // }
 
   shouldComponentUpdate (nextProps, nextState) {
     return true
@@ -148,7 +143,7 @@ class MapView extends Component {
   renderWinner = () => {
     let {playerWin, monsterWin} = this.state
     if (playerWin === true) return <div style={styles.winnerText}>YOU WIN! </div>
-    if (monsterWin === true) return <div style={styles.winnerText}>YOU ARE LOOSER</div>
+    if (monsterWin === true) return <div style={styles.winnerText}>YOU LOOSE!</div>
   }
 
   renderExit = () => {
@@ -167,9 +162,9 @@ class MapView extends Component {
   }
 
   calcPlayerAttack = () => {
-    let {user} = this.state // TODO fix this
+    let {attack} = this.props
     let baseDmg = 10
-    let attackDmg = 1 + (user.attack / 100)
+    let attackDmg = 1 + (attack / 100)
     let totalDmg = baseDmg * attackDmg
     let rawDmgGiven = Math.ceil(Math.floor(Math.random() * (totalDmg - baseDmg)) + baseDmg)
     return rawDmgGiven
@@ -184,9 +179,9 @@ class MapView extends Component {
   }
 
   clacPlayerDmgReduction = () => {
-    let {user} = this.state
+    let {block} = this.props
     let baseReduction = 5
-    let itemReduction = user.block
+    let itemReduction = block
     let maxReduction = baseReduction + itemReduction
     let dmgReduction = Math.ceil((Math.floor(Math.random() * (maxReduction - baseReduction)) + baseReduction) / 5)
     return dmgReduction
@@ -203,7 +198,8 @@ class MapView extends Component {
         monsterTurn: false,
         enemyHP: enemyHP - rawDmgGiven,
         displayDmg: rawDmgGiven,
-        waitForMonster: true})
+        waitForMonster: true
+      })
     }
     if (enemyHP === 0 || rawDmgGiven > enemyHP || rawDmgGiven === enemyHP) return this.playerWin(this.state.activeMonsterID)
     setTimeout(() => {
@@ -214,7 +210,8 @@ class MapView extends Component {
           playerHP: playerHP - dmgWithReduction,
           displayDmg: dmgWithReduction,
           displayReduction: dmgReduction,
-          waitForMonster: false})
+          waitForMonster: false
+        })
       }
     }, 1500)
   }
@@ -231,9 +228,6 @@ class MapView extends Component {
 
   removeMonster = (id) => {
     let {monsterMarkers} = this.state
-    // monsterMarkers.splice(id, 1)
-    // console.log("id:" + id);
-    // console.log(monsterMarkers[id].icon)
     monsterMarkers[id].alive = false
     this.setState({monsterMarkers: monsterMarkers})
   }
@@ -241,9 +235,6 @@ class MapView extends Component {
   // TODO: Respawn monsters! for loop setState({markers -> Alive})
 
   setMonsters = (nextProps, nextState) => {
-    // let {lat, lng} = nextProps.coords
-    // let {monsterMarkers, didSetMonsters} = nextState
-    // if ((!lat || !lng) || (lat === null || lng === null) || (didSetMonsters)) return
     let {didSetMonsters} = this.state
     if (didSetMonsters) return
     let mapCoordinates = {Coordinates}

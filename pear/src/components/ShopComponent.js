@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import {Nav, NavLink, NavItem, ModalHeader, TabContent, TabPane, Table, Button} from 'reactstrap'
 import classnames from 'classnames'
-import Images from '../libs/Imgs'
-let {Sword} = Images
+import {itemWeapon} from './Items'
 
 export default class ShopComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
+      user: this.props.user
     }
   }
 
@@ -58,11 +58,11 @@ export default class ShopComponent extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td style={styles.firstData}><img src={Sword} style={styles.listItemPic} alt='Longsword' /></td>
-                  <td>Longsword</td>
-                  <td>+25 % dmg</td>
-                  <td>10 c</td>
-                  <td><Button onClick={this.buyItem} disable={this.checkCoin} style={styles.buyButton}>Buy</Button></td>
+                  <td style={styles.firstData}><img src={itemWeapon[0].img} style={styles.listItemPic} alt='item' /></td>
+                  <td>{itemWeapon[0].name}</td>
+                  <td>+ {itemWeapon[0].dmg}% dmg</td>
+                  <td>{itemWeapon[0].cost}c</td>
+                  <td><Button onClick={this.props.buyWeapon} disable={this.checkCoin} style={styles.buyButton}>Buy</Button></td>
                 </tr>
               </tbody>
             </Table>
@@ -89,11 +89,9 @@ export default class ShopComponent extends Component {
 
   checkCoin = () => {
     let {user} = this.state
-    let {itemCost} = this.props
-    if (user.coins < itemCost) this.setState({disable: true})
-  }
-
-  buyItem = () => {
+    let {coins} = user
+    if (coins < itemWeapon[0].cost) return true
+    return false
   }
 
   toggle = (tab) => {
