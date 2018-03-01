@@ -19,7 +19,15 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
 
   export let onClick = (id: number, props: Object) => {
     console.warn('MONSTER PRESS ID: ' + id)
+    //let currMonster = props.markers[id]
+    let monsterLL = new google.maps.LatLng(props.markers[id].latitude, props.markers[id].longitude)
+    let playerLL = new google.maps.LatLng(props.lat, props.lng)
+
+    //console.log("props: ", props.lng + ", " + props.lat, " :" + currMonster.longitude + ", " + currMonster.latitude)
+    let dist = google.maps.geometry.spherical.computeDistanceBetween(monsterLL, playerLL)
+    if (dist <= 50) {
     props.toggleFightView(id)
+    }
   }
 
 export default MARKERS
