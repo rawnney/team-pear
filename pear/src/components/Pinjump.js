@@ -12,10 +12,7 @@ export default class Pinjump extends Component {
     const defaultOptions = {
       loop: true,
       autoplay: true,
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: '100%'
-      }
+      animationData: animationData
     }
 
     return <div>
