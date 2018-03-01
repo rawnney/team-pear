@@ -49,32 +49,21 @@ export default class GameView extends Component<Props, State> {
     this.innerRef.getLocation()
   }
 
-  setRef = (ref: *) => {
-    this.innerRef = ref
-  }
-
-  setLoggedIn = (loggedIn) => {
-    this.setState({loggedIn: true})
-  }
-
-  signOut = () => {
-    let {user: {monstersKilled, coins, iduser}} = this.state
-    axios.put(API_UPDATE_KILLS, {monstersKilled, iduser})
-    axios.put(API_UPDATE_COINS, {coins, iduser})
-    .then((result) => this.setState({loggedIn: false, user: null}))
-  }
-
-  setUser = (user) => {
-    this.setState({user})
-  }
+  setRef = (ref: *) => this.innerRef = ref
+  setLoggedIn = (loggedIn) => this.setState({loggedIn: true})
+  signOut = () => this.setState({loggedIn: false, user: null})
+  setUser = (user) => this.setState({user})
 
   updateUser = (monstersKilled, coins) => {
     let {user} = this.state
+    let {iduser} = user
     this.setState({user: {...user, monstersKilled: monstersKilled + 1, coins: coins + 2}})
+    axios.put(API_UPDATE_KILLS, {monstersKilled: monstersKilled + 1, iduser})
+    axios.put(API_UPDATE_COINS, {coins: coins + 2, iduser})
+    console.log('monstersKilled' + monstersKilled, 'coins' + coins)
   }
 
   //  SHOP ITEMS
-
   buyWeaponAPI = () => {
     let {user} = this.state
     let {iduser, reg, coins, weapon} = user
@@ -84,6 +73,7 @@ export default class GameView extends Component<Props, State> {
     if (weapon === newWeapon.name) return
     this.setState({user: {...user, weapon: newWeapon.name, attack: newWeapon.dmg, coins: coins - newWeapon.cost}})
     axios.put(API_WEAPON, {weapon: newWeapon.name, attack: newWeapon.dmg, iduser}).then(() => {
+      axios.put(API_UPDATE_COINS, {coins, iduser})
       console.log('You bought ' + newWeapon.name + 'for ' + newWeapon.cost)
     })
   }

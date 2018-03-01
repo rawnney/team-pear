@@ -28,26 +28,6 @@ export default class CharacterView extends Component {
     }
   }
 
-  signOut = () => {
-    let {loggedIn} = this.state
-    this.setState({loggedIn: false, user: {}})
-    this.props.signOut(loggedIn)
-  }
-
-  togglemod = () => {
-    let {modal} = this.state
-    let {setUser} = this.props
-    this.setState({modal: !modal, userIsUpdated: false, error: false, user: setUser})
-  }
-
-  toggle = (tab) => {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      })
-    }
-  }
-
   render () {
     let {activeTab, user, editUser, signUp} = this.state
     return (
@@ -138,84 +118,6 @@ export default class CharacterView extends Component {
     )
   }
 
-  renderUserItems = () => {
-    let {user} = this.state
-    let {weapon, shield, head, chest, legs, feet} = user
-    if (!weapon && !shield && !head && !chest && !legs && !feet) return <p style={styles.errorMsg}>You have no items, head over to the shop if you have the funds!</p>
-    return <div>
-      <ul style={styles.listStyle}>
-        <li>
-          <img style={styles.items} src={weapon} alt='item' />
-          <img style={styles.items} src={Dagger} alt='item' />
-          <img style={styles.items} src={Wand} alt='item' />
-        </li>
-        <br />
-        <li>
-          <img style={styles.items} src={Armor} alt='item' />
-          <img style={styles.items} src={Shield} alt='item' />
-        </li>
-      </ul>
-    </div>
-  }
-
-  renderUserSkills = () => {
-    let {user} = this.state
-    let {attack, block} = user
-    return <div>
-      <div>
-        <img src={Sword} style={styles.attack} alt='Attack'/>
-        <ul style={styles.none}>
-          <li><p>Base attack damage: 10</p></li>
-          <li><p>Weapon damage: {attack} %</p></li>
-        </ul>
-      </div>
-      <hr />
-      <div>
-        <img src={Shield} style={styles.block} alt='Armor'/>
-        <ul style={styles.none}>
-          <li><p>Base defence value: 5</p></li>
-          <li><p>Armor value: {block}</p></li>
-        </ul>
-      </div>
-    </div>
-  }
-
-  renderNoRegUserInfo = () => {
-    let {user} = this.state
-    return <div>
-      <h4 style={styles.userCall}>Hey {user.username}! </h4>
-    You didnt signup when you started your adventure. But its not to late -
-    you can still register to save your progress!
-      <Button onClick={this.openSignUpNoReg} colo='success'>Sign up now</Button>
-    </div>
-  }
-
-  openSignUpNoReg = () => {
-    this.setState({signUp: true})
-  }
-
-  renderSignUpNoReg = () => {
-    let {user} = this.state
-    return <SignUpNoRegComponent user={user}/>
-  }
-
-  renderUserInfo = () => {
-    let {user} = this.state
-    let {username, email} = user
-    return <div>
-      <ul style={styles.none}>
-        <li><p>Username: {username}</p></li>
-        <li><p>Email: {email}</p></li>
-      </ul>
-      <Button onClick={this.enableUserEdit}>Edit details</Button>
-    </div>
-  }
-
-  enableUserEdit = () => {
-    let {editUser} = this.state
-    this.setState({editUser: !editUser})
-  }
-
   renderUserEditor = () => {
     let {user, updatedUser, userIsUpdated, error} = this.state
     let {username, email} = user
@@ -246,6 +148,117 @@ export default class CharacterView extends Component {
         </FormGroup>
       </Form>
     )
+  }
+
+  renderUserItems = () => {
+    let {user} = this.state
+    let {weapon, shield, head, chest, legs, feet} = user
+    if (!weapon && !shield && !head && !chest && !legs && !feet) return <p style={styles.errorMsg}>You have no items, head over to the shop if you have the funds!</p>
+    return <div>
+      <ul style={styles.listStyle}>
+        <li>
+          <img style={styles.items} src={weapon} alt='item' />
+          <img style={styles.items} src={Dagger} alt='item' />
+          <img style={styles.items} src={Wand} alt='item' />
+        </li>
+        <br />
+        <li>
+          <img style={styles.items} src={Armor} alt='item' />
+          <img style={styles.items} src={Shield} alt='item' />
+        </li>
+      </ul>
+    </div>
+  }
+
+  renderUserSkills = () => {
+    let {user} = this.state
+    let {attack, block} = user
+    return <div>
+      <div>
+        <img src={Sword} style={styles.attack} alt='Attack'/>
+        <ul style={styles.none}>
+          <li><p>Base attack: 10</p></li>
+          <li><p>Weapon damage: {attack} %</p></li>
+        </ul>
+      </div>
+      <hr />
+      <div>
+        <img src={Shield} style={styles.block} alt='Armor'/>
+        <ul style={styles.none}>
+          <li><p>Base defence: 5</p></li>
+          <li><p>Armor: {block}</p></li>
+        </ul>
+      </div>
+    </div>
+  }
+
+  renderNoRegUserInfo = () => {
+    let {user} = this.state
+    return <div>
+      <h4 style={styles.userCall}>Hey {user.username}! </h4>
+    You didnt signup when you started your adventure. But its not to late -
+    you can still register to save your progress!
+      <Button onClick={this.openSignUpNoReg} colo='success'>Sign up now</Button>
+    </div>
+  }
+
+  renderSignUpNoReg = () => {
+    let {user} = this.state
+    return <SignUpNoRegComponent user={user}/>
+  }
+
+  renderUserInfo = () => {
+    let {user} = this.state
+    let {username, email} = user
+    return <div>
+      <ul style={styles.none}>
+        <li><p>Username: {username}</p></li>
+        <li><p>Email: {email}</p></li>
+      </ul>
+      <Button onClick={this.enableUserEdit}>Edit details</Button>
+    </div>
+  }
+
+  renderUserStats = () => {
+    let {user} = this.state
+    let {monstersKilled, coins} = user
+    return <ul style={styles.listStyle}>
+      <li><p>Monsters killed: {monstersKilled}</p></li>
+      <li><p>Coins: {coins}</p></li>
+    </ul>
+  }
+
+  renderError = () => {
+    return <p style={styles.errorMsg}>Something went wrong! Please check your changes or try again later!</p>
+  }
+
+  signOut = () => {
+    let {loggedIn} = this.state
+    this.setState({loggedIn: false, user: {}})
+    this.props.signOut(loggedIn)
+  }
+
+  togglemod = () => {
+    let {modal} = this.state
+    let {setUser} = this.props
+    this.setState({modal: !modal, userIsUpdated: false, error: false, editUser: false, user: setUser})
+  }
+
+  toggle = (tab) => {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      })
+    }
+  }
+
+  openSignUpNoReg = () => {
+    this.setState({signUp: true})
+  }
+
+  enableUserEdit = () => {
+    let {editUser} = this.state
+    this.setState({editUser: !editUser})
   }
 
   renderMsg = () => {
@@ -304,19 +317,6 @@ export default class CharacterView extends Component {
     axios.put(API_UPDATE_PASSWORD, {password: newPassword, iduser}).then(() => {
       this.setState({userIsUpdated: true, error: false})
     })
-  }
-
-  renderError = () => {
-    return <p style={styles.errorMsg}>Something went wrong! Please check your changes or try again later!</p>
-  }
-
-  renderUserStats = () => {
-    let {user} = this.state
-    let {monstersKilled, coins} = user
-    return <ul style={styles.listStyle}>
-      <li><p>Monsters killed: {monstersKilled}</p></li>
-      <li><p>Coins: {coins}</p></li>
-    </ul>
   }
 
   //  SHOP ITEMS
