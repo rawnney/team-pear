@@ -100,7 +100,7 @@ const mapOptions = {
       'elementType': 'geometry',
       'stylers': [
         {
-          'color': '#ffffff'
+          'color': '#616161'
         }
       ]
     },
@@ -143,7 +143,7 @@ const mapOptions = {
       'featureType': 'road.local',
       'stylers': [
         {
-          'color': '#393c3a'
+          'color': '#616161'
         }
       ]
     },
@@ -188,7 +188,7 @@ const mapOptions = {
       'elementType': 'geometry',
       'stylers': [
         {
-          'color': '#a9a8a7'
+          'color': '#75B6D6'
         }
       ]
     },

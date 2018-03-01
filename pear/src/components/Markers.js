@@ -25,9 +25,9 @@ const MARKERS = withScriptjs(withGoogleMap(props => {
 
     //console.log("props: ", props.lng + ", " + props.lat, " :" + currMonster.longitude + ", " + currMonster.latitude)
     let dist = google.maps.geometry.spherical.computeDistanceBetween(monsterLL, playerLL)
-    if (dist <= 50) {
-    props.toggleFightView(id)
-    }
+      if (dist <= 15) {
+      props.toggleFightView(id)
+      }
   }
 
 export default MARKERS
