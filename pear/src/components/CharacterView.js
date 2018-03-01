@@ -4,7 +4,7 @@ import {Form, TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHe
 import {capitalizeFirstLetter} from '../libs/Common'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
-import {itemWeapon} from './Items'
+import {itemWeapon, itemShield, itemHead, itemChest, itemLegs, itemFeet} from './Items'
 import LeaderboardComponent from './LeaderboardComponent'
 import ShopComponent from './ShopComponent'
 import axios from 'axios'
@@ -105,7 +105,15 @@ export default class CharacterView extends Component {
             <TabPane tabId='6'>
               <ModalHeader toggle={this.toggle}>Shop</ModalHeader>
               <ModalBody style={styles.shopModal}>
-                <ShopComponent user={user} buyWeapon={this.buyWeapon} />
+                <ShopComponent
+                  user={user}
+                  buyWeapon={this.buyWeapon}
+                  buyShield={this.buyShield}
+                  buyHead={this.buyHead}
+                  buyChest={this.buyChest}
+                  buyLegs={this.buyLegs}
+                  buyFeet={this.buyFeet}
+                />
               </ModalBody>
             </TabPane>
           </TabContent>
@@ -331,6 +339,66 @@ export default class CharacterView extends Component {
     if (weapon === newWeapon.name) return
     this.setState({user: {...user, weapon: newWeapon.name, attack: newWeapon.dmg, coins: coins - newWeapon.cost}})
     if (buyWeapon) buyWeapon(user)
+  }
+
+  buyShield = () => {
+    let {user} = this.state
+    let {reg, coins, shield, block} = user
+    let newShield = itemShield[0]
+    let {buyShield} = this.props
+    if (reg === 'false') return
+    if (coins < newShield.cost) return
+    if (shield === newShield.name) return
+    this.setState({user: {...user, shield: newShield.name, block: block + newShield.block, coins: coins - newShield.cost}})
+    if (buyShield) buyShield(user)
+  }
+
+  buyHead = () => {
+    let {user} = this.state
+    let {reg, coins, head, block} = user
+    let newHead = itemHead[0]
+    let {buyHead} = this.props
+    if (reg === 'false') return
+    if (coins < newHead.cost) return
+    if (head === newHead.name) return
+    this.setState({user: {...user, head: newHead.name, block: block + newHead.block, coins: coins - newHead.cost}})
+    if (buyHead) buyHead(user)
+  }
+
+  buyChest = () => {
+    let {user} = this.state
+    let {reg, coins, chest, block} = user
+    let newChest = itemChest[0]
+    let {buyChest} = this.props
+    if (reg === 'false') return
+    if (coins < newChest.cost) return
+    if (chest === newChest.name) return
+    this.setState({user: {...user, chest: newChest.name, block: block + newChest.block, coins: coins - newChest.cost}})
+    if (buyChest) buyChest(user)
+  }
+
+  buyLegs = () => {
+    let {user} = this.state
+    let {reg, coins, legs, block} = user
+    let newLegs = itemLegs[0]
+    let {buyLegs} = this.props
+    if (reg === 'false') return
+    if (coins < newLegs.cost) return
+    if (legs === newLegs.name) return
+    this.setState({user: {...user, legs: newLegs.name, block: block + newLegs.block, coins: coins - newLegs.cost}})
+    if (buyLegs) buyLegs(user)
+  }
+
+  buyFeet = () => {
+    let {user} = this.state
+    let {reg, coins, feet, block} = user
+    let newFeet = itemFeet[0]
+    let {buyFeet} = this.props
+    if (reg === 'false') return
+    if (coins < newFeet.cost) return
+    if (feet === newFeet.name) return
+    this.setState({user: {...user, feet: newFeet.name, block: block + newFeet.block, coins: coins - newFeet.cost}})
+    if (buyFeet) buyFeet(user)
   }
 }
 

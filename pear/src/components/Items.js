@@ -24,3 +24,39 @@ export const itemShield = [
     img: Shield
   }
 ]
+
+export const itemHead = [
+  {
+    name: 'Steel helmet',
+    block: 5,
+    cost: 4
+    // img: Helmet
+  }
+]
+
+export const itemChest = [
+  {
+    name: 'Dress',
+    block: 1,
+    cost: 1
+    // img:
+  }
+]
+
+export const itemLegs = [
+  {
+    name: 'Dragon Scale Legs',
+    block: 5,
+    cost: 4
+    // img:
+  }
+]
+
+export const itemFeet = [
+  {
+    name: 'Sandals',
+    block: 3,
+    cost: 4
+    // img:
+  }
+]

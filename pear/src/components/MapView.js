@@ -151,8 +151,9 @@ class MapView extends Component {
   }
 
   logDmgGiven = () => {
-    let {displayDmg} = this.state
-    return <div style={styles.logDmgGiven}>You hit for {displayDmg} dmg!</div>
+    let {displayDmg, displayReduction} = this.state
+    if (displayReduction <= 0) return <div style={styles.logDmgGiven}>You hit for {displayDmg} dmg!</div>
+    if (displayReduction) return <div style={styles.logDmgGiven}> You hit for {displayDmg} dmg! ({displayReduction} dmg mitigated)</div>
   }
 
   logDmgTaken = () => {
@@ -163,18 +164,18 @@ class MapView extends Component {
 
   calcPlayerAttack = () => {
     let {attack} = this.props
-    let baseDmg = 10
+    let baseDmg = 15
     let attackDmg = 1 + (attack / 100)
-    let totalDmg = baseDmg * attackDmg
-    let rawDmgGiven = Math.ceil(Math.floor(Math.random() * (totalDmg - baseDmg)) + baseDmg)
+    let maxDmg = baseDmg * attackDmg
+    let rawDmgGiven = Math.ceil(Math.floor(Math.random() * (maxDmg - baseDmg)) + baseDmg)
     return rawDmgGiven
   }
 
   calcMonsterAttack = () => {
-    let baseDmg = 10
+    let baseDmg = 12
     let attackDmg = 1.25
-    let totalDmg = baseDmg * attackDmg
-    let rawDmgTaken = Math.ceil(Math.floor(Math.random() * (totalDmg - baseDmg)) + baseDmg)
+    let maxDmg = baseDmg * attackDmg
+    let rawDmgTaken = Math.ceil(Math.floor(Math.random() * (maxDmg - baseDmg)) + baseDmg)
     return rawDmgTaken
   }
 
@@ -182,6 +183,14 @@ class MapView extends Component {
     let {block} = this.props
     let baseReduction = 5
     let itemReduction = block
+    let maxReduction = baseReduction + itemReduction
+    let playerDmgReduction = Math.ceil((Math.floor(Math.random() * (maxReduction - baseReduction)) + baseReduction) / 5)
+    return playerDmgReduction
+  }
+
+  clacMonsterDmgReduction = () => {
+    let baseReduction = 5
+    let itemReduction = 10
     let maxReduction = baseReduction + itemReduction
     let dmgReduction = Math.ceil((Math.floor(Math.random() * (maxReduction - baseReduction)) + baseReduction) / 5)
     return dmgReduction
@@ -191,13 +200,16 @@ class MapView extends Component {
     let {enemyHP, playerHP} = this.state
     let rawDmgGiven = this.calcPlayerAttack()
     let rawDmgTaken = this.calcMonsterAttack()
-    let dmgReduction = this.clacPlayerDmgReduction()
-    let dmgWithReduction = rawDmgTaken - dmgReduction
+    let playerDmgReduction = this.clacPlayerDmgReduction()
+    let monsterDmgReduction = this.clacMonsterDmgReduction()
+    let playerDmgTakenWithReduction = rawDmgTaken - playerDmgReduction
+    let monsterDmgTakenWithReduction = rawDmgGiven - monsterDmgReduction
     if (enemyHP > 0 || enemyHP !== 0) {
       this.setState({playerTurn: true,
         monsterTurn: false,
-        enemyHP: enemyHP - rawDmgGiven,
-        displayDmg: rawDmgGiven,
+        enemyHP: enemyHP - monsterDmgTakenWithReduction,
+        displayDmg: monsterDmgTakenWithReduction,
+        displayReduction: monsterDmgReduction,
         waitForMonster: true
       })
     }
@@ -207,9 +219,9 @@ class MapView extends Component {
       if (playerHP > 0) {
         this.setState({playerTurn: false,
           monsterTurn: true,
-          playerHP: playerHP - dmgWithReduction,
-          displayDmg: dmgWithReduction,
-          displayReduction: dmgReduction,
+          playerHP: playerHP - playerDmgTakenWithReduction,
+          displayDmg: playerDmgTakenWithReduction,
+          displayReduction: playerDmgReduction,
           waitForMonster: false
         })
       }
