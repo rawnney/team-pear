@@ -15,7 +15,6 @@ export default {
   Coin: require('../assets/img/coin.png'),
   CoinStack: require('../assets/img/coinstack.png'),
   KillIcon: require('../assets/img/kill_icon.png'),
-
   // ------------------------SHOP ITEMS----------------------------
   // SWORD
   CombatKnife: require('../assets/img/shop/weapon/sword/1_Combat_Knife.gif'),
@@ -37,7 +36,7 @@ export default {
   BlessedShield: require('../assets/img/shop/shield/5_Blessed_Shield.gif'),
   // HEAD
   JesterHat: require('../assets/img/shop/head/1_Jester_Hat.gif'),
-  ChainHelemt: require('../assets/img/shop/head/2_Chain_Helmet.gif'),
+  ChainHelmet: require('../assets/img/shop/head/2_Chain_Helmet.gif'),
   VikingHelmet: require('../assets/img/shop/head/3_Viking_Helmet.gif'),
   RoyalHelmet: require('../assets/img/shop/head/4_Royal_Helmet.gif'),
   GoldenHelmet: require('../assets/img/shop/head/5_Golden_Helmet.gif'),
@@ -58,5 +57,5 @@ export default {
   GuardianBoots: require('../assets/img/shop/feet/2_Guardian_Boots.gif'),
   SteelBoots: require('../assets/img/shop/feet/3_Steel_Boots.gif'),
   FireWalkerBoots: require('../assets/img/shop/feet/4_Firewalker_Boots.gif'),
-  GoldenBoots: require('../assets/img/shop/feet/5_Golden_Boots.gif'),
+  GoldenBoots: require('../assets/img/shop/feet/5_Golden_Boots.gif')
 }
