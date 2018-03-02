@@ -50,8 +50,8 @@ class MapView extends Component {
       activeMonsterAvatar, user, playerTurn, monsterTurn, waitForMonster} = this.state
     let {isGeolocationAvailable, isGeolocationEnabled, coords} = this.props
     if (!user) return <div/>
-    if (!isGeolocationAvailable) return <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
-    if (!isGeolocationEnabled) return <div style={styles.infoMsg}>You must enable Geolocation to play this game!</div>
+    if (!isGeolocationAvailable) return <Pinjump />// <div style={styles.infoMsg}>Your browser does not support Geolocation</div>
+    if (!isGeolocationEnabled) return <Pinjump />// <div style={styles.infoMsg}>You must enable Geolocation to play this game!</div>
     if (!coords) return <Pinjump />
 
     return <div>

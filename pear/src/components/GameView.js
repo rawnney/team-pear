@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {itemWeapon, itemShield, itemChest, itemHead, itemFeet, itemLegs} from './Items'
+import {itemWeapon, itemShield, itemChest, itemHead, itemFeet, itemLegs} from '../libs/Items'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
 import Home from './Home'

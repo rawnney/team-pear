@@ -3,7 +3,7 @@ let {Sword, Shield} = Images
 
 export const itemWeapon = [
   {
-    name: 'Longsword',
+    name: 'Combat Knife',
     dmg: 25,
     cost: 10,
     img: Sword

@@ -4,7 +4,7 @@ import {Form, TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHe
 import {capitalizeFirstLetter} from '../libs/Common'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
-import {itemWeapon, itemShield, itemHead, itemChest, itemLegs, itemFeet} from './Items'
+import {itemWeapon, itemShield, itemHead, itemChest, itemLegs, itemFeet} from '../libs/Items'
 import LeaderboardComponent from './LeaderboardComponent'
 import ShopComponent from './ShopComponent'
 import axios from 'axios'

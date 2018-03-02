@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 // eslint-disable-next-line
 import {Nav, NavLink, NavItem, ModalHeader, TabContent, TabPane, Table, Button} from 'reactstrap'
 import classnames from 'classnames'
-import {itemWeapon, itemShield, itemHead, itemChest, itemLegs, itemFeet} from './Items'
+import {itemWeapon, itemShield, itemHead, itemChest, itemLegs, itemFeet} from '../libs/Items'
 
 export default class ShopComponent extends Component {
   constructor (props) {
@@ -101,20 +101,20 @@ export default class ShopComponent extends Component {
       <Table style={styles.table}>
         <thead>
           <tr>
-            <th></th>
-            <th>Item</th>
-            <th>Bonus</th>
-            <th>Cost</th>
-            <th></th>
+            <th style={styles.th}></th>
+            <th style={styles.th}>Item</th>
+            <th style={styles.th}>Attack</th>
+            <th style={styles.th}>Cost</th>
+            <th style={styles.th}></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style={styles.firstData}><img src={itemWeapon[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td>{itemWeapon[0].name}</td>
-            <td>+ {itemWeapon[0].dmg} % dmg</td>
-            <td>{itemWeapon[0].cost} c</td>
-            <td><Button onClick={this.props.buyWeapon} style={styles.buyButton}>Buy</Button></td>
+            <td style={styles.tableData}>{itemWeapon[0].name}</td>
+            <td style={styles.tableData}>+ {itemWeapon[0].dmg} %</td>
+            <td style={styles.tableData}>{itemWeapon[0].cost} c</td>
+            <td style={styles.tableData}><Button onClick={this.props.buyWeapon} style={styles.buyButton}>Buy</Button></td>
           </tr>
         </tbody>
       </Table>
@@ -126,20 +126,20 @@ export default class ShopComponent extends Component {
       <Table style={styles.table}>
         <thead>
           <tr>
-            <th></th>
-            <th>Item</th>
-            <th>Bonus</th>
-            <th>Cost</th>
-            <th></th>
+            <th style={styles.th}></th>
+            <th style={styles.th}>Item</th>
+            <th style={styles.th}>Armor</th>
+            <th style={styles.th}>Cost</th>
+            <th style={styles.th}></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style={styles.firstData}><img src={itemShield[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td>{itemShield[0].name}</td>
-            <td>+ {itemShield[0].block} armor</td>
-            <td>{itemShield[0].cost} c</td>
-            <td><Button onClick={this.props.buyShield} style={styles.buyButton}>Buy</Button></td>
+            <td style={styles.tableData}>{itemShield[0].name}</td>
+            <td style={styles.tableData}>+ {itemShield[0].block}</td>
+            <td style={styles.tableData}>{itemShield[0].cost} c</td>
+            <td style={styles.tableData}><Button onClick={this.props.buyShield} style={styles.buyButton}>Buy</Button></td>
           </tr>
         </tbody>
       </Table>
@@ -151,20 +151,20 @@ export default class ShopComponent extends Component {
       <Table style={styles.table}>
         <thead>
           <tr>
-            <th></th>
-            <th>Item</th>
-            <th>Bonus</th>
-            <th>Cost</th>
-            <th></th>
+            <th style={styles.th}></th>
+            <th style={styles.th}>Item</th>
+            <th style={styles.th}>Armor</th>
+            <th style={styles.th}>Cost</th>
+            <th style={styles.th}></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style={styles.firstData}><img src={itemHead[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td>{itemHead[0].name}</td>
-            <td>+ {itemHead[0].block} armor</td>
-            <td>{itemHead[0].cost} c</td>
-            <td><Button onClick={this.props.buyHead} style={styles.buyButton}>Buy</Button></td>
+            <td style={styles.tableData}>{itemHead[0].name}</td>
+            <td style={styles.tableData}>+ {itemHead[0].block}</td>
+            <td style={styles.tableData}>{itemHead[0].cost} c</td>
+            <td style={styles.tableData}><Button onClick={this.props.buyHead} style={styles.buyButton}>Buy</Button></td>
           </tr>
         </tbody>
       </Table>
@@ -176,20 +176,20 @@ export default class ShopComponent extends Component {
       <Table style={styles.table}>
         <thead>
           <tr>
-            <th></th>
-            <th>Item</th>
-            <th>Bonus</th>
-            <th>Cost</th>
-            <th></th>
+            <th style={styles.th}></th>
+            <th style={styles.th}>Item</th>
+            <th style={styles.th}>Armor</th>
+            <th style={styles.th}>Cost</th>
+            <th style={styles.th}></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style={styles.firstData}><img src={itemChest[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td>{itemChest[0].name}</td>
-            <td>+ {itemChest[0].block} armor</td>
-            <td>{itemChest[0].cost} c</td>
-            <td><Button onClick={this.props.buyChest} style={styles.buyButton}>Buy</Button></td>
+            <td style={styles.tableData}>{itemChest[0].name}</td>
+            <td style={styles.tableData}>+ {itemChest[0].block}</td>
+            <td style={styles.tableData}>{itemChest[0].cost} c</td>
+            <td style={styles.tableData}><Button onClick={this.props.buyChest} style={styles.buyButton}>Buy</Button></td>
           </tr>
         </tbody>
       </Table>
@@ -201,20 +201,20 @@ export default class ShopComponent extends Component {
       <Table style={styles.table}>
         <thead>
           <tr>
-            <th></th>
-            <th>Item</th>
-            <th>Bonus</th>
-            <th>Cost</th>
-            <th></th>
+            <th style={styles.th}></th>
+            <th style={styles.th}>Item</th>
+            <th style={styles.th}>Armor</th>
+            <th style={styles.th}>Cost</th>
+            <th style={styles.th}></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style={styles.firstData}><img src={itemLegs[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td>{itemLegs[0].name}</td>
-            <td>+ {itemLegs[0].block} armor</td>
-            <td>{itemLegs[0].cost} c</td>
-            <td><Button onClick={this.props.buyLegs} style={styles.buyButton}>Buy</Button></td>
+            <td style={styles.tableData}>{itemLegs[0].name}</td>
+            <td style={styles.tableData}>+ {itemLegs[0].block}</td>
+            <td style={styles.tableData}>{itemLegs[0].cost} c</td>
+            <td style={styles.tableData}><Button onClick={this.props.buyLegs} style={styles.buyButton}>Buy</Button></td>
           </tr>
         </tbody>
       </Table>
@@ -226,20 +226,20 @@ export default class ShopComponent extends Component {
       <Table style={styles.table}>
         <thead>
           <tr>
-            <th></th>
-            <th>Item</th>
-            <th>Bonus</th>
-            <th>Cost</th>
-            <th></th>
+            <th style={styles.th}></th>
+            <th style={styles.th}>Item</th>
+            <th style={styles.th}>Armor</th>
+            <th style={styles.th}>Cost</th>
+            <th style={styles.th}></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style={styles.firstData}><img src={itemFeet[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td>{itemFeet[0].name}</td>
-            <td>+ {itemFeet[0].block} armor</td>
-            <td>{itemFeet[0].cost} c</td>
-            <td><Button onClick={this.props.buyFeet} style={styles.buyButton}>Buy</Button></td>
+            <td style={styles.tableData}>{itemFeet[0].name}</td>
+            <td style={styles.tableData}>+ {itemFeet[0].block}</td>
+            <td style={styles.tableData}>{itemFeet[0].cost} c</td>
+            <td style={styles.tableData}><Button onClick={this.props.buyFeet} style={styles.buyButton}>Buy</Button></td>
           </tr>
         </tbody>
       </Table>
@@ -253,21 +253,31 @@ let styles = {
     margin: 0
   },
   firstData: {
-    padding: 0,
+    padding: '15px',
     margin: 0,
     verticalAlign: 'middle'
   },
   buyButton: {
     margin: 0,
     padding: '5px 10px',
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
+    maxWidth: '50px',
+    maxHeight: '35px'
   },
   listItemPic: {
-    width: '30px'
+    width: '35px',
+    height: '35px'
   },
   infoMsg: {
     fontSize: '20px',
     color: 'green',
     padding: '20px'
+  },
+  tableData: {
+    verticalAlign: 'middle',
+    paddingLeft: '0px'
+  },
+  th: {
+    paddingLeft: '0px'
   }
 }
