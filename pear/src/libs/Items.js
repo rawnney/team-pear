@@ -76,7 +76,7 @@ export const itemShield = [
 
 export const itemHead = [
   {
-    name: 'Jest Hat',
+    name: 'Jester Hat',
     block: 1,
     cost: 1,
     img: JesterHat

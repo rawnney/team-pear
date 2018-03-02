@@ -11,7 +11,7 @@ import axios from 'axios'
 import SignUpNoRegComponent from './SignUpNoRegComponent'
 import {API_UPDATE_USERNAME, API_UPDATE_EMAIL, API_UPDATE_PASSWORD} from '../libs/Const'
 
-let {KillIcon, CoinStack, Sword, Dagger, Shield, Armor, Wand} = Images
+let {KillIcon, CoinStack, Sword, Shield} = Images
 
 export default class CharacterView extends Component {
   constructor (props) {
@@ -39,37 +39,32 @@ export default class CharacterView extends Component {
           <Nav tabs>
             <NavItem>
               <NavLink className={classnames({ active: activeTab === '1' })} onClick={() => { this.toggle('1') }}>
-                Account
+                Character
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink className={classnames({ active: activeTab === '2' })} onClick={() => { this.toggle('2') }}>
-                Skills
+                Account
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink className={classnames({ active: activeTab === '3' })} onClick={() => { this.toggle('3') }}>
-                Inventory
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className={classnames({ active: activeTab === '4' })} onClick={() => { this.toggle('4') }}>
                 Leaderboard
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className={classnames({ active: activeTab === '5' })} onClick={() => { this.toggle('5') }}>
+              <NavLink className={classnames({ active: activeTab === '4' })} onClick={() => { this.toggle('4') }}>
                 Stats
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className={classnames({ active: activeTab === '6' })} onClick={() => { this.toggle('6') }}>
+              <NavLink className={classnames({ active: activeTab === '5' })} onClick={() => { this.toggle('5') }}>
                 Shop
               </NavLink>
             </NavItem>
           </Nav>
           <TabContent activeTab={activeTab}>
-            <TabPane tabId='1'>
+            <TabPane tabId='2'>
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>Account</ModalHeader>
               <ModalBody>
                 {user.reg === 'true' && editUser === false ? this.renderUserInfo() : <div />}
@@ -78,31 +73,25 @@ export default class CharacterView extends Component {
                 {user.reg === 'false' && signUp === true ? this.renderSignUpNoReg() : <div />}
               </ModalBody>
             </TabPane>
-            <TabPane tabId='2'>
-              <ModalHeader toggle={this.toggle}>Skills</ModalHeader>
+            <TabPane tabId='1'>
+              <ModalHeader toggle={this.toggle}>Character</ModalHeader>
               <ModalBody>
-                {user ? this.renderUserSkills() : <div />}
+                { user ? this.renderCharacter() : <div />}
               </ModalBody>
             </TabPane>
             <TabPane tabId='3'>
-              <ModalHeader toggle={this.toggle}>Inventory</ModalHeader>
-              <ModalBody>
-                {user.reg ? this.renderUserItems() : <div />}
-              </ModalBody>
-            </TabPane>
-            <TabPane tabId='4'>
               <ModalHeader toggle={this.toggle}>Leaderboard</ModalHeader>
               <ModalBody>
                 <LeaderboardComponent />
               </ModalBody>
             </TabPane>
-            <TabPane tabId='5'>
+            <TabPane tabId='4'>
               <ModalHeader style={styles.modalHeader} toggle={this.toggle}>Stats</ModalHeader>
               <ModalBody>
                 {user ? this.renderUserStats() : <div/>}
               </ModalBody>
             </TabPane>
-            <TabPane tabId='6'>
+            <TabPane tabId='5'>
               <ModalHeader toggle={this.toggle}>Shop</ModalHeader>
               <ModalBody style={styles.shopModal}>
                 <ShopComponent
@@ -158,23 +147,31 @@ export default class CharacterView extends Component {
     )
   }
 
+  renderCharacter = () => {
+    let {user} = this.state
+    return <div style={styles.characterContainer}>
+      {user ? this.renderUserSkills() : <div />}
+      {user.reg ? this.renderUserItems() : <div />}
+    </div>
+  }
+
   renderUserItems = () => {
     let {user} = this.state
     let {weapon, shield, head, chest, legs, feet} = user
     if (!weapon && !shield && !head && !chest && !legs && !feet) return <p style={styles.errorMsg}>You have no items, head over to the shop if you have the funds!</p>
-    return <div>
-      <ul style={styles.listStyle}>
-        <li>
-          <img style={styles.items} src={weapon} alt='item' />
-          <img style={styles.items} src={Dagger} alt='item' />
-          <img style={styles.items} src={Wand} alt='item' />
-        </li>
-        <br />
-        <li>
-          <img style={styles.items} src={Armor} alt='item' />
-          <img style={styles.items} src={Shield} alt='item' />
-        </li>
-      </ul>
+    return <div style={styles.itemWrapper}>
+      <div style={styles.itemTopSection}>
+        <img src={head} style={styles.userItem} alt='O'/>
+      </div>
+      <div style={styles.itemMidSection}>
+        <img src={weapon} style={styles.userItem} alt='O' />
+        <img src={chest} style={styles.userItem} alt='O' />
+        <img src={shield} style={styles.userItem} alt='O' />
+      </div>
+      <div style={styles.itemLowSection}>
+        <img src={legs} style={styles.userItem} alt='O' />
+        <img src={feet} style={styles.userItem} alt='O' />
+      </div>
     </div>
   }
 
@@ -476,5 +473,29 @@ let styles = {
   },
   statsItem: {
     display: 'flex'
+  },
+  characterContainer: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  itemWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '10px'
+  },
+  itemTopSection: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  itemMidSection: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  itemLowSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  userItem: {
   }
 }
