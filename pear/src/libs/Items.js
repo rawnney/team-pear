@@ -1,12 +1,60 @@
 import Images from '../libs/Imgs'
 let {
-  CombatKnife, BoneSword, JaggedSword, FireSword, BladeOfDestruction,
+  Club, CombatKnife, BoneSword, JaggedSword, FireSword, BladeOfDestruction,
   BrokenShield, VikingShield, TowerShield, DemonShield, BlessedShield,
-  JesterHat, ChainHelmet, VikingHelmet, RoyalHelmet, GoldenHelmet,
-  FlowerDress, GreenTunic, ChainArmor, KnightArmor, GoldenArmor,
-  BastSkirt, StuddedLegs, KnightLegs, DemonLegs, GoldenLegs,
+  LeatherHelmet, JesterHat, ChainHelmet, VikingHelmet, RoyalHelmet, GoldenHelmet,
+  LeatherArmor, FlowerDress, GreenTunic, ChainArmor, KnightArmor, GoldenArmor,
+  LeatherLegs, BastSkirt, StuddedLegs, KnightLegs, DemonLegs, GoldenLegs,
   LeatherBoots, GuardianBoots, SteelBoots, FireWalkerBoots, GoldenBoots
 } = Images
+
+
+// head: 100,
+// weapon: 101,
+// chest: 102,
+// shield: 103,
+// legs: 104,
+// feet: 105,
+
+export const itemStart = [
+  {
+    id: 100,
+    name: 'Leather Helmet',
+    block: 1,
+    img: LeatherHelmet
+  },
+  {
+    id: 101,
+    name: 'Club',
+    dmg: 4,
+    img: Club
+  },
+  {
+    id: 102,
+    name: 'Leather Armor',
+    block: 1,
+    img: LeatherArmor
+
+  },
+  {
+    id: 103,
+    name: 'Broken Shield',
+    block: 10,
+    img: BrokenShield
+  },
+  {
+    id: 104,
+    name: 'Leather Legs',
+    block: 1,
+    img: LeatherLegs
+  },
+  {
+    id: 105,
+    name: 'Leather Boots',
+    block: 1,
+    img: LeatherBoots
+  }
+]
 
 export const itemWeapon = [
   {
@@ -49,34 +97,27 @@ export const itemWeapon = [
 export const itemShield = [
   {
     id: 0,
-    name: 'Broken Shield',
-    block: 10,
-    cost: 4,
-    img: BrokenShield
-  },
-  {
-    id: 1,
     name: 'Viking Shield',
     block: 20,
     cost: 7,
     img: VikingShield
   },
   {
-    id: 2,
+    id: 1,
     name: 'Tower Shield',
     block: 30,
     cost: 11,
     img: TowerShield
   },
   {
-    id: 3,
+    id: 2,
     name: 'Demon Shield',
     block: 40,
     cost: 15,
     img: DemonShield
   },
   {
-    id: 4,
+    id: 3,
     name: 'Blessed Shield',
     block: 50,
     cost: 29,
@@ -201,34 +242,27 @@ export const itemLegs = [
 export const itemFeet = [
   {
     id: 0,
-    name: 'Leather Boots',
-    block: 1,
-    cost: 1,
-    img: LeatherBoots
-  },
-  {
-    id: 1,
     name: 'Guardian Boots',
     block: 2,
     cost: 4,
     img: GuardianBoots
   },
   {
-    id: 2,
+    id: 1,
     name: 'Steel Boots',
     block: 4,
     cost: 7,
     img: SteelBoots
   },
   {
-    id: 3,
+    id: 2,
     name: 'Fire Walker Boots',
     block: 9,
     cost: 17,
     img: FireWalkerBoots
   },
   {
-    id: 4,
+    id: 3,
     name: 'Golden Boots',
     block: 12,
     cost: 29,

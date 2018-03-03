@@ -4,7 +4,7 @@ import {Form, TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHe
 import {capitalizeFirstLetter} from '../libs/Common'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
-import {itemWeapon, itemShield, itemHead, itemChest, itemLegs, itemFeet} from '../libs/Items'
+import {itemWeapon, itemShield, itemHead, itemChest, itemLegs, itemFeet, itemStart} from '../libs/Items'
 import LeaderboardComponent from './LeaderboardComponent'
 import ShopComponent from './ShopComponent'
 import axios from 'axios'
@@ -161,16 +161,22 @@ export default class CharacterView extends Component {
     // if (!weapon && !shield && !head && !chest && !legs && !feet) return <p style={styles.errorMsg}>You have no items, head over to the shop if you have the funds!</p>
     return <div style={styles.itemWrapper}>
       <div style={styles.itemTopSection}>
-        <img src={itemHead[head].img} style={styles.userItem} alt='O'/>
+        {head === 100 ? <img src={itemStart[0].img} style={styles.userItem} alt='0' />
+          : <img src={itemHead[head].img} style={styles.userItem} alt='O'/> }
       </div>
       <div style={styles.itemMidSection}>
-        <img src={itemWeapon[weapon].img} style={styles.userItem} alt='O' />
-        <img src={itemChest[chest].img} style={styles.userItem} alt='O' />
-        <img src={itemShield[shield].img} style={styles.userItem} alt='O' />
+        {weapon === 101 ? <img src={itemStart[1].img} style={styles.userItem} alt='0' />
+          : <img src={itemWeapon[weapon].img} style={styles.userItem} alt='O' /> }
+        {chest === 102 ? <img src={itemStart[2].img} style={styles.userItem} alt='0' />
+          : <img src={itemChest[chest].img} style={styles.userItem} alt='O' /> }
+        {shield === 103 ? <img src={itemStart[3].img} style={styles.userItem} alt='0' />
+          : <img src={itemShield[shield].img} style={styles.userItem} alt='O' /> }
       </div>
       <div style={styles.itemLowSection}>
-        <img src={itemLegs[legs].img} style={styles.userItem} alt='O' />
-        <img src={itemFeet[feet].img} style={styles.userItem} alt='O' />
+        {legs === 104 ? <img src={itemStart[4].img} style={styles.userItem} alt='0' />
+          : <img src={itemLegs[legs].img} style={styles.userItem} alt='O' /> }
+        {feet === 105 ? <img src={itemStart[5].img} style={styles.userItem} alt='0' />
+          : <img src={itemFeet[feet].img} style={styles.userItem} alt='O' /> }
       </div>
     </div>
   }

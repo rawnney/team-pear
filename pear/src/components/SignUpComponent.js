@@ -20,12 +20,12 @@ export default class SignUpComponent extends Component {
         coins: 0,
         attack: 0,
         block: 0,
-        weapon: 0,
-        shield: 0,
-        head: 0,
-        chest: 0,
-        legs: 0,
-        feet: 0,
+        head: 100,
+        weapon: 101,
+        chest: 102,
+        shield: 103,
+        legs: 104,
+        feet: 105,
         team: 'none'
       }
     }

@@ -28,6 +28,8 @@ export default {
   FireAxe: require('../assets/img/shop/weapon/axe/3_Fire_Axe.gif'),
   BeastslayerAxe: require('../assets/img/shop/weapon/axe/4_Beastslayer_Axe.gif'),
   ChopperOfDestruction: require('../assets/img/shop/weapon/axe/5_Chopper_of_Destruction.gif'),
+  // CLUB
+  Club: require('../assets/img/shop/weapon/club/0_Club.gif'),
   // SHIELD
   BrokenShield: require('../assets/img/shop/shield/1_Broken_Wooden_Shield.gif'),
   VikingShield: require('../assets/img/shop/shield/2_Viking_Shield.gif'),
@@ -35,18 +37,21 @@ export default {
   DemonShield: require('../assets/img/shop/shield/4_Demon_Shield.gif'),
   BlessedShield: require('../assets/img/shop/shield/5_Blessed_Shield.gif'),
   // HEAD
+  LeatherHelmet: require('../assets/img/shop/head/0_Leather_Helmet.gif'),
   JesterHat: require('../assets/img/shop/head/1_Jester_Hat.gif'),
   ChainHelmet: require('../assets/img/shop/head/2_Chain_Helmet.gif'),
   VikingHelmet: require('../assets/img/shop/head/3_Viking_Helmet.gif'),
   RoyalHelmet: require('../assets/img/shop/head/4_Royal_Helmet.gif'),
   GoldenHelmet: require('../assets/img/shop/head/5_Golden_Helmet.gif'),
   // CHEST
+  LeatherArmor: require('../assets/img/shop/chest/0_Leather_Armor.gif'),
   FlowerDress: require('../assets/img/shop/chest/1_Flower_Dress.gif'),
   GreenTunic: require('../assets/img/shop/chest/2_Green_Tunic.gif'),
   ChainArmor: require('../assets/img/shop/chest/3_Chain_Armor.gif'),
   KnightArmor: require('../assets/img/shop/chest/4_Knight_Armor.gif'),
   GoldenArmor: require('../assets/img/shop/chest/5_Golden_Armor.gif'),
   // LEGS
+  LeatherLegs: require('../assets/img/shop/legs/0_Leather_Legs.gif'),
   BastSkirt: require('../assets/img/shop/legs/1_Bast_Skirt.gif'),
   StuddedLegs: require('../assets/img/shop/legs/2_Studded_Legs.gif'),
   KnightLegs: require('../assets/img/shop/legs/3_Knight_Legs.gif'),
