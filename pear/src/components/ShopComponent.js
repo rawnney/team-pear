@@ -97,6 +97,18 @@ export default class ShopComponent extends Component {
   }
 
   renderWeapons = () => {
+    let {buyWeapon} = this.props
+    let weapons = itemWeapon.map((itemWeapon, i) => {
+      return (
+        <tr key={i}>
+          <td style={styles.firstData}><img src={itemWeapon.img} style={styles.listItemPic} alt='item' /></td>
+          <td style={styles.tableData}>{itemWeapon.name}</td>
+          <td style={styles.tableData}>+{itemWeapon.dmg}%</td>
+          <td style={styles.tableData}>{itemWeapon.cost}c</td>
+          <td style={styles.tableData}><Button onClick={() => buyWeapon(i)} style={styles.buyButton}>Buy</Button></td>
+        </tr>
+      )
+    })
     return (
       <Table style={styles.table}>
         <thead>
@@ -109,19 +121,25 @@ export default class ShopComponent extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style={styles.firstData}><img src={itemWeapon[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td style={styles.tableData}>{itemWeapon[0].name}</td>
-            <td style={styles.tableData}>+ {itemWeapon[0].dmg}%</td>
-            <td style={styles.tableData}>{itemWeapon[0].cost} c</td>
-            <td style={styles.tableData}><Button onClick={this.props.buyWeapon} style={styles.buyButton}>Buy</Button></td>
-          </tr>
+          {weapons}
         </tbody>
       </Table>
     )
   }
 
   renderShields = () => {
+    let {buyShield} = this.props
+    let shields = itemShield.map((itemShield, i) => {
+      return (
+        <tr key={i}>
+          <td style={styles.firstData}><img src={itemShield.img} style={styles.listItemPic} alt='item' /></td>
+          <td style={styles.tableData}>{itemShield.name}</td>
+          <td style={styles.tableData}>+{itemShield.block}</td>
+          <td style={styles.tableData}>{itemShield.cost}c</td>
+          <td style={styles.tableData}><Button onClick={() => buyShield(i)} style={styles.buyButton}>Buy</Button></td>
+        </tr>
+      )
+    })
     return (
       <Table style={styles.table}>
         <thead>
@@ -134,19 +152,25 @@ export default class ShopComponent extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style={styles.firstData}><img src={itemShield[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td style={styles.tableData}>{itemShield[0].name}</td>
-            <td style={styles.tableData}>+ {itemShield[0].block}</td>
-            <td style={styles.tableData}>{itemShield[0].cost} c</td>
-            <td style={styles.tableData}><Button onClick={this.props.buyShield} style={styles.buyButton}>Buy</Button></td>
-          </tr>
+          {shields}
         </tbody>
       </Table>
     )
   }
 
   renderHeads = () => {
+    let {buyHead} = this.props
+    let heads = itemHead.map((itemHead, i) => {
+      return (
+        <tr key={i}>
+          <td style={styles.firstData}><img src={itemHead.img} style={styles.listItemPic} alt='item' /></td>
+          <td style={styles.tableData}>{itemHead.name}</td>
+          <td style={styles.tableData}>+{itemHead.block}</td>
+          <td style={styles.tableData}>{itemHead.cost}c</td>
+          <td style={styles.tableData}><Button onClick={() => buyHead(i)} style={styles.buyButton}>Buy</Button></td>
+        </tr>
+      )
+    })
     return (
       <Table style={styles.table}>
         <thead>
@@ -159,19 +183,25 @@ export default class ShopComponent extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style={styles.firstData}><img src={itemHead[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td style={styles.tableData}>{itemHead[0].name}</td>
-            <td style={styles.tableData}>+ {itemHead[0].block}</td>
-            <td style={styles.tableData}>{itemHead[0].cost} c</td>
-            <td style={styles.tableData}><Button onClick={this.props.buyHead} style={styles.buyButton}>Buy</Button></td>
-          </tr>
+          {heads}
         </tbody>
       </Table>
     )
   }
 
   renderChests = () => {
+    let {buyChest} = this.props
+    let chest = itemChest.map((itemChest, i) => {
+      return (
+        <tr key={i}>
+          <td style={styles.firstData}><img src={itemChest.img} style={styles.listItemPic} alt='item' /></td>
+          <td style={styles.tableData}>{itemChest.name}</td>
+          <td style={styles.tableData}>+{itemChest.block}</td>
+          <td style={styles.tableData}>{itemChest.cost}c</td>
+          <td style={styles.tableData}><Button onClick={() => buyChest(i)} style={styles.buyButton}>Buy</Button></td>
+        </tr>
+      )
+    })
     return (
       <Table style={styles.table}>
         <thead>
@@ -184,19 +214,25 @@ export default class ShopComponent extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style={styles.firstData}><img src={itemChest[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td style={styles.tableData}>{itemChest[0].name}</td>
-            <td style={styles.tableData}>+ {itemChest[0].block}</td>
-            <td style={styles.tableData}>{itemChest[0].cost} c</td>
-            <td style={styles.tableData}><Button onClick={this.props.buyChest} style={styles.buyButton}>Buy</Button></td>
-          </tr>
+          {chest}
         </tbody>
       </Table>
     )
   }
 
   renderLegs = () => {
+    let {buyLegs} = this.props
+    let legs = itemLegs.map((itemLegs, i) => {
+      return (
+        <tr key={i}>
+          <td style={styles.firstData}><img src={itemLegs.img} style={styles.listItemPic} alt='item' /></td>
+          <td style={styles.tableData}>{itemLegs.name}</td>
+          <td style={styles.tableData}>+{itemLegs.block}</td>
+          <td style={styles.tableData}>{itemLegs.cost}c</td>
+          <td style={styles.tableData}><Button onClick={() => buyLegs(i)} style={styles.buyButton}>Buy</Button></td>
+        </tr>
+      )
+    })
     return (
       <Table style={styles.table}>
         <thead>
@@ -209,19 +245,25 @@ export default class ShopComponent extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style={styles.firstData}><img src={itemLegs[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td style={styles.tableData}>{itemLegs[0].name}</td>
-            <td style={styles.tableData}>+ {itemLegs[0].block}</td>
-            <td style={styles.tableData}>{itemLegs[0].cost} c</td>
-            <td style={styles.tableData}><Button onClick={this.props.buyLegs} style={styles.buyButton}>Buy</Button></td>
-          </tr>
+          {legs}
         </tbody>
       </Table>
     )
   }
 
   renderFeet = () => {
+    let {buyFeet} = this.props
+    let feet = itemFeet.map((itemFeet, i) => {
+      return (
+        <tr key={i}>
+          <td style={styles.firstData}><img src={itemFeet.img} style={styles.listItemPic} alt='item' /></td>
+          <td style={styles.tableData}>{itemFeet.name}</td>
+          <td style={styles.tableData}>+{itemFeet.block}</td>
+          <td style={styles.tableData}>{itemFeet.cost}c</td>
+          <td style={styles.tableData}><Button onClick={() => buyFeet(i)} style={styles.buyButton}>Buy</Button></td>
+        </tr>
+      )
+    })
     return (
       <Table style={styles.table}>
         <thead>
@@ -234,13 +276,7 @@ export default class ShopComponent extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style={styles.firstData}><img src={itemFeet[0].img} style={styles.listItemPic} alt='item' /></td>
-            <td style={styles.tableData}>{itemFeet[0].name}</td>
-            <td style={styles.tableData}>+ {itemFeet[0].block}</td>
-            <td style={styles.tableData}>{itemFeet[0].cost} c</td>
-            <td style={styles.tableData}><Button onClick={this.props.buyFeet} style={styles.buyButton}>Buy</Button></td>
-          </tr>
+          {feet}
         </tbody>
       </Table>
     )

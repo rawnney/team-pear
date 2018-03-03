@@ -338,76 +338,76 @@ export default class CharacterView extends Component {
 
   //  SHOP ITEMS
 
-  buyWeapon = () => {
+  buyWeapon = (i) => {
     let {user} = this.state
     let {reg, coins, weapon} = user
-    let newWeapon = itemWeapon[0]
+    let newWeapon = itemWeapon[i]
     let {buyWeapon} = this.props
     if (reg === 'false') return
     if (coins < newWeapon.cost) return
     if (weapon === newWeapon.id) return
     this.setState({user: {...user, weapon: newWeapon.id, attack: newWeapon.dmg, coins: coins - newWeapon.cost}})
-    if (buyWeapon) buyWeapon(user)
+    if (buyWeapon) buyWeapon(i)
   }
 
-  buyShield = () => {
+  buyShield = (i) => {
     let {user} = this.state
     let {reg, coins, shield, block} = user
-    let newShield = itemShield[0]
+    let newShield = itemShield[i]
     let {buyShield} = this.props
     if (reg === 'false') return
     if (coins < newShield.cost) return
     if (shield === newShield.id) return
     this.setState({user: {...user, shield: newShield.id, block: block + newShield.block, coins: coins - newShield.cost}})
-    if (buyShield) buyShield(user)
+    if (buyShield) buyShield(i)
   }
 
-  buyHead = () => {
+  buyHead = (i) => {
     let {user} = this.state
     let {reg, coins, head, block} = user
-    let newHead = itemHead[0]
+    let newHead = itemHead[i]
     let {buyHead} = this.props
     if (reg === 'false') return
     if (coins < newHead.cost) return
     if (head === newHead.id) return
     this.setState({user: {...user, head: newHead.id, block: block + newHead.block, coins: coins - newHead.cost}})
-    if (buyHead) buyHead(user)
+    if (buyHead) buyHead(i)
   }
 
-  buyChest = () => {
+  buyChest = (i) => {
     let {user} = this.state
     let {reg, coins, chest, block} = user
-    let newChest = itemChest[0]
+    let newChest = itemChest[i]
     let {buyChest} = this.props
     if (reg === 'false') return
     if (coins < newChest.cost) return
     if (chest === newChest.id) return
     this.setState({user: {...user, chest: newChest.id, block: block + newChest.block, coins: coins - newChest.cost}})
-    if (buyChest) buyChest(user)
+    if (buyChest) buyChest(i)
   }
 
-  buyLegs = () => {
+  buyLegs = (i) => {
     let {user} = this.state
     let {reg, coins, legs, block} = user
-    let newLegs = itemLegs[0]
+    let newLegs = itemLegs[i]
     let {buyLegs} = this.props
     if (reg === 'false') return
     if (coins < newLegs.cost) return
     if (legs === newLegs.id) return
     this.setState({user: {...user, legs: newLegs.id, block: block + newLegs.block, coins: coins - newLegs.cost}})
-    if (buyLegs) buyLegs(user)
+    if (buyLegs) buyLegs(i)
   }
 
-  buyFeet = () => {
+  buyFeet = (i) => {
     let {user} = this.state
     let {reg, coins, feet, block} = user
-    let newFeet = itemFeet[0]
+    let newFeet = itemFeet[i]
     let {buyFeet} = this.props
     if (reg === 'false') return
     if (coins < newFeet.cost) return
     if (feet === newFeet.id) return
     this.setState({user: {...user, feet: newFeet.id, block: block + newFeet.block, coins: coins - newFeet.cost}})
-    if (buyFeet) buyFeet(user)
+    if (buyFeet) buyFeet(i)
   }
 }
 

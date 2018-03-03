@@ -3,7 +3,6 @@ import {itemWeapon, itemShield, itemChest, itemHead, itemFeet, itemLegs} from '.
 import MapView from './MapView'
 import CharacterView from './CharacterView'
 import Home from './Home'
-// import Images from '../libs/Imgs'
 import axios from 'axios'
 import {API_UPDATE_KILLS, API_UPDATE_COINS, API_WEAPON, API_SHIELD, API_HEAD, API_CHEST, API_FEET, API_LEGS} from '../libs/Const'
 
@@ -29,7 +28,6 @@ export default class GameView extends Component<Props, State> {
     if (!loggedIn || !user) return notLoggedIn
     return <div>
       <CharacterView
-      // TODO: send user back to parent for updating items and coins
         setUser={user}
         signOut={this.signOut}
         buyWeapon={this.buyWeaponAPI}
@@ -69,10 +67,10 @@ export default class GameView extends Component<Props, State> {
   }
 
   //  SHOP ITEMS
-  buyWeaponAPI = () => {
+  buyWeaponAPI = (i) => {
     let {user} = this.state
     let {iduser, reg, coins, weapon} = user
-    let newWeapon = itemWeapon[0]
+    let newWeapon = itemWeapon[i]
     if (reg === 'false') return
     if (coins < newWeapon.cost) return
     if (weapon === newWeapon.id) return
@@ -83,10 +81,10 @@ export default class GameView extends Component<Props, State> {
     })
   }
 
-  buyShieldAPI = () => {
+  buyShieldAPI = (i) => {
     let {user} = this.state
     let {iduser, reg, coins, shield, block} = user
-    let newShield = itemShield[0]
+    let newShield = itemShield[i]
     if (reg === 'false') return
     if (coins < newShield.cost) return
     if (shield === newShield.id) return
@@ -97,10 +95,10 @@ export default class GameView extends Component<Props, State> {
     })
   }
 
-  buyHeadAPI = () => {
+  buyHeadAPI = (i) => {
     let {user} = this.state
     let {iduser, reg, coins, head, block} = user
-    let newHead = itemHead[0]
+    let newHead = itemHead[i]
     if (reg === 'false') return
     if (coins < newHead.cost) return
     if (head === newHead.id) return
@@ -111,10 +109,10 @@ export default class GameView extends Component<Props, State> {
     })
   }
 
-  buyChestAPI = () => {
+  buyChestAPI = (i) => {
     let {user} = this.state
     let {iduser, reg, coins, chest, block} = user
-    let newChest = itemChest[0]
+    let newChest = itemChest[i]
     if (reg === 'false') return
     if (coins < newChest.cost) return
     if (chest === newChest.id) return
@@ -125,10 +123,10 @@ export default class GameView extends Component<Props, State> {
     })
   }
 
-  buyLegsAPI = () => {
+  buyLegsAPI = (i) => {
     let {user} = this.state
     let {iduser, reg, coins, legs, block} = user
-    let newLegs = itemLegs[0]
+    let newLegs = itemLegs[i]
     if (reg === 'false') return
     if (coins < newLegs.cost) return
     if (legs === newLegs.id) return
@@ -139,10 +137,10 @@ export default class GameView extends Component<Props, State> {
     })
   }
 
-  buyFeetAPI = () => {
+  buyFeetAPI = (i) => {
     let {user} = this.state
     let {iduser, reg, coins, feet, block} = user
-    let newFeet = itemFeet[0]
+    let newFeet = itemFeet[i]
     if (reg === 'false') return
     if (coins < newFeet.cost) return
     if (feet === newFeet.id) return
