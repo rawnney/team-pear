@@ -11,7 +11,7 @@ import axios from 'axios'
 import SignUpNoRegComponent from './SignUpNoRegComponent'
 import {API_UPDATE_USERNAME, API_UPDATE_EMAIL, API_UPDATE_PASSWORD} from '../libs/Const'
 
-let {KillIcon, CoinStack, Sword, Shield} = Images
+let {KillIcon, CoinStack} = Images
 
 export default class CharacterView extends Component {
   constructor (props) {
@@ -186,17 +186,17 @@ export default class CharacterView extends Component {
     let {attack, block} = user
     return <div>
       <div>
-        <img src={Sword} style={styles.attack} alt='Attack'/>
+        <p style={styles.skillHeader}>Attack</p>
         <ul style={styles.listStyle}>
           <li><p>Base attack: 15</p></li>
-          <li><p>Weapon damage: {attack} %</p></li>
+          <li><p>Weapon damage: {attack}%</p></li>
         </ul>
       </div>
       <hr />
       <div>
-        <img src={Shield} style={styles.block} alt='Armor'/>
+        <p style={styles.skillHeader}>Armor</p>
         <ul style={styles.listStyle}>
-          <li><p>Base defence: 5</p></li>
+          <li><p>Base armor: 5</p></li>
           <li><p>Armor: {block}</p></li>
         </ul>
       </div>
@@ -438,14 +438,14 @@ let styles = {
     display: 'flex',
     overflow: 'scroll'
   },
-  attack: {
-    width: '30px'
-  },
-  block: {
-    width: '30px'
-  },
   listStyle: {
-    listStyle: 'none'
+    listStyle: 'none',
+    paddingLeft: '0'
+  },
+  skillHeader: {
+    fontSize: '20px',
+    fontWeight: 600,
+    borderBottom: '1px solid #e9ecef'
   },
   items: {
     width: '40px',
@@ -482,7 +482,8 @@ let styles = {
   },
   characterContainer: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   },
   itemWrapper: {
     display: 'flex',

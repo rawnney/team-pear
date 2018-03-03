@@ -112,7 +112,7 @@ export default class ShopComponent extends Component {
           <tr>
             <td style={styles.firstData}><img src={itemWeapon[0].img} style={styles.listItemPic} alt='item' /></td>
             <td style={styles.tableData}>{itemWeapon[0].name}</td>
-            <td style={styles.tableData}>+ {itemWeapon[0].dmg} %</td>
+            <td style={styles.tableData}>+ {itemWeapon[0].dmg}%</td>
             <td style={styles.tableData}>{itemWeapon[0].cost} c</td>
             <td style={styles.tableData}><Button onClick={this.props.buyWeapon} style={styles.buyButton}>Buy</Button></td>
           </tr>

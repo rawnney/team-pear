@@ -8,7 +8,6 @@ let {
   LeatherBoots, GuardianBoots, SteelBoots, FireWalkerBoots, GoldenBoots
 } = Images
 
-
 // head: 100,
 // weapon: 101,
 // chest: 102,

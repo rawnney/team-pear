@@ -17,7 +17,13 @@ export default class NoRegComponent extends Component {
         reg: 'false',
         avatar: 'Avatar1',
         attack: 0,
-        block: 0
+        block: 0,
+        head: 100,
+        weapon: 101,
+        chest: 102,
+        shield: 103,
+        legs: 104,
+        feet: 105
       }
     }
   }
