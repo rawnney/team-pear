@@ -42,15 +42,17 @@ export default class LoginForm extends Component {
 
   handleSignIn = (e) => {
     e.preventDefault()
+    let {user} = this.state
+    let {username, password} = user
     this.setState({loading: true})
     let {onSignIn} = this.props
-    const {username, password} = this.state.user
+    // const {username, password} = this.state.user
     axios.post(API_SIGNIN, {username, password})
       .then((result) => {
-        const user = result.data.user
-        const error = result.data.Error
+        let user = result.data.user
+        let error = result.data.Error
         if (error === true) return this.setState({loginError: true, loading: false})
-        if (error === false) this.setState({user: user, loading: false})
+        if (error === false) this.setState({user: {...user}, loading: false})
         if (onSignIn) onSignIn(user)
       })
   }

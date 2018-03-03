@@ -20,6 +20,12 @@ export default class SignUpComponent extends Component {
         coins: 0,
         attack: 0,
         block: 0,
+        weapon: 0,
+        shield: 0,
+        head: 0,
+        chest: 0,
+        legs: 0,
+        feet: 0,
         team: 'none'
       }
     }
@@ -110,7 +116,7 @@ export default class SignUpComponent extends Component {
     e.preventDefault()
     let {onSignIn} = this.props
     let {user} = this.state
-    let {username, password, rePassword, email, avatar, team, reg, monstersKilled, coins, attack, block} = user
+    let {username, password, rePassword, email, avatar, team, reg, monstersKilled, coins, attack, block, weapon, shield, head, chest, legs, feet} = user
     if (!username || username.length < 3) return this.setState({signUpError: true, errorMsg: 'Invalid username input, make sure its 3 characters or longer'})
     if (!password || password.length < 5) return this.setState({signUpError: true, errorMsg: 'Invalid password input, make sure its 5 characters or longer'})
     if (password !== rePassword) return this.setState({signUpError: true, errorMsg: 'The passwords did not match'})
@@ -118,7 +124,7 @@ export default class SignUpComponent extends Component {
     if (!avatar) return this.setState({signUpError: true, errorMsg: 'You forgot to select a avatar!'})
     if (!team || team === 'none') return this.setState({signUpError: true, errorMsg: 'Without a team you will never make it in the wild! Please select a team.'})
     this.setState({loading: true})
-    axios.post(API_USERS, {username, email, password, avatar, team, reg, monstersKilled, coins, attack, block}).then((result) => {
+    axios.post(API_USERS, {username, email, password, avatar, team, reg, monstersKilled, coins, attack, block, weapon, shield, head, chest, legs, feet}).then((result) => {
       const user = null
       if (onSignIn) onSignIn(user)
     }).catch((error) => {
