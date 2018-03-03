@@ -42,8 +42,6 @@ export default class Home extends Component {
 
   saveProgress = (user) => {
     let {monstersKilled, coins} = this.state
-    let {updateUser} = this.props
-    updateUser(monstersKilled, coins)
     this.setState({user: {...user, monstersKilled, coins}})
   }
 
@@ -94,7 +92,7 @@ export default class Home extends Component {
         </div>
 
       </section>
-      <Modal style={styles.modalStyle} isOpen={modalLogin} toggleLogin={this.toggleLogin} className={this.props.className}>
+      <Modal style={styles.modalStyle} isOpen={modalLogin} toggle={this.toggleLogin} className={this.props.className}>
         <ModalHeader>
           <Nav tabs>
             <NavItem>
@@ -135,11 +133,13 @@ export default class Home extends Component {
           </ModalFooter>
         </ModalHeader>
       </Modal>
-      <Modal style={styles.modalStyle} isOpen={modalLeaderboard} toggleLogin={this.modalLeaderboard}>
+      <Modal style={styles.modalStyle} isOpen={modalLeaderboard} toggle={this.modalLeaderboard}>
         <ModalHeader>
           Leaderboard
         </ModalHeader>
-        <LeaderboardComponent />
+        <ModalBody>
+          <LeaderboardComponent />
+        </ModalBody>
         <ModalFooter style={styles.section}>
           <Button color="danger" onClick={this.toggleLeaderboard}>Cancel</Button>
         </ModalFooter>

@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 // eslint-disable-next-line
 import {Col, Button, Form, FormGroup, Label, Input} from 'reactstrap'
 import axios from 'axios'
-
-const API_SIGNIN = 'http://peargameapi.herokuapp.com/api/signin'
+import {capitalizeFirstLetter} from '../libs/Common'
+import Loader from './Loader'
+import {API_SIGNIN} from '../libs/Const'
 
 export default class LoginForm extends Component {
   constructor (props) {
@@ -15,11 +16,11 @@ export default class LoginForm extends Component {
   }
 
   render () {
-    let {username, password, loginError} = this.state
+    let {username, password, loginError, loading} = this.state
     return (
       <Form onSubmit={this.handleSignIn}>
         <FormGroup row>
-          <Label for="username" sm={4}>Username</Label>
+          <Label for="Username" sm={4}>Username</Label>
           <Col sm={8}>
             <Input type="text" onChange={this.handleUsername} value={username} placeholder="Your Username" />
           </Col>
@@ -32,6 +33,7 @@ export default class LoginForm extends Component {
         </FormGroup>
         <FormGroup>
           {loginError ? this.renderLoginError() : <div />}
+          {loading ? this.renderLoading() : <div />}
           <Button color="success" type="submit">Sign in</Button>
         </FormGroup>
       </Form>
@@ -40,26 +42,33 @@ export default class LoginForm extends Component {
 
   handleSignIn = (e) => {
     e.preventDefault()
+    let {user} = this.state
+    let {username, password} = user
+    this.setState({loading: true})
     let {onSignIn} = this.props
-    const {username, password} = this.state.user
+    // const {username, password} = this.state.user
     axios.post(API_SIGNIN, {username, password})
       .then((result) => {
-        const user = result.data.user
-        const error = result.data.Error
-        if (error === true) return this.setState({loginError: true})
-        if (error === false) this.setState({user: user})
+        let user = result.data.user
+        let error = result.data.Error
+        if (error === true) return this.setState({loginError: true, loading: false})
+        if (error === false) this.setState({user: {...user}, loading: false})
         if (onSignIn) onSignIn(user)
       })
   }
 
-  handleUsername = (name) => {
+  handleUsername = (username) => {
     let {user} = this.state
-    this.setState({user: {...user, username: name.target.value}})
+    this.setState({user: {...user, username: capitalizeFirstLetter(username.target.value)}})
   }
 
   handlePassword = (pass) => {
     let {user} = this.state
     this.setState({user: {...user, password: pass.target.value}})
+  }
+
+  renderLoading = () => {
+    return <Loader />
   }
 
   renderLoginError = () => {
