@@ -197,13 +197,21 @@ class MapView extends Component {
     return dmgReduction
   }
 
+  calcPlayerDmgTaken = () => {
+    let rawDmgTaken = this.calcMonsterAttack()
+    let playerDmgReduction = this.clacPlayerDmgReduction()
+    let playerDmgTakenWithReduction = rawDmgTaken - playerDmgReduction
+    if (playerDmgReduction > rawDmgTaken) return 0
+    return playerDmgTakenWithReduction
+  }
+
   playerAttack = () => {
     let {enemyHP, playerHP} = this.state
     let rawDmgGiven = this.calcPlayerAttack()
-    let rawDmgTaken = this.calcMonsterAttack()
+    // let rawDmgTaken = this.calcMonsterAttack()
     let playerDmgReduction = this.clacPlayerDmgReduction()
     let monsterDmgReduction = this.clacMonsterDmgReduction()
-    let playerDmgTakenWithReduction = rawDmgTaken - playerDmgReduction
+    let playerDmgTakenWithReduction = this.calcPlayerDmgTaken()
     let monsterDmgTakenWithReduction = rawDmgGiven - monsterDmgReduction
     if (enemyHP > 0 || enemyHP !== 0) {
       this.setState({playerTurn: true,
@@ -214,9 +222,9 @@ class MapView extends Component {
         waitForMonster: true
       })
     }
-    if (enemyHP === 0 || rawDmgGiven > enemyHP || rawDmgGiven === enemyHP) return this.playerWin(this.state.activeMonsterID)
+    if (enemyHP === 0 || monsterDmgTakenWithReduction > enemyHP || monsterDmgTakenWithReduction === enemyHP) return this.playerWin(this.state.activeMonsterID)
     setTimeout(() => {
-      if (playerHP < 0 || rawDmgTaken > playerHP) return this.playerLoose()
+      if (playerHP < 0 || playerDmgTakenWithReduction > playerHP) return this.playerLoose()
       if (playerHP > 0) {
         this.setState({playerTurn: false,
           monsterTurn: true,
