@@ -140,7 +140,7 @@ export default class CharacterView extends Component {
           </Col>
         </FormGroup>
         <FormGroup>
-          {userIsUpdated ? this.renderMsg() : <Button color="success" type="submit">Update account details</Button>}
+          {userIsUpdated ? this.renderMsg() : <Button color='success' type='submit'>Update account details</Button>}
           {error && !userIsUpdated ? this.renderError() : <div />}
         </FormGroup>
       </Form>
@@ -206,10 +206,11 @@ export default class CharacterView extends Component {
   renderNoRegUserInfo = () => {
     let {user} = this.state
     return <div>
-      <h4 style={styles.userCall}>Hey {user.username}! </h4>
+      <h4 style={styles.userCall}>Hey {user.username}!</h4>
+      <p style={styles.successMsg}>
     You didnt signup when you started your adventure. But its not to late -
-    you can still register to save your progress!
-      <Button onClick={this.openSignUpNoReg} colo='success'>Sign up now</Button>
+    you can still register to save your progress!</p>
+      <Button onClick={this.openSignUpNoReg} color='success'>Sign up now</Button>
     </div>
   }
 
@@ -466,7 +467,8 @@ let styles = {
   },
   successMsg: {
     fontSize: '20px',
-    color: 'green'
+    color: 'green',
+    padding: '20px'
   },
   errorMsg: {
     fontSize: '20px',

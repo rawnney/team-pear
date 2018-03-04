@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
+import {Button, ModalBody, Modal} from 'reactstrap';
 import {itemWeapon, itemShield, itemChest, itemHead, itemFeet, itemLegs} from '../libs/Items'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
 import Home from './Home'
 import axios from 'axios'
 import {API_UPDATE_KILLS, API_UPDATE_COINS, API_WEAPON, API_SHIELD, API_HEAD, API_CHEST, API_FEET, API_LEGS} from '../libs/Const'
+import LottiePresent from './LottiePresent'
+import Images from '../libs/Imgs'
+let {CoinStack} = Images
 
 export default class GameView extends Component<Props, State> {
   innerRef
@@ -12,7 +16,9 @@ export default class GameView extends Component<Props, State> {
     super(props)
     this.state = {
       loggedIn: false,
-      user: undefined
+      user: undefined,
+      welcomeGift: false,
+      giftModal: false
     }
   }
 
@@ -23,7 +29,7 @@ export default class GameView extends Component<Props, State> {
   }
 
   render () {
-    let {loggedIn, user} = this.state
+    let {loggedIn, user, giftModal, welcomeGift} = this.state
     let notLoggedIn = <Home setUser={this.setUser} setLoggedIn={this.setLoggedIn}/>
     if (!loggedIn || !user) return notLoggedIn
     return <div>
@@ -44,12 +50,17 @@ export default class GameView extends Component<Props, State> {
         attack={user.attack}
         block={user.block}
       />
+      {welcomeGift ? <Button style={styles.presentButton} onClick={this.toggleGiftModal}>
+      <LottiePresent /></Button>
+      : <div />}
+      {giftModal ? this.renderWelcomeGift() : <div />}
     </div>
   }
 
   getLocation = () => {
     if (!this.innerRef || !this.innerRef.getLocation) return
     this.innerRef.getLocation()
+    this.playerGift()
   }
 
   setRef = (ref: *) => this.innerRef = ref
@@ -66,6 +77,39 @@ export default class GameView extends Component<Props, State> {
     console.log('monstersKilled' + monstersKilled, 'coins' + coins)
   }
 
+  playerGift = () => {
+    let {notLoggedIn, welcomeGift, user} = this.state
+    let {coins, monstersKilled} = user
+    if (notLoggedIn) return
+    if (monstersKilled !== 1 || welcomeGift === true) return
+    if (monstersKilled === 1 && coins === 2) this.setState({welcomeGift: true})
+  }
+
+  renderWelcomeGift = () => {
+    let {giftModal} = this.state
+     return <Modal isOpen={giftModal}>
+    <ModalBody style={styles.center}>
+      <h3>Congratulations!</h3>
+      <p>You have killed your first monster!</p>
+      <p>You are gifted 5 coins!</p>
+      <img src={CoinStack} style={styles.coins} alt='Coins'/>
+      <Button onClick={this.collectCoin}>Collect gift</Button>
+    </ModalBody>
+  </Modal>
+}
+
+toggleGiftModal = () => {
+  let {giftModal} = this.state
+  this.setState({giftModal: !giftModal})
+}
+
+collectCoin = () => {
+  let {user} = this.state
+  let {coins} = user
+  if (coins !== 2) return this.setState({giftModal: false, welcomeGift: false})
+  this.setState({giftModal: false, welcomeGift: false, user: {...user, coins: coins + 5}})
+  console.log('YOU RECIVED 5 COINS! GZ')
+}
   //  SHOP ITEMS
   buyWeaponAPI = (i) => {
     let {user} = this.state
@@ -149,5 +193,32 @@ export default class GameView extends Component<Props, State> {
       axios.put(API_UPDATE_COINS, {coins: coins - newFeet.cost, iduser})
       console.log('You bought ' + newFeet.name + ' for ' + newFeet.cost)
     })
+  }
+}
+
+let styles = {
+  presentButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '75px',
+    height: '75px',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    margin: '10px',
+    backgroundColor: 'transparent',
+    border: 'none',
+    borderRadius: '50%'
+  },
+  coins: {
+    height: '100px',
+    width: '100px'
+  },
+  center: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'middle'
   }
 }

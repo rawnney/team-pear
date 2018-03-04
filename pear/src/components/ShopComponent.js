@@ -93,7 +93,7 @@ export default class ShopComponent extends Component {
   }
 
   infoMsg = () => {
-    return <p style={styles.infoMsg}>Register now to get full access to all the epic items!</p>
+    return <p style={styles.infoMsg}>Go to 'Account' to register now for full access to all the epic items!</p>
   }
 
   renderWeapons = () => {
