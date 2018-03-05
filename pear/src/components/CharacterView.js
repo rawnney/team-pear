@@ -79,6 +79,7 @@ export default class CharacterView extends Component {
                 { user ? this.renderCharacter() : <div />}
               </ModalBody>
             </TabPane>
+        {/* Inventory under working process*/}
             <TabPane tabId='3'>
               <ModalHeader toggle={this.toggle}>Leaderboard</ModalHeader>
               <ModalBody>
