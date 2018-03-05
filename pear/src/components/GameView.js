@@ -3,6 +3,7 @@ import {Button, ModalBody, Modal} from 'reactstrap';
 import {itemWeapon, itemShield, itemChest, itemHead, itemFeet, itemLegs} from '../libs/Items'
 import MapView from './MapView'
 import CharacterView from './CharacterView'
+import GlobalChatComponent from './GlobalChatComponent'
 import Home from './Home'
 import axios from 'axios'
 import {API_UPDATE_KILLS, API_UPDATE_COINS, API_WEAPON, API_SHIELD, API_HEAD, API_CHEST, API_FEET, API_LEGS} from '../libs/Const'
@@ -42,6 +43,9 @@ export default class GameView extends Component<Props, State> {
         buyChest={this.buyChestAPI}
         buyLegs={this.buyLegsAPI}
         buyFeet={this.buyFeetAPI}
+      />
+      <GlobalChatComponent
+        setUser={user}
       />
       <MapView
         ref={this.setRef}
