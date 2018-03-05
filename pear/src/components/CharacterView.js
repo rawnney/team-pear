@@ -7,6 +7,7 @@ import classnames from 'classnames'
 import {itemWeapon, itemShield, itemHead, itemChest, itemLegs, itemFeet, itemStart} from '../libs/Items'
 import LeaderboardComponent from './LeaderboardComponent'
 import ShopComponent from './ShopComponent'
+import GlobalChatComponent from './GlobalChatComponent'
 import axios from 'axios'
 import SignUpNoRegComponent from './SignUpNoRegComponent'
 import {API_UPDATE_USERNAME, API_UPDATE_EMAIL, API_UPDATE_PASSWORD} from '../libs/Const'
@@ -103,6 +104,12 @@ export default class CharacterView extends Component {
                   buyLegs={this.buyLegs}
                   buyFeet={this.buyFeet}
                 />
+              </ModalBody>
+            </TabPane>
+            <TabPane tabId='6'>
+              <ModalHeader toggle={this.toggle}>GlobalChat</ModalHeader>
+              <ModalBody>
+                <GlobalChatComponent />
               </ModalBody>
             </TabPane>
           </TabContent>

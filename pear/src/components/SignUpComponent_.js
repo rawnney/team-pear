@@ -51,19 +51,6 @@ export default class SignUpComponent extends Component {
       })
   }
 
-  // onSubmit = (e) => {
-  //   e.preventDefault()
-  //   let {onSignIn} = this.props
-  //   const { username, password, email, avatar, team_id } = this.state.user
-  //
-  //   axios.post(API_USERS, { username, email, password, avatar, team_id})
-  //     .then((result) => {
-  //       console.log(result)
-  //       const user = null
-  //       if (onSignIn) onSignIn(user)
-  //     })
-  // }
-
   render () {
     const { username, password, email, avatar, team_id } = this.state
     return (
