@@ -13,16 +13,14 @@ export default class GlobalChatComponent extends Component {
       message: '',
       messages: []
     }
-    this.toggle = this.toggle.bind(this)
-    this.socket = io('localhost:5000')
+
+    this.socket = io('https://peargamechat1.herokuapp.com/')
 
     this.socket.on('RECEIVE_MESSAGE', (data) => {
       addMessage(data)
-      console.log('RECEIVE_MESSAGE : ' + data)
     })
 
     const addMessage = data => {
-      console.log('Message Added: ' + data)
       this.setState({messages: [...this.state.messages, data]})
     }
 
@@ -36,15 +34,19 @@ export default class GlobalChatComponent extends Component {
     }
   }
 
-  toggle () {
+  toggle = () => {
     this.setState({
       modal: !this.state.modal
     })
   }
 
   render () {
-    let {user} = this.state
-
+    let {user, messages} = this.state
+    let allMessages = messages.map((message, i) => {
+      return (
+        <div key={i}><img style={styles.smallAvatar} src={Images[user.avatar]} alt='Avatar' />{message.author}: {message.message}</div>
+      )
+    })
     return (
       <div>
         <div style={styles.buttonWrapper}>
@@ -52,7 +54,6 @@ export default class GlobalChatComponent extends Component {
           <Modal style={styles.modalStyle} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
             <ModalHeader toggle={this.toggle}>Global Chat</ModalHeader>
             <ModalBody>
-
               <div className="container">
                 <div className="row">
                   <div className="col-12">
@@ -61,11 +62,7 @@ export default class GlobalChatComponent extends Component {
                         <div className="col-12"><img style={styles.smallAvatar} src={Images[user.avatar]} alt='Avatar' />{user.username}</div>
                         <hr/>
                         <div className="messages">
-                          {this.state.messages.map(message => {
-                            return (
-                              <div key={message}><img style={styles.smallAvatar} src={Images[user.avatar]} alt='Avatar' />{message.author}: {message.message}</div>
-                            )
-                          })}
+                          {allMessages}
                         </div>
                       </div>
                       <div className="card-footer">
