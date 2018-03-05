@@ -7,6 +7,7 @@ import Markers from './Markers'
 import PlayerComponent from './PlayerComponent'
 import Coordinates from '../assets/json/coordinates'
 import WinnerPopUp from './WinnerPopUp'
+import Images from '../libs/Imgs'
 
 class MapView extends Component {
   constructor (props) {
@@ -71,7 +72,7 @@ class MapView extends Component {
             {!winnerIsSet && playerTurn ? this.logDmgGiven() : <div />}
             {!winnerIsSet && monsterTurn ? this.logDmgTaken() : <div />}
           </div>
-          <PlayerComponent playerHP={playerHP} username={user.username} avatar={user.avatar}/>
+          <PlayerComponent playerHP={playerHP} username={user.username} avatar={Images[user.avatar]}/>
           <div style={styles.buttonWrapper}>
             {winnerIsSet
               ? <Button onClick={this.toggleFightView} color='success' style={styles.buttonStyle}>Continue</Button>
