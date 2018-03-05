@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+// eslint-disable-next-line
 import {Form, TabContent, TabPane, Nav, NavItem, NavLink, Button, Modal, ModalHeader, ModalFooter, FormGroup, Label, Col, Input, ModalBody} from 'reactstrap'
 import Images from '../libs/Imgs'
 import io from 'socket.io-client'
@@ -17,10 +18,11 @@ export default class GlobalChatComponent extends Component {
 
     this.socket.on('RECEIVE_MESSAGE', (data) => {
       addMessage(data)
+      console.log('RECEIVE_MESSAGE : ' + data)
     })
 
     const addMessage = data => {
-      console.log(data)
+      console.log('Message Added: ' + data)
       this.setState({messages: [...this.state.messages, data]})
     }
 
@@ -46,7 +48,7 @@ export default class GlobalChatComponent extends Component {
     return (
       <div>
         <div style={styles.buttonWrapper}>
-          <Button color="success" onClick={this.toggle}>{this.props.buttonLabel}Global Chat</Button>
+          <Button color="success" onClick={this.toggle} style={styles.menuButton}>Global Chat</Button>
           <Modal style={styles.modalStyle} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
             <ModalHeader toggle={this.toggle}>Global Chat</ModalHeader>
             <ModalBody>
@@ -56,12 +58,12 @@ export default class GlobalChatComponent extends Component {
                   <div className="col-12">
                     <div className="card">
                       <div className="card-body">
-                        <div className="col-12"><img style={styles.smallAvatar} src={Images[user.avatar]} />{user.username}</div>
+                        <div className="col-12"><img style={styles.smallAvatar} src={Images[user.avatar]} alt='Avatar' />{user.username}</div>
                         <hr/>
                         <div className="messages">
                           {this.state.messages.map(message => {
                             return (
-                              <div key={message}><img style={styles.smallAvatar} src={Images[user.avatar]} />{message.author}: {message.message}</div>
+                              <div key={message}><img style={styles.smallAvatar} src={Images[user.avatar]} alt='Avatar' />{message.author}: {message.message}</div>
                             )
                           })}
                         </div>
@@ -92,11 +94,10 @@ let styles = {
     justifyContent: 'center',
     position: 'absolute',
     bottom: '42px',
-    width: '10%',
-    left: '45%'
+    width: '100%'
   },
   menuButton: {
-    width: '100px',
+    width: '120px',
     position: 'absolute',
     bottom: '0'
   },
