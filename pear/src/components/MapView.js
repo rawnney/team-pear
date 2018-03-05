@@ -4,12 +4,9 @@ import {Modal, Button} from 'reactstrap'
 import EnemyComponent from './EnemyComponent'
 import Pinjump from './Pinjump'
 import Markers from './Markers'
-import Images from '../libs/Imgs'
 import PlayerComponent from './PlayerComponent'
 import Coordinates from '../assets/json/coordinates'
 import WinnerPopUp from './WinnerPopUp'
-
-let {Monster} = Images
 
 class MapView extends Component {
   constructor (props) {
@@ -85,7 +82,6 @@ class MapView extends Component {
     </div>
   }
 
-  // TODO: randomize coindrop (depending on monster)  // this.setActiveMonsterCoins(id)
   toggleFightView = (id) => {
     let {fightViewOpened} = this.state
     if (fightViewOpened === false) return this.initFight(id)
@@ -135,7 +131,6 @@ class MapView extends Component {
 
   setActiveMonsterName = (id) => {
     let {monsterMarkers} = this.state
-    //console.log(monsterMarkers[id])
     return monsterMarkers[id].name
   }
   setActiveMonsterAvatar = (id) => {
@@ -253,16 +248,13 @@ class MapView extends Component {
     this.setState({monsterMarkers: monsterMarkers})
   }
 
-  // TODO: Respawn monsters! for loop setState({markers -> Alive})
-
   setMonsters = (nextProps, nextState) => {
     let {didSetMonsters} = this.state
     if (didSetMonsters) return
     let mapCoordinates = {Coordinates}
     let x = []
     let monstersToRender = []
-    console.log(mapCoordinates.Coordinates.features);
-    for (var {properties: {Name: n, gx_media_links: img}, geometry: {coordinates: [c, d]}} of mapCoordinates.Coordinates.features) { // console.log('Name: ' + n + ', Father: ' + c + " " + d);
+    for (var {properties: {Name: n, gx_media_links: img}, geometry: {coordinates: [c, d]}} of mapCoordinates.Coordinates.features) {
       x.push({name: n, latitude: d, longitude: c, icon: img})
     }
     for (var i = 0; i < x.length; i++) {

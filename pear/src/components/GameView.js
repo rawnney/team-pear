@@ -89,11 +89,11 @@ export default class GameView extends Component<Props, State> {
     let {giftModal} = this.state
      return <Modal isOpen={giftModal}>
     <ModalBody style={styles.center}>
-      <h3>Congratulations!</h3>
-      <p>You have killed your first monster!</p>
-      <p>You are gifted 5 coins!</p>
+      <h3 style={styles.gzStyle}>Congratulations!</h3>
+      <p>You have killed your first monster! Head over to the shop to upgrade your items!</p>
+      <p style={styles.coinText}>You are gifted 5 coins!</p>
       <img src={CoinStack} style={styles.coins} alt='Coins'/>
-      <Button onClick={this.collectCoin}>Collect gift</Button>
+      <Button onClick={this.collectCoin} color='success'>Collect gift</Button>
     </ModalBody>
   </Modal>
 }
@@ -220,5 +220,12 @@ let styles = {
     flexDirection: 'column',
     alignItems: 'center',
     textAlign: 'middle'
+  },
+  gzStyle: {
+    padding: '20px',
+    marginBottom: '10px'
+  },
+  coinText: {
+    fontWeight: 600
   }
 }
