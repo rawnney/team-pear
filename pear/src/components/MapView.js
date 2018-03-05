@@ -6,6 +6,7 @@ import Pinjump from './Pinjump'
 import Markers from './Markers'
 import PlayerComponent from './PlayerComponent'
 import Coordinates from '../assets/json/coordinates'
+import PlayerDiedComponent from './PlayerDiedComponent';
 import WinnerPopUp from './WinnerPopUp'
 import Images from '../libs/Imgs'
 
@@ -126,8 +127,10 @@ class MapView extends Component {
     updateUser(monstersKilled, coins)
   }
 
-  playerLoose = () => {
+  playerLoose = (user) => {
+    let {nullUser} = this.props
     this.setState({winnerIsSet: true, monsterWin: true, waitForMonster: true})
+    nullUser(user)
   }
 
   setActiveMonsterName = (id) => {
@@ -140,9 +143,9 @@ class MapView extends Component {
   }
 
   renderWinner = () => {
-    let {playerWin, monsterWin} = this.state
+    let {playerWin, monsterWin, user} = this.state
     if (playerWin === true) return <WinnerPopUp goldDropped={2} />
-    if (monsterWin === true) return <div style={styles.winnerText}>YOU LOOSE!</div>
+    if (monsterWin === true) return <PlayerDiedComponent goldLoss={user.coins} />
   }
 
   logDmgGiven = () => {

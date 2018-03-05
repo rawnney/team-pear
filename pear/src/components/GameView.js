@@ -53,6 +53,7 @@ export default class GameView extends Component<Props, State> {
         updateUser={this.updateUser}
         attack={user.attack}
         block={user.block}
+        nullUser={this.nullUser}
       />
       {welcomeGift ? <Button style={styles.presentButton} onClick={this.toggleGiftModal}>
       <LottiePresent /></Button>
@@ -64,7 +65,6 @@ export default class GameView extends Component<Props, State> {
   getLocation = () => {
     if (!this.innerRef || !this.innerRef.getLocation) return
     this.innerRef.getLocation()
-    this.playerGift()
   }
 
   setRef = (ref: *) => this.innerRef = ref
@@ -75,18 +75,25 @@ export default class GameView extends Component<Props, State> {
   updateUser = (monstersKilled, coins) => {
     let {user} = this.state
     let {iduser} = user
+    this.playerGift()
     this.setState({user: {...user, monstersKilled: monstersKilled + 1, coins: coins + 2}})
     axios.put(API_UPDATE_KILLS, {monstersKilled: monstersKilled + 1, iduser})
     axios.put(API_UPDATE_COINS, {coins: coins + 2, iduser})
-    console.log('monstersKilled' + monstersKilled, 'coins' + coins)
+    console.log('monstersKilled: +1, coins: +2')
+  }
+
+  nullUser = (user) => {
+    this.setState({user: {...user, coins: 0}})
+    console.log('You lost all your coins')
   }
 
   playerGift = () => {
     let {notLoggedIn, welcomeGift, user} = this.state
     let {coins, monstersKilled} = user
     if (notLoggedIn) return
-    if (monstersKilled !== 1 || welcomeGift === true) return
-    if (monstersKilled === 1 && coins === 2) this.setState({welcomeGift: true})
+    if (monstersKilled !== 0 || welcomeGift === true) return
+    if (monstersKilled === 0 && coins === 0) this.setState({welcomeGift: true})
+    console.log('Gift recived.');
   }
 
   renderWelcomeGift = () => {
