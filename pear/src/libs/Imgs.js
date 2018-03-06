@@ -15,6 +15,7 @@ export default {
   Coin: require('../assets/img/coin.png'),
   CoinStack: require('../assets/img/coinstack.png'),
   KillIcon: require('../assets/img/kill_icon.png'),
+  WereWolf: require('../assets/img/monsters/werewolf-icon.png'),
   // ------------------------SHOP ITEMS----------------------------
   // SWORD
   CombatKnife: require('../assets/img/shop/weapon/sword/1_Combat_Knife.gif'),

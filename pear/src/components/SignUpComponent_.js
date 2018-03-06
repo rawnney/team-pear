@@ -3,11 +3,10 @@ import React, {Component} from 'react'
 import {Form, FormGroup,FormText, Label, Input, Col, Button} from 'reactstrap'
 import axios from 'axios'
 import {capitalizeFirstLetter} from '../libs/Common'
+import {API_USERS} from '../libs/Const'
 import Images from '../libs/Imgs'
 
-let {Avatar1, Avatar2, Avatar3, Avatar4 } = Images
-
-const API_USERS = 'http://peargameapi.herokuapp.com/api/users/'
+let {Avatar1, Avatar2, Avatar3, Avatar4} = Images
 
 export default class SignUpComponent extends Component {
   constructor (props) {
