@@ -346,7 +346,7 @@ export default class CharacterView extends Component {
     let {buyWeapon} = this.props
     if (reg === 'false') return
     if (coins < newWeapon.cost) return
-    if (weapon === newWeapon.id) return
+    if (weapon === newWeapon.id || weapon > newWeapon.id) return
     this.setState({user: {...user, weapon: newWeapon.id, attack: newWeapon.dmg, coins: coins - newWeapon.cost}})
     if (buyWeapon) buyWeapon(i)
   }
@@ -358,7 +358,7 @@ export default class CharacterView extends Component {
     let {buyShield} = this.props
     if (reg === 'false') return
     if (coins < newShield.cost) return
-    if (shield === newShield.id) return
+    if (shield === newShield.id || shield > newShield.id) return
     this.setState({user: {...user, shield: newShield.id, block: block + newShield.block, coins: coins - newShield.cost}})
     if (buyShield) buyShield(i)
   }
@@ -370,7 +370,7 @@ export default class CharacterView extends Component {
     let {buyHead} = this.props
     if (reg === 'false') return
     if (coins < newHead.cost) return
-    if (head === newHead.id) return
+    if (head === newHead.id || head > newHead.id) return
     this.setState({user: {...user, head: newHead.id, block: block + newHead.block, coins: coins - newHead.cost}})
     if (buyHead) buyHead(i)
   }
@@ -382,7 +382,7 @@ export default class CharacterView extends Component {
     let {buyChest} = this.props
     if (reg === 'false') return
     if (coins < newChest.cost) return
-    if (chest === newChest.id) return
+    if (chest === newChest.id || chest > newChest.id) return
     this.setState({user: {...user, chest: newChest.id, block: block + newChest.block, coins: coins - newChest.cost}})
     if (buyChest) buyChest(i)
   }
@@ -394,7 +394,7 @@ export default class CharacterView extends Component {
     let {buyLegs} = this.props
     if (reg === 'false') return
     if (coins < newLegs.cost) return
-    if (legs === newLegs.id) return
+    if (legs === newLegs.id || legs > newLegs.id) return
     this.setState({user: {...user, legs: newLegs.id, block: block + newLegs.block, coins: coins - newLegs.cost}})
     if (buyLegs) buyLegs(i)
   }
@@ -406,7 +406,7 @@ export default class CharacterView extends Component {
     let {buyFeet} = this.props
     if (reg === 'false') return
     if (coins < newFeet.cost) return
-    if (feet === newFeet.id) return
+    if (feet === newFeet.id || feet > newFeet.id) return
     this.setState({user: {...user, feet: newFeet.id, block: block + newFeet.block, coins: coins - newFeet.cost}})
     if (buyFeet) buyFeet(i)
   }

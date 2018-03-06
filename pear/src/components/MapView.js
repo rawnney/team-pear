@@ -6,7 +6,7 @@ import Pinjump from './Pinjump'
 import Markers from './Markers'
 import PlayerComponent from './PlayerComponent'
 import Coordinates from '../assets/json/coordinates'
-import PlayerDiedComponent from './PlayerDiedComponent';
+import PlayerDiedComponent from './PlayerDiedComponent'
 import WinnerPopUp from './WinnerPopUp'
 import Images from '../libs/Imgs'
 
@@ -125,6 +125,7 @@ class MapView extends Component {
     this.removeMonster(id)
     this.setState({winnerIsSet: true, playerWin: true})
     updateUser(monstersKilled, coins)
+    console.log('updateUser in playerWin, coins: ' + coins)
   }
 
   playerLoose = (user) => {
@@ -244,6 +245,7 @@ class MapView extends Component {
   incCoins = () => {
     let {coins} = this.state
     this.setState({coins: coins + 2})
+    console.log('incCoins, coins: ' + coins + '2')
   }
 
   removeMonster = (id) => {

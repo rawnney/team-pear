@@ -79,7 +79,7 @@ export default class GameView extends Component<Props, State> {
     this.setState({user: {...user, monstersKilled: monstersKilled + 1, coins: coins + 2}})
     axios.put(API_UPDATE_KILLS, {monstersKilled: monstersKilled + 1, iduser})
     axios.put(API_UPDATE_COINS, {coins: coins + 2, iduser})
-    console.log('monstersKilled: +1, coins: +2')
+    console.log('(GameView) monstersKilled: +1, coins: +2')
   }
 
   nullUser = (user) => {
@@ -128,7 +128,7 @@ collectCoin = () => {
     let newWeapon = itemWeapon[i]
     if (reg === 'false') return
     if (coins < newWeapon.cost) return
-    if (weapon === newWeapon.id) return
+    if (weapon === newWeapon.id || weapon > newWeapon.id) return
     this.setState({user: {...user, weapon: newWeapon.id, attack: newWeapon.dmg, coins: coins - newWeapon.cost}})
     axios.put(API_WEAPON, {weapon: newWeapon.id, attack: newWeapon.dmg, iduser}).then(() => {
       axios.put(API_UPDATE_COINS, {coins: coins - newWeapon.cost, iduser})
@@ -142,7 +142,7 @@ collectCoin = () => {
     let newShield = itemShield[i]
     if (reg === 'false') return
     if (coins < newShield.cost) return
-    if (shield === newShield.id) return
+    if (shield === newShield.id || shield > newShield.id) return
     this.setState({user: {...user, shield: newShield.id, block: block + newShield.block, coins: coins - newShield.cost}})
     axios.put(API_SHIELD, {shield: newShield.id, block: block + newShield.block, iduser}).then(() => {
       axios.put(API_UPDATE_COINS, {coins: coins - newShield.cost, iduser})
@@ -156,7 +156,7 @@ collectCoin = () => {
     let newHead = itemHead[i]
     if (reg === 'false') return
     if (coins < newHead.cost) return
-    if (head === newHead.id) return
+    if (head === newHead.id || head > newHead.id) return
     this.setState({user: {...user, head: newHead.id, block: block + newHead.block, coins: coins - newHead.cost}})
     axios.put(API_HEAD, {head: newHead.id, block: block + newHead.block, iduser}).then(() => {
       axios.put(API_UPDATE_COINS, {coins: coins - newHead.cost, iduser})
@@ -170,7 +170,7 @@ collectCoin = () => {
     let newChest = itemChest[i]
     if (reg === 'false') return
     if (coins < newChest.cost) return
-    if (chest === newChest.id) return
+    if (chest === newChest.id || chest > newChest.id) return
     this.setState({user: {...user, chest: newChest.id, block: block + newChest.block, coins: coins - newChest.cost}})
     axios.put(API_CHEST, {chest: newChest.id, block: block + newChest.block, iduser}).then(() => {
       axios.put(API_UPDATE_COINS, {coins: coins - newChest.cost, iduser})
@@ -184,7 +184,7 @@ collectCoin = () => {
     let newLegs = itemLegs[i]
     if (reg === 'false') return
     if (coins < newLegs.cost) return
-    if (legs === newLegs.id) return
+    if (legs === newLegs.id || legs > newLegs.id) return
     this.setState({user: {...user, legs: newLegs.id, block: block + newLegs.block, coins: coins - newLegs.cost}})
     axios.put(API_LEGS, {legs: newLegs.id, block: block + newLegs.block, iduser}).then(() => {
       axios.put(API_UPDATE_COINS, {coins: coins - newLegs.cost, iduser})
@@ -198,7 +198,7 @@ collectCoin = () => {
     let newFeet = itemFeet[i]
     if (reg === 'false') return
     if (coins < newFeet.cost) return
-    if (feet === newFeet.id) return
+    if (feet === newFeet.id || feet > newFeet.id) return
     this.setState({user: {...user, feet: newFeet.id, block: block + newFeet.block, coins: coins - newFeet.cost}})
     axios.put(API_FEET, {feet: newFeet.id, block: block + newFeet.block, iduser}).then(() => {
       axios.put(API_UPDATE_COINS, {coins: coins - newFeet.cost, iduser})
