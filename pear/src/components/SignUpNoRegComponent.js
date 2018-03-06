@@ -113,7 +113,7 @@ export default class SignUpNoRegComponent extends Component {
     axios.post(API_USERS, {username, email, password, avatar, team, reg, monstersKilled, coins, attack, block, weapon, shield, head, chest, legs, feet}).then((result) => {
       const error = result.data.Error
       if (error) this.setState({signUpError: true, errorMsg: 'Something went wrong! Please try again later.'})
-      if (!error) this.setState({user: {...user}, loading: false, signUpSuccess: true, signUpError: false})
+      if (!error) this.setState({user: {...user, reg: 'true'}, loading: false, signUpSuccess: true, signUpError: false})
     }).catch((error) => {
       console.log(error)
     })
