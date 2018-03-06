@@ -72,9 +72,8 @@ export default class GameView extends Component<Props, State> {
   signOut = () => this.setState({loggedIn: false, user: null})
   setUser = (user) => this.setState({user})
 
-  updateUser = (monstersKilled, coins) => {
-    let {user} = this.state
-    let {iduser} = user
+  updateUser = (user) => {
+    let {iduser, monstersKilled, coins} = user
     this.playerGift()
     this.setState({user: {...user, monstersKilled: monstersKilled + 1, coins: coins + 2}})
     axios.put(API_UPDATE_KILLS, {monstersKilled: monstersKilled + 1, iduser})

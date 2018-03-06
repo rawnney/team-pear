@@ -25,9 +25,7 @@ class MapView extends Component {
       monsterWin: false,
       enemyHP: 100,
       playerHP: 100,
-      monstersKilled: this.props.setUser.monstersKilled,
-      user: this.props.setUser,
-      coins: this.props.setUser.coins,
+      user: {},
       playerTurn: false,
       monsterTurn: false,
       displayDmg: undefined,
@@ -85,6 +83,8 @@ class MapView extends Component {
   }
 
   toggleFightView = (id) => {
+    let {setUser} = this.props
+    this.setState({user: setUser})
     let {fightViewOpened} = this.state
     if (fightViewOpened === false) return this.initFight(id)
     if (fightViewOpened === true) return this.resetFight(id)
@@ -118,14 +118,14 @@ class MapView extends Component {
   }
 
   playerWin = (id) => {
-    let {monstersKilled, coins} = this.state
+    let {user} = this.state
     let {updateUser} = this.props
     this.killCounter()
     this.incCoins(id)
     this.removeMonster(id)
     this.setState({winnerIsSet: true, playerWin: true})
-    updateUser(monstersKilled, coins)
-    console.log('updateUser in playerWin, coins: ' + coins)
+    updateUser(user)
+    console.log('updateUser in playerWin, coins: ' + user.coins)
   }
 
   playerLoose = (user) => {
@@ -238,13 +238,15 @@ class MapView extends Component {
   }
 
   killCounter = () => {
-    let {monstersKilled} = this.state
-    this.setState({monstersKilled: monstersKilled + 1})
+    let {user} = this.state
+    let {monstersKilled} = user
+    this.setState({user: {...user, monstersKilled: monstersKilled + 1}})
   }
 
   incCoins = () => {
-    let {coins} = this.state
-    this.setState({coins: coins + 2})
+    let {user} = this.state
+    let {coins} = user
+    this.setState({user: {...user, coins: coins + 2}})
     console.log('incCoins, coins: ' + coins + '2')
   }
 
