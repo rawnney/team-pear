@@ -9,6 +9,7 @@ import LeaderboardComponent from './LeaderboardComponent'
 import InfoComponent from './InfoComponent'
 import Images from '../libs/Imgs'
 import classnames from 'classnames'
+import EyeIcon from './EyeIcon'
 
 let {Pear} = Images
 
@@ -80,7 +81,7 @@ export default class Home extends Component {
     let {modalLogin, modalLeaderboard, modalInfo, activeTab} = this.state
     return <main style={styles.wrapper}>
       <header>
-        <img style={styles.logo} src={Pear} alt='Pear'/>
+        <EyeIcon />
         <h1>Pear Game</h1>
       </header>
       <section style={styles.section}>
