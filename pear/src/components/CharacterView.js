@@ -19,7 +19,7 @@ export default class CharacterView extends Component {
     this.state = {
       modal: false,
       activeTab: '1',
-      user: this.props.setUser,
+      user: {},
       editUser: false,
       updatedUser: {},
       userIsUpdated: false,
@@ -33,7 +33,7 @@ export default class CharacterView extends Component {
     return (
       <div>
         <nav style={styles.buttonWrapper}>
-          <Button style={styles.menuButton} color='success' onClick={this.togglemod}>{this.props.buttonLabel}Menu</Button>
+          <Button style={styles.menuButton} color='success' onClick={this.toggleMenu}>{this.props.buttonLabel}Menu</Button>
         </nav>
         <Modal style={styles.modalStyle} isOpen={this.state.modal} toggle={this.togglemod} className={this.props.className}>
           <Nav tabs>
@@ -258,8 +258,13 @@ export default class CharacterView extends Component {
 
   togglemod = () => {
     let {modal} = this.state
+    this.setState({modal: !modal, userIsUpdated: false, error: false, editUser: false})
+  }
+
+  toggleMenu = () => {
+    let {modal} = this.state
     let {setUser} = this.props
-    this.setState({modal: !modal, userIsUpdated: false, error: false, editUser: false, user: setUser})
+    this.setState({modal: !modal, user: setUser})
   }
 
   toggle = (tab) => {
