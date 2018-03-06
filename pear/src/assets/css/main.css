@@ -38,12 +38,21 @@ button {
     margin-top: 10px;
 }
 
+/* Center text in modal-header */
+.modal-header {
+  justify-content: center;
+}
+/* Remove close button from modal-headers */
+.close {
+  display: none;
+}
+
+/* Enable scroll on modals that has a height > 100% */
 .modal {
   overflow: scroll;
 }
 
-/* hide Map elements */
-
+/* Hide Map elements */
 #root > div > div:nth-child(3) > div > div:nth-child(1) > div > div > div:nth-child(9) {
   visibility: hidden;
 }
