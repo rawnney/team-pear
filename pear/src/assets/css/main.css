@@ -9,7 +9,6 @@ button:before, button:after {
   outline:none;
 }
 
-
 button {
   margin: 20px 0;
   line-height: 34px;
@@ -19,7 +18,6 @@ button {
   outline:none !important;
   width:100%;
 }
-
 
 .button-container{
 
