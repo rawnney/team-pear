@@ -34,6 +34,7 @@ export default class Leaderboard extends Component {
     }
     let list = this.state.leaderboardData.sort(sortData).map((leaderboardData, i) => {
       return (
+
         <tr key={i}>
           <th><li></li></th>
           <td>{leaderboardData.username}</td>
@@ -54,14 +55,13 @@ export default class Leaderboard extends Component {
     return <div>
       {loader ? <Loader />
         : <ol style={styles.list}>
+        <div style={teamStyle}>
+          <div style={teamColorBlue}>{temp.BLUE}</div>
+          <div style={teamColorGreen}>{temp.GREEN}</div>
+          <div style={teamColorRed}>{temp.RED}</div>
+        </div>
           <Table>
             <thead>
-              <tr>
-                <th></th>
-                <th>GREEN: {temp.GREEN}</th>
-                <th>BLUE: {temp.BLUE}</th>
-                <th>RED: {temp.RED}</th>
-              </tr>
               <tr>
                 <th>#</th>
                 <th>Username</th>
@@ -89,7 +89,50 @@ export default class Leaderboard extends Component {
     if (teamColor === 'RED') return {teamRed}
   }
 }
+let teamStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  paddingLeft: '9vh',
+  paddingRight: '9vh',
+  paddingBottom: '2vh'
 
+}
+
+let teamColorBlue = {
+  background: 'linear-gradient(135deg, #77cdff, #5513ad)',
+  width: '4vh',
+  height: '4vh',
+  borderRadius: '50%',
+  color: 'white',
+  display: 'flex',
+  justifyContent: 'center',
+  alignSelf: 'center',
+  textAlign: 'center'
+}
+let teamColorGreen = {
+  background: 'linear-gradient(135deg, #02e00d, #008e07)',
+  width: '4vh',
+  height: '4vh',
+  borderRadius: '50%',
+  color: 'white',
+  display: 'flex',
+  justifyContent: 'center',
+  alignSelf: 'center',
+  textAlign: 'center'
+}
+
+let teamColorRed = {
+  background: 'linear-gradient(135deg, #ff0f0f, #db0000)',
+  width: '4vh',
+  height: '4vh',
+  borderRadius: '50%',
+  color: 'white',
+  display: 'flex',
+  justifyContent: 'center',
+  alignSelf: 'center',
+  textAlign: 'center'
+}
 let styles = {
   list: {
     paddingLeft: '10px'
