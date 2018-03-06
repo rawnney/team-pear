@@ -1,5 +1,3 @@
-
-
 export const API_URL = 'https://peargameapi.herokuapp.com/api'
 export const API_SIGNIN = API_URL + '/signin'
 export const API_USERS = API_URL + '/users/'
