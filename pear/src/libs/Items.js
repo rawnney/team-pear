@@ -64,14 +64,14 @@ export const itemWeapon = [
     img: CombatKnife
   },
   {
-    id: 2,
+    id: 1,
     name: 'Bone Sword',
     dmg: 20,
     cost: 7,
     img: BoneSword
   },
   {
-    id: 3,
+    id: 2,
     name: 'Jagged Sword',
     dmg: 30,
     cost: 11,
