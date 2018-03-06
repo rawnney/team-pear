@@ -7,11 +7,8 @@ import SignUpComponent from './SignUpComponent'
 import Welcome from './Welcome'
 import LeaderboardComponent from './LeaderboardComponent'
 import InfoComponent from './InfoComponent'
-import Images from '../libs/Imgs'
 import classnames from 'classnames'
 import EyeIcon from './EyeIcon'
-
-let {Pear} = Images
 
 export default class Home extends Component {
   constructor (props) {
