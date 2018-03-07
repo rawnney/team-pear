@@ -28,7 +28,6 @@ export default class GlobalChatComponent extends Component {
       ev.preventDefault()
       this.socket.emit('SEND_MESSAGE', {
         author: this.state.user.username,
-        avatar: this.state.user.avatar,
         message: this.state.message
       })
       this.setState({message: ''})
@@ -45,7 +44,7 @@ export default class GlobalChatComponent extends Component {
     let {user, messages} = this.state
     let allMessages = messages.map((message, i) => {
       return (
-        <div key={i}><img style={styles.smallAvatar} src={Images[message.avatar]} alt='Avatar' />{message.author}: {message.message}</div>
+        <div key={i}><img style={styles.smallAvatar} src={Images[user.avatar]} alt='Avatar' />{message.author}: {message.message}</div>
       )
     })
     return (
