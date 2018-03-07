@@ -17,8 +17,8 @@ export default class EyeIcon extends Component {
 
     return <div>
       <Lottie options={defaultOptions}
-        height={200}
-        width={300}
+        height={150}
+        width={250}
         isStopped={this.state.isStopped}
         isPaused={this.state.isPaused}/>
     </div>

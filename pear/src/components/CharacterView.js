@@ -316,7 +316,7 @@ export default class CharacterView extends Component {
     let {user, updatedUser} = this.state
     let {username, iduser} = user
     let {newUsername} = updatedUser
-    if (newUsername === username || newUsername === '' || newUsername === {} || newUsername === null || newUsername === undefined) return
+    if (newUsername === username || newUsername === '' || newUsername === {} || newUsername === null || newUsername === undefined || newUsername === 'Admin') return
     axios.put(API_UPDATE_USERNAME, {username: newUsername, iduser}).then(() => {
       this.setState({userIsUpdated: true, error: false})
     })

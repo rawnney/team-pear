@@ -117,8 +117,9 @@ export default class SignUpComponent extends Component {
     let {onSignIn} = this.props
     let {user} = this.state
     let {username, password, rePassword, email, avatar, team, reg, monstersKilled, coins, attack, block, weapon, shield, head, chest, legs, feet} = user
-    if (!username || username.length < 3) return this.setState({signUpError: true, errorMsg: 'Invalid username input, make sure its 3 characters or longer'})
-    if (!password || password.length < 5) return this.setState({signUpError: true, errorMsg: 'Invalid password input, make sure its 5 characters or longer'})
+    if (!username || username.length < 3 || username.length > 12) return this.setState({signUpError: true, errorMsg: 'Invalid username input, make sure its 3-12 characters long'})
+    if (username === 'Admin') return this.setState({signUpError: true, errorMsg: 'You have no power here.'})
+    if (!password || password.length < 4 || password.length > 20) return this.setState({signUpError: true, errorMsg: 'Invalid password input, make sure its 4 characters or longer'})
     if (password !== rePassword) return this.setState({signUpError: true, errorMsg: 'The passwords did not match'})
     if (!email || validateEmail(email) === false) return this.setState({signUpError: true, errorMsg: 'That is one wierd email-adress.'})
     if (!avatar) return this.setState({signUpError: true, errorMsg: 'You forgot to select a avatar!'})
