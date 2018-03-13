@@ -1,7 +1,7 @@
 # Pear Game
 www.peargame.fun
 
-This App was built using *[React](https://reactjs.org) and *[ReactStrap](https://reactstrap.github.io).
+This App was built using [React](https://reactjs.org) and [ReactStrap](https://reactstrap.github.io).
 
 ## Getting started
 
