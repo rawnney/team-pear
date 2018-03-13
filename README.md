@@ -21,12 +21,12 @@ yarn add -g eslint
 
 ### To run the game locally
 
-´´´
-yarn 
-´´´
-´´´
+```
+yarn
+```
+```
 yarn start
-´´´
+```
 
 ### Repos
 * [Chat](https://github.com/rawnney/PearGameChat)
@@ -35,7 +35,7 @@ yarn start
 
 Our game is set up on three different heroku instances, one for the API, one for the game chatt and one for the actual game-client. Pushing new content to master branch on github will rebuild the application live on Heroku.
 
-###Authors
+### Authors
 
 * [Tim Aro](https://github.com/Finen2)
 * [Masudul Hasan](https://github.com/masudulhas)
