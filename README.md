@@ -37,6 +37,6 @@ Our game is set up on three different heroku instances, one for the API, one for
 
 * [Tim Aro](https://github.com/Finen2)
 * [Masudul Hasan](https://github.com/masudulhas)
-* [Nasim Huq](https://github.com/nasimjibs)
+* [Nasimul Huq](https://github.com/nasimjibs)
 * [Robin Wisseng](https://github.com/robinwiss)
 * [Hugo Rune](https://github.com/rawnney)
