@@ -1,5 +1,3 @@
-README
-
 # Pear Game
 www.peargame.fun
 
